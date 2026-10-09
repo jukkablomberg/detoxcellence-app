@@ -1,67 +1,87 @@
 #!/usr/bin/env node
 /**
- * Store screenshots, GENERATED from the app's own web export rendered by headless Chromium at the two
- * store geometries (scripts/shot-frame.mjs: android 1080×1920 plain; ios 1320×2868 under the caption
- * band from store/listing.json), with LIVE data from monitoringroom.com — the same JSON the phone reads.
- * No mock data. monitoringroom.com sends no CORS headers (the phone needs none), so the harness fetches
- * the API from Node through Playwright routing and hands the browser the real body.
+ * Store screenshots, GENERATED from the app's own web export at the two store geometries (scripts/shot-frame.mjs:
+ * android 1080×1920; ios 1320×2868 under the caption band from store/listing.json). Nothing staged by hand:
+ * 01 is the engine's real result for the public-domain bottle reference photo (assets/demo/bottle-demo.jpg, the
+ * web build's stand-in for the camera), 02 the row it opens, 03 the room check's real ranking of that photo,
+ * 04 the Exposure Index as bundled, 05 a real run of the Exposure Score (alternating answers 1 and 2), 06 About.
+ * The web export has no camera, so the camera view itself is not shown.
  *
- *   npx expo export --platform web --output-dir web-export
- *   MR_SHOT_SESSION=<a session token> node scripts/screenshots.mjs [--platform=android,ios]
- *     → assets/screenshots/<platform>/*.png
- *
- * MR_SHOT_SESSION (optional) shows the question screen signed in, i.e. with the call control. It is a
- * token from /api/auth/app-exchange for an account that has made NO call on the question shown, so the
- * shot invents nothing; without it the question screen shows its signed-out state.
+ *   npx expo export --platform web --output-dir web-export && node scripts/screenshots.mjs [--platform=android,ios]
  */
+import { readFileSync } from "node:fs";
 import { dirname, join, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 import { launchChromium } from "./browser.mjs";
 import { exportServer, openShotContext, platformsFromArgv } from "./shot-frame.mjs";
 
-const here = dirname(fileURLToPath(import.meta.url));
-const root = resolve(here, "..");
+const root = resolve(dirname(fileURLToPath(import.meta.url)), "..");
 const EXPORT = join(root, "web-export");
+const quiz = JSON.parse(readFileSync(join(root, "src/data/quiz.json"), "utf8"));
 const { server, port } = await exportServer(EXPORT);
-const SESSION = process.env.MR_SHOT_SESSION ?? "";
+const base = `http://127.0.0.1:${port}`;
 
-const SHOTS = [
-  ["01-now", "/", "Live situations"],
-  ["02-forecasts", "/forecasts", "Earthquakes"],
-  ["03-question", "/question/eq-world-m7-2026-10", "How it resolves"],
-  ["04-situation", null, "Level"],
-  ["05-leaders", "/leaders", "Brier"],
-  ["06-about", "/about", "More from JukkaBlomberg.com"],
-];
-
-const platforms = platformsFromArgv();
 const browser = await launchChromium();
 try {
-  for (const platform of platforms) {
+  for (const platform of platformsFromArgv()) {
     const shot = await openShotContext(browser, { platform, root, exportDir: EXPORT, port, colorScheme: "light" });
     const { page, shoot, errors } = shot;
-    await page.route("https://monitoringroom.com/api/**", async (route) => {
-      const res = await route.fetch();
-      await route.fulfill({ response: res, headers: { ...res.headers(), "access-control-allow-origin": "*" } });
-    });
-    if (SESSION) await page.addInitScript((t) => window.localStorage.setItem("mr.session", t), SESSION);
-    for (const [name, path, mustContain] of SHOTS) {
-      if (path) {
-        await page.goto(`http://127.0.0.1:${port}${path}`, { waitUntil: "load" });
-      } else {
-        // the top situation on the live board, reached the way a reader reaches it
-        await page.goto(`http://127.0.0.1:${port}/`, { waitUntil: "load" });
-        await page.getByText("Live situations").filter({ visible: true }).first().waitFor({ timeout: 30_000 });
-        await page.waitForTimeout(1500);
-        await page.locator('[role="button"]').filter({ hasText: /INTENSE|ESCALATING|ACTIVE|BACKGROUND|CALM/i, visible: true }).first().click();
-      }
-      // native tabs keep the other tabs mounted (hidden) on web — wait for the VISIBLE copy (2026-10-07, APP-STANDARD)
-      await page.getByText(mustContain, { exact: false }).filter({ visible: true }).first().waitFor({ timeout: 30_000 });
-      // every board on the screen has painted: no "Loading …" placeholder left (10-07: 01-now was shot mid-load)
-      await page.waitForFunction(() => !/Loading /.test(document.body.innerText), null, { timeout: 30_000 });
-      await page.waitForTimeout(1400); // the brand moment (≤ 1 s, APP-STANDARD § 1) is gone
-      await shoot(name);
+    // The web build draws NativeTabs as a Radix tab list over the header; the phone draws a native bar at the
+    // bottom that the web export cannot show. Hide the web-only list and move between tabs by URL instead.
+    await page.addInitScript(() => document.addEventListener("DOMContentLoaded", () => {
+      const st = document.createElement("style"); st.textContent = '[role="tablist"]{display:none!important}'; document.head.appendChild(st);
+    }));
+    await page.route(/detoxcellence\.com|jukkablomberg\.com/, (r) => r.abort());
+    const vis = (t) => page.getByText(t, { exact: false }).filter({ visible: true }).first();
+    const tid = (id) => page.locator(`[data-testid="${id}"]:visible`).first();
+    const settle = async () => page.waitForTimeout(1400); // the brand moment (≤ 1 s) has gone
+
+    await page.goto(`${base}/`, { waitUntil: "load" });
+    await tid("scan-target").waitFor({ timeout: 30000 });
+    await settle();
+    await tid("scan-target").click();
+    await vis("Is it…").waitFor({ timeout: 10000 });
+    await page.waitForTimeout(500);
+    await shoot("01-scan");
+    await page.getByRole("button", { name: "Plastic water bottle" }).filter({ visible: true }).first().click();
+    await tid("ask-bottled-water-plastic").waitFor({ timeout: 10000 });
+    await tid("ask-bottled-water-plastic").click();
+    await tid("entry-score").waitFor({ timeout: 10000 });
+    await page.waitForTimeout(500);
+    await shoot("02-entry");
+
+    await page.goto(`${base}/`, { waitUntil: "load" });
+    await tid("room-check").waitFor({ timeout: 30000 });
+    await settle();
+    await tid("room-check").click();
+    await tid("room-result").waitFor({ timeout: 10000 });
+    await page.waitForTimeout(500);
+    await shoot("03-room");
+
+    await page.goto(`${base}/exposures`, { waitUntil: "load" });
+    await tid("index-search").waitFor({ timeout: 30000 });
+    await settle();
+    await tid("cat-all").click();
+    await page.waitForTimeout(500);
+    await shoot("04-index");
+
+    await page.goto(`${base}/score`, { waitUntil: "load" });
+    await tid("start-quiz").waitFor({ timeout: 30000 });
+    await settle();
+    await tid("start-quiz").click();
+    for (let i = 0; i < quiz.questions.length; i++) {
+      await vis(`Question ${i + 1} of ${quiz.questions.length}`).waitFor({ timeout: 5000 });
+      await tid(`answer-${i % 2 === 0 ? 1 : 2}`).click();
     }
+    await tid("result").waitFor({ timeout: 10000 });
+    await page.waitForTimeout(500);
+    await shoot("05-score");
+
+    await page.goto(`${base}/about`, { waitUntil: "load" });
+    await vis("How Scan works").waitFor({ timeout: 30000 });
+    await settle();
+    await shoot("06-about");
+
     if (errors.length) { console.error(`screenshots: ${errors.length} page error(s):\n  ${errors.join("\n  ")}`); process.exitCode = 1; }
     await shot.close();
   }

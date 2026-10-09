@@ -43,6 +43,31 @@
   "screenshots": {
     "_note": "iOS caption band per shot (scripts/shot-frame.mjs): [headline ≤5 words, subline ≤60 chars] — one feature per shot; first two frames sell (NEW-APP-CHECKLIST 10-08). Filled at C3 with the camera lens first.",
     "displayFontFile": "LeagueGothic-Regular",
-    "captions": {}
+    "captions": {
+      "01-scan": [
+        "Point at a bottle",
+        "Recognised on your phone, photo never sent"
+      ],
+      "02-entry": [
+        "Its exposure score, explained",
+        "The evidence behind each rating, plus a swap"
+      ],
+      "03-room": [
+        "Room check: one shelf",
+        "Every item in the photo, ranked by burden"
+      ],
+      "04-index": [
+        "The Exposure Index, offline",
+        "189 household items, bundled with the app"
+      ],
+      "05-score": [
+        "Your Exposure Score",
+        "15 questions, results kept on your phone"
+      ],
+      "06-about": [
+        "Built by JukkaBlomberg.com",
+        "No account, no ads, photos never sent"
+      ]
+    }
   }
 }
