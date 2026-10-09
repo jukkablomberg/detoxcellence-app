@@ -28,6 +28,15 @@
         "track": "internal",
         "releaseStatus": "draft"
       }
+    },
+    "production": {
+      "android": {
+        "track": "production",
+        "releaseStatus": "draft"
+      },
+      "ios": {
+        "appleTeamId": "RM8U7U8M3B"
+      }
     }
   }
 }
