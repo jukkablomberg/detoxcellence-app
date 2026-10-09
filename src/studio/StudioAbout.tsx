@@ -1,11 +1,12 @@
 import Constants from "expo-constants";
-import type { ReactNode } from "react";
+import { useEffect, useRef, useState, type ReactNode } from "react";
 import { Linking, Image, Pressable, ScrollView, StyleSheet, Text, View, type TextStyle } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { Lockup } from "./Lockup";
 import { openStudio, storeUrlFor } from "./links";
 import { iconFor, useStudioApps, type StudioApp } from "./registry";
 import type { StudioTheme } from "./theme";
+import { buildLabel, testerOn, toggleTester, TESTER_TAPS } from "./updates";
 
 /**
  * The About screen — design/APP-ABOUT-STANDARD.md § 2–3. Six blocks in a fixed order: (1) nav — the app's Stack
@@ -52,6 +53,21 @@ export function StudioAbout(p: StudioAboutProps) {
   const insets = useSafeAreaInsets();
   const { apps, developerUrl } = useStudioApps(p.slug, p.liveRegistry ?? false);
   const version = Constants.expoConfig?.version ?? "";
+  const [tester, setTester] = useState(false);
+  const taps = useRef({ n: 0, at: 0 });
+  useEffect(() => {
+    void testerOn().then(setTester);
+  }, []);
+  // RELEASE-PIPELINE.md § 3 — TESTER_TAPS quick taps on the version line switch this phone to the preview channel.
+  const onVersionTap = () => {
+    const now = Date.now();
+    taps.current = now - taps.current.at < 1500 ? { n: taps.current.n + 1, at: now } : { n: 1, at: now };
+    if (taps.current.n >= TESTER_TAPS) {
+      taps.current = { n: 0, at: 0 };
+      void toggleTester().then((v) => v !== null && setTester(v));
+    }
+  };
+  const label = buildLabel(version, tester);
   const s = makeStyles(t);
   const shown = apps.slice(0, 3);
   return (
@@ -93,7 +109,9 @@ export function StudioAbout(p: StudioAboutProps) {
       ) : null}
 
       <View style={s.sign}>
-        <Text style={s.colo}>{version ? `${p.colophon} · ${version}` : p.colophon}</Text>
+        <Pressable onPress={onVersionTap} accessible={false}>
+          <Text style={s.colo}>{label ? `${p.colophon} · ${label}` : p.colophon}</Text>
+        </Pressable>
         <View style={s.lock}>
           <Lockup color={t.muted} onPress={() => void openStudio(p.slug, "about-lockup")} />
         </View>

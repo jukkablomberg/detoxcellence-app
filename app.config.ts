@@ -35,6 +35,12 @@ const config: ExpoConfig = {
   name: venture.venture,
   slug: venture.slug,
   version: "1.0.0",
+  // EAS Update — projects/app-stores/RELEASE-PIPELINE.md. JS/asset changes ship over the air to the build already on the
+  // phone; a new store build is needed only when this fingerprint (the native layer) changes. Channels live in eas.json.
+  runtimeVersion: { policy: "fingerprint" },
+  ...(easProjectId
+    ? { updates: { url: `https://u.expo.dev/${easProjectId}`, checkAutomatically: "ON_LOAD" as const, fallbackToCacheTimeout: 0 } }
+    : {}),
   orientation: "portrait",
   scheme: venture.slug,
   // Integrity ships light and dark (the site's two token blocks); the app follows the phone (DESIGN.md § App).
