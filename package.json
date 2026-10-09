@@ -1,0 +1,48 @@
+{
+  "name": "detoxcellence-app",
+  "version": "1.0.0",
+  "private": true,
+  "main": "expo-router/entry",
+  "_versions": "PINNED AND DECLARED. Exact versions (no ^, no ~, no *); scripts/listing-readiness.mjs fails on any range operator. Expo SDK 57 / target API 36. The dependency set is projects/monitoringroom/repo-app's (EAS build FINISHED 10-06/07) minus expo-secure-store (no account) and expo-device (no push token): the weekly swap reminder is a LOCAL notification. No firebase / revenuecat (no Firebase project for Detoxcellence yet \u2014 HEALTH-TRIO-DAY \u00a7 2 'Not on the day'; no IAP \u2014 Paid Apps Agreement unsigned). HEALTH-TRIO-DAY C2 adds the camera-engine set from projects/fattonic/repo-app.",
+  "scripts": {
+    "start": "expo start",
+    "web": "expo start --web",
+    "typecheck": "tsc --noEmit",
+    "test": "node --experimental-strip-types --no-warnings --test scripts/*.test.mjs",
+    "sync:exposures": "node scripts/sync-exposures.mjs",
+    "check:exposures-sync": "node scripts/sync-exposures.mjs --check",
+    "check:listing": "node scripts/listing-readiness.mjs",
+    "check:listing:launch": "node scripts/listing-readiness.mjs --mode=launch",
+    "redproof": "node scripts/redproof.mjs",
+    "store:config": "node scripts/store-config.mjs",
+    "store-assets": "node scripts/store-assets.mjs",
+    "export:web": "expo export --platform web --output-dir web-export",
+    "screenshots": "node scripts/screenshots.mjs"
+  },
+  "dependencies": {
+    "@expo/metro-runtime": "57.0.15",
+    "@react-native-async-storage/async-storage": "2.2.0",
+    "expo": "57.0.21",
+    "expo-build-properties": "57.0.17",
+    "expo-constants": "57.0.17",
+    "expo-font": "57.0.4",
+    "expo-linking": "57.0.9",
+    "expo-notifications": "57.0.17",
+    "expo-router": "57.0.20",
+    "expo-splash-screen": "57.0.8",
+    "expo-status-bar": "57.0.1",
+    "expo-symbols": "57.0.3",
+    "expo-system-ui": "57.0.3",
+    "react": "19.2.3",
+    "react-dom": "19.2.3",
+    "react-native": "0.86.3",
+    "react-native-safe-area-context": "5.7.0",
+    "react-native-screens": "4.26.2",
+    "react-native-svg": "15.15.4",
+    "react-native-web": "0.21.2"
+  },
+  "devDependencies": {
+    "@types/react": "19.2.18",
+    "typescript": "6.0.3"
+  }
+}

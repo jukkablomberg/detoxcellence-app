@@ -1,0 +1,3507 @@
+{
+  "dataset": "Detoxcellence Exposure Index",
+  "url": "https://detoxcellence.com/exposures",
+  "version": "1.3.1",
+  "released": "2026-10-09",
+  "licence": {
+    "name": "CC BY 4.0",
+    "url": "https://creativecommons.org/licenses/by/4.0/"
+  },
+  "citation": "Detoxcellence (2026). Detoxcellence Exposure Index (version 1.3.1) [Data set]. https://detoxcellence.com/methodology.html. Licensed CC BY 4.0.",
+  "methodology": "https://detoxcellence.com/methodology.html",
+  "provenance": {
+    "statement_date": "2026-10-02",
+    "rows_total": 189,
+    "rows_with_sources": 8,
+    "summary": "8 of 189 rows carry per-row sources. The other 181 record no source: an audit on 2026-09-04 found none recorded for them anywhere, and none has been reconstructed or assumed. Sources added to rows after that audit were researched afresh and carry the date they were opened; they document the evidence as read on that date, not how the original rating was set.",
+    "sourced": "Only rows that carry a \"sources\" field. Each entry names the page (\"name\"), where to open it (\"url\") and the date it was opened (\"retrieved\").",
+    "not_sourced": "hazard, exposure and persistence (0-10) and evidence (1-3) are editorial ratings, not values taken from a cited dataset; \"evidence\" is a strength rating, not a citation. context, swap and note are editorial prose.",
+    "studies": "74 of 189 rows carry \"studies\": peer-reviewed or agency papers, each with a DOI and/or PMID, the score input it supports (\"input\": hazard, exposure or persistence), where in the paper the claim sits (\"locator\"), what it shows (\"claim\") and the date it was read (\"accessed\"). Every identifier was resolved on doi.org / PubMed (data/study-resolutions.json in the source repository). An input with no study is shown on its page as \"unsourced input\"; where a search found no fitting study, the row's \"unsourced\" field records the input, the search date (\"searched\") and the reason. The ratings themselves remain editorial.",
+    "computed": "The Detox Score shown on the site is computed from hazard, exposure and persistence (100 - hazard*4.6 - exposure*3.4 - persistence*2.6, rounded, clamped 1-100) and is not stored in this file."
+  },
+  "rows": [
+    {
+      "name": "Unfiltered Tap Water",
+      "category": "Water",
+      "context": "Municipal drinking water, straight from the tap",
+      "hazard": 4,
+      "exposure": 8,
+      "persistence": 4,
+      "evidence": 2,
+      "swap": "A filter certified to NSF/ANSI 53 or 58 for the contaminant in your water",
+      "note": "Quality varies widely by region. Common concerns are disinfection by-products, lead from old pipes, and trace PFAS. What a home filter removes depends on its type and on what it is certified to reduce — check the certifier’s listing for your contaminant.",
+      "studies": [
+        {
+          "doi": "10.1021/acs.estlett.6b00260",
+          "pmid": "27752509",
+          "input": "exposure",
+          "locator": "Abstract",
+          "claim": "In US EPA monitoring data from 2013-2015, drinking water supplies for 6 million US residents exceeded the 70 ng/L lifetime health advisory for PFOS and PFOA.",
+          "accessed": "2026-10-02"
+        },
+        {
+          "doi": "10.1097/01.ede.0000121380.02594.fc",
+          "pmid": "15097021",
+          "input": "hazard",
+          "locator": "Abstract, Results",
+          "claim": "Pooling 6 case-control studies (2,806 cases), men averaging more than 1 µg/L of trihalomethanes had an odds ratio of 1.24 for bladder cancer, and 1.44 above 50 µg/L; no association was seen in women.",
+          "accessed": "2026-10-02"
+        },
+        {
+          "doi": "10.1136/oemed-2017-104651",
+          "pmid": "29133598",
+          "input": "persistence",
+          "locator": "Abstract, Results",
+          "claim": "After Ronneby, Sweden, stopped supplying PFAS-contaminated municipal water, residents’ mean serum half-lives were estimated at 5.3 years for PFHxS, 3.4 years for PFOS and 2.7 years for PFOA.",
+          "accessed": "2026-10-02"
+        }
+      ],
+      "sources": [
+        {
+          "name": "US EPA — Identifying drinking water filters certified to reduce PFAS (updated 2025-11-18)",
+          "url": "https://www.epa.gov/water-research/identifying-drinking-water-filters-certified-reduce-pfas",
+          "retrieved": "2026-10-02"
+        }
+      ]
+    },
+    {
+      "name": "Bottled Water (Plastic)",
+      "category": "Water",
+      "context": "Single-use PET bottles",
+      "hazard": 4,
+      "exposure": 7,
+      "persistence": 6,
+      "evidence": 3,
+      "swap": "Filtered tap water in a glass or steel bottle",
+      "note": "Studies find microplastic and nanoplastic particles in most bottled water, shed from the plastic itself and worsened by heat and storage time.",
+      "studies": [
+        {
+          "doi": "10.3389/fchem.2018.00407",
+          "pmid": "30255015",
+          "input": "exposure",
+          "locator": "Abstract",
+          "claim": "93% of 259 bottles from 11 brands showed microplastic contamination, an average of 325 particles per litre counting particles down to 6.5 um.",
+          "accessed": "2026-10-02"
+        },
+        {
+          "doi": "10.1073/pnas.2300582121",
+          "pmid": "38190543",
+          "input": "exposure",
+          "locator": "Abstract",
+          "claim": "Micro- and nanoplastics in bottled water were estimated at about 2.4 ± 1.3 × 10^5 particles per litre.",
+          "accessed": "2026-10-02"
+        },
+        {
+          "doi": "10.1021/acs.est.3c09524",
+          "pmid": "39692326",
+          "input": "hazard",
+          "locator": "Abstract",
+          "claim": "A rapid systematic review of 3 human and 28 animal studies concluded microplastic exposure is “suspected” to harm reproductive, digestive and respiratory health; birth outcomes were “unclassifiable”.",
+          "accessed": "2026-10-02"
+        },
+        {
+          "doi": "10.1038/s41591-024-03453-1",
+          "pmid": "39901044",
+          "input": "persistence",
+          "locator": "Abstract",
+          "claim": "Micro- and nanoplastics, mainly polyethylene, were found in decedents’ liver, kidney and brain; liver and brain concentrations were higher in 2024 than in 2016 deaths. A correction to the paper has been published.",
+          "accessed": "2026-10-02"
+        }
+      ]
+    },
+    {
+      "name": "Carbon-Filter Pitcher Water",
+      "category": "Water",
+      "context": "Activated-carbon jug filter",
+      "hazard": 2,
+      "exposure": 3,
+      "persistence": 2,
+      "evidence": 2,
+      "swap": "—",
+      "note": "Pitcher filters cut many chlorination by-products, but in a 2020 home study carbon filters of this kind removed only about 40–70% of PFAS. A filter works only while its cartridge is replaced on schedule.",
+      "studies": [
+        {
+          "doi": "10.1021/acs.estlett.0c00004",
+          "input": "exposure",
+          "locator": "Abstract",
+          "claim": "In North Carolina homes, pitcher and other activated-carbon filters (other than under-sink units) showed variable PFAS removal: about 60–70% for long-chain and about 40% for short-chain PFAS.",
+          "accessed": "2026-10-02"
+        },
+        {
+          "doi": "10.1155/2013/959480",
+          "pmid": "23476675",
+          "input": "exposure",
+          "locator": "Abstract",
+          "claim": "Filtering Barcelona tap water through a pitcher-type or reverse-osmosis filter mostly eliminated bromine-containing trihalomethanes; across all boiling and filtering tests, THM4 fell 48% to 97%.",
+          "accessed": "2026-10-02"
+        }
+      ],
+      "sources": [
+        {
+          "name": "US EPA — Identifying drinking water filters certified to reduce PFAS (updated 2025-11-18)",
+          "url": "https://www.epa.gov/water-research/identifying-drinking-water-filters-certified-reduce-pfas",
+          "retrieved": "2026-10-02"
+        }
+      ]
+    },
+    {
+      "name": "Reverse-Osmosis Filtered Water",
+      "category": "Water",
+      "context": "Under-sink RO system",
+      "hazard": 1,
+      "exposure": 2,
+      "persistence": 1,
+      "evidence": 3,
+      "swap": "—",
+      "note": "In a 2020 home study, under-sink reverse-osmosis and two-stage filters removed nearly all the PFAS tested. Like any filter, it works only while its membrane and pre-filters are replaced on schedule; RO also sends about a gallon of water to the drain for every gallon it treats.",
+      "studies": [
+        {
+          "doi": "10.1021/acs.estlett.0c00004",
+          "input": "exposure",
+          "locator": "Abstract",
+          "claim": "In North Carolina homes, all under-sink reverse-osmosis and dual-stage filters tested showed near complete removal of all PFAS evaluated.",
+          "accessed": "2026-10-02"
+        }
+      ],
+      "sources": [
+        {
+          "name": "US EPA — Identifying drinking water filters certified to reduce PFAS (updated 2025-11-18)",
+          "url": "https://www.epa.gov/water-research/identifying-drinking-water-filters-certified-reduce-pfas",
+          "retrieved": "2026-10-02"
+        }
+      ],
+      "unsourced": [
+        {
+          "input": "hazard",
+          "searched": "2026-10-05",
+          "reason": "The low rating reflects the dose left after filtering, which the exposure study already covers; no study rates it separately."
+        },
+        {
+          "input": "persistence",
+          "searched": "2026-10-05",
+          "reason": "The low rating reflects the dose left after filtering, which the exposure study already covers; no study rates it separately."
+        }
+      ]
+    },
+    {
+      "name": "Untested Private Well Water",
+      "category": "Water",
+      "context": "Private well, never tested",
+      "hazard": 6,
+      "exposure": 7,
+      "persistence": 5,
+      "evidence": 2,
+      "swap": "Annual testing + a targeted filter",
+      "swapSlot": {
+        "label": null,
+        "url": null,
+        "rel": "sponsored"
+      },
+      "note": "Wells aren't covered by public water rules. Arsenic, nitrates, bacteria and agricultural runoff are all possible and invisible without a test.",
+      "studies": [
+        {
+          "doi": "10.1093/jnci/djw099",
+          "pmid": "27140955",
+          "input": "hazard",
+          "locator": "Abstract, Results",
+          "claim": "In a New England case-control study (1,213 cases), people with the highest cumulative arsenic exposure from drinking water had about twice the bladder-cancer risk of the lowest quartile (odds ratio 2.24).",
+          "accessed": "2026-10-02"
+        },
+        {
+          "doi": "10.1021/acs.est.7b02881",
+          "pmid": "29043784",
+          "input": "exposure",
+          "locator": "Abstract",
+          "claim": "About 44.1 million people in the US use domestic wells; an estimated 2.1 million (95% CI 1.5 to 2.9 million) use wells with predicted arsenic above 10 μg/L.",
+          "accessed": "2026-10-02"
+        },
+        {
+          "doi": "10.1073/pnas.1305372110",
+          "pmid": "24145428",
+          "input": "persistence",
+          "locator": "Abstract",
+          "claim": "In a three-decade tracer experiment, 12–15% of fertilizer nitrogen still resided in soil after more than a quarter century, and nitrate export toward water is predicted to continue for at least five more decades.",
+          "accessed": "2026-10-02"
+        }
+      ]
+    },
+    {
+      "name": "Scented Candles (Paraffin)",
+      "category": "Air",
+      "context": "Burning fragranced paraffin candles indoors",
+      "hazard": 4,
+      "exposure": 5,
+      "persistence": 2,
+      "evidence": 2,
+      "swap": "Unscented beeswax or soy, or none at all",
+      "note": "Combustion releases fine particulate and VOCs; synthetic fragrance adds more. Ventilate, or skip the flame.",
+      "studies": [
+        {
+          "doi": "10.1007/s11356-013-2394-2",
+          "pmid": "24318837",
+          "input": "exposure",
+          "locator": "Abstract",
+          "claim": "Container candles made from different paraffin waxes, burned in a test chamber, emitted polycyclic aromatic hydrocarbons, aromatic compounds, short-chain aldehydes and particulate matter; wax quality strongly influenced the emissions.",
+          "accessed": "2026-10-06"
+        }
+      ]
+    },
+    {
+      "name": "Plug-In Air Fresheners",
+      "category": "Air",
+      "context": "Continuous synthetic-fragrance diffusers",
+      "hazard": 5,
+      "exposure": 6,
+      "persistence": 3,
+      "evidence": 2,
+      "swap": "Open a window; simmer herbs; fix the odour source",
+      "note": "They mask smell by adding phthalates and VOCs to the air you breathe all day. Real ventilation beats masking every time.",
+      "studies": [
+        {
+          "doi": "10.1111/j.1600-0668.2005.00414.x",
+          "pmid": "16683937",
+          "input": "exposure",
+          "locator": "Abstract",
+          "claim": "In a 50 m3 room ventilated at about 0.5 air changes per hour, air-freshener use emitted d-limonene, dihydromyrcenol, linalool, linalyl acetate and beta-citronellol at 35-180 mg/day over 3 days.",
+          "accessed": "2026-10-06"
+        },
+        {
+          "doi": "10.1016/j.envint.2014.03.029",
+          "pmid": "24769411",
+          "input": "hazard",
+          "locator": "Abstract",
+          "claim": "In a 20 m3 chamber, a plug-in air freshener emitted terpenes and glycol ethers; at high ozone (about 50 ppb) its reaction products reached formaldehyde and 4-oxopentanal concentrations the authors judged may give rise to concern about sensory irritation and airflow limitation.",
+          "accessed": "2026-10-06"
+        }
+      ]
+    },
+    {
+      "name": "Unvented Gas Stove",
+      "category": "Air",
+      "context": "Gas cooking with no range hood",
+      "hazard": 5,
+      "exposure": 6,
+      "persistence": 2,
+      "evidence": 3,
+      "swap": "Vent to outside; run a hood; or induction",
+      "note": "Gas burners emit nitrogen dioxide and fine particulate that can exceed outdoor limits in a closed kitchen. Always vent while cooking.",
+      "studies": [
+        {
+          "doi": "10.1093/ije/dyt150",
+          "pmid": "23962958",
+          "input": "hazard",
+          "locator": "Abstract",
+          "claim": "A random-effects meta-analysis of 41 studies found a summary odds ratio of 1.32 (95% CI 1.18-1.48) for asthma in children with gas cooking, and indoor NO2 associated with current wheeze (OR 1.15).",
+          "accessed": "2026-10-06"
+        },
+        {
+          "doi": "10.1021/acs.est.2c09289",
+          "pmid": "37319002",
+          "input": "exposure",
+          "locator": "Abstract",
+          "claim": "Across 87 homes in California and Colorado, gas and propane burners on high and ovens at 350 F emitted 2.8-6.5 micrograms of benzene per minute, 10-25 times more than electric coil and radiant stoves; in some homes benzene spread to bedrooms above chronic health benchmarks for hours.",
+          "accessed": "2026-10-06"
+        }
+      ]
+    },
+    {
+      "name": "Wood-Burning Fireplace",
+      "category": "Air",
+      "context": "Open indoor wood fires",
+      "hazard": 5,
+      "exposure": 4,
+      "persistence": 2,
+      "evidence": 3,
+      "swap": "A sealed stove, or cleaner heating",
+      "note": "Wood smoke is a major source of indoor PM2.5, linked to respiratory and cardiovascular harm. If you burn, use a sealed, well-drawing stove.",
+      "studies": [
+        {
+          "doi": "10.1080/08958370600985875",
+          "pmid": "17127644",
+          "input": "hazard",
+          "locator": "Abstract",
+          "claim": "A review concludes that wood-burning stoves and fireplaces emit significant quantities of known health-damaging pollutants, including several carcinogenic compounds, as well as CO and NOx.",
+          "accessed": "2026-10-06"
+        }
+      ]
+    },
+    {
+      "name": "HEPA-Filtered Indoor Air",
+      "category": "Air",
+      "context": "A true-HEPA air purifier sized to the room",
+      "hazard": 1,
+      "exposure": 2,
+      "persistence": 1,
+      "evidence": 3,
+      "swap": "—",
+      "note": "One of the highest-value, lowest-effort exposure reductions: a correctly sized HEPA unit measurably cuts indoor PM2.5, pollen and many particulates.",
+      "studies": [
+        {
+          "doi": "10.1111/ina.12753",
+          "pmid": "32996146",
+          "input": "exposure",
+          "locator": "Abstract",
+          "claim": "In a randomized trial in 71 non-smoking homes of children with asthma, homes given two portable HEPA cleaners had 60% (95% CI 41-72%) lower sleeping-area and 42% (19-58%) lower living-area PM2.5 than control homes at one year.",
+          "accessed": "2026-10-06"
+        }
+      ]
+    },
+    {
+      "name": "Off-Gassing New Furniture",
+      "category": "Air",
+      "context": "New pressed-wood furniture, mattresses, carpet",
+      "hazard": 4,
+      "exposure": 5,
+      "persistence": 4,
+      "evidence": 2,
+      "swap": "Air out new items; choose low-VOC/CertiPUR",
+      "note": "New composite wood and foams release formaldehyde and VOCs for weeks. Unwrap and ventilate before bringing them into bedrooms.",
+      "studies": [
+        {
+          "doi": "10.1111/j.1600-0668.2007.00478.x",
+          "pmid": "17661923",
+          "input": "hazard",
+          "locator": "Abstract",
+          "claim": "A review of 21 epidemiologic studies of indoor residential chemical emissions found formaldehyde or particleboard, phthalates or plastic materials, and recent painting to be the risk factors most often associated with respiratory or allergic effects in infants and children.",
+          "accessed": "2026-10-06"
+        },
+        {
+          "doi": "10.1021/es405625q",
+          "pmid": "24548111",
+          "input": "exposure",
+          "locator": "Abstract",
+          "claim": "All 20 new and used crib mattresses tested in small chambers emitted VOCs, with mean total VOC emission rates of 56 micrograms/m2/h at 23 C and 139 at 36 C; rates were higher for new mattresses than used ones.",
+          "accessed": "2026-10-06"
+        }
+      ]
+    },
+    {
+      "name": "Burning Incense",
+      "category": "Air",
+      "context": "Regular indoor incense",
+      "hazard": 5,
+      "exposure": 5,
+      "persistence": 2,
+      "evidence": 2,
+      "swap": "Ventilate; essential-oil diffusion sparingly",
+      "note": "Incense smoke can produce more fine particulate than cigarettes in a closed room. Reserve it for well-ventilated spaces.",
+      "studies": [
+        {
+          "doi": "10.1002/cncr.23788",
+          "pmid": "18726993",
+          "input": "hazard",
+          "locator": "Abstract",
+          "claim": "In a prospective cohort of 61,320 Singapore Chinese followed to 2005, incense use was associated with a significantly increased risk of upper respiratory tract carcinomas other than nasopharyngeal, and duration and intensity of use with squamous cell carcinomas of the respiratory tract (P for trend = .004); no overall effect was seen on lung cancer.",
+          "accessed": "2026-10-06"
+        }
+      ]
+    },
+    {
+      "name": "Secondhand Cigarette Smoke",
+      "category": "Air",
+      "context": "Living or working around indoor smoking",
+      "hazard": 10,
+      "exposure": 8,
+      "persistence": 3,
+      "evidence": 3,
+      "swap": "A strictly smoke-free indoor environment",
+      "swapSlot": {
+        "label": null,
+        "url": null,
+        "rel": "sponsored"
+      },
+      "note": "A confirmed human carcinogen with no safe level of exposure. Keeping all indoor spaces smoke-free is non-negotiable for detox load.",
+      "studies": [
+        {
+          "doi": "10.1016/S0140-6736(10)61388-8",
+          "pmid": "21112082",
+          "input": "hazard",
+          "locator": "Abstract",
+          "claim": "Using data from 192 countries, second-hand smoke was estimated to have caused 603,000 deaths in 2004, about 1.0% of worldwide mortality, including 379,000 from ischaemic heart disease and 21,400 from lung cancer.",
+          "accessed": "2026-10-06"
+        }
+      ]
+    },
+    {
+      "name": "Nonstick (PTFE) Cookware",
+      "category": "Kitchen",
+      "context": "Teflon-type nonstick pans",
+      "hazard": 6,
+      "exposure": 6,
+      "persistence": 8,
+      "evidence": 3,
+      "swap": "Cast iron or stainless steel",
+      "swapSlot": {
+        "label": null,
+        "url": null,
+        "rel": "sponsored"
+      },
+      "note": "Scratched or overheated nonstick can shed PFAS-family compounds — the 'forever chemicals' that persist in the body and environment for years.",
+      "studies": [
+        {
+          "doi": "10.1021/es062377w",
+          "pmid": "17593716",
+          "input": "exposure",
+          "locator": "Abstract",
+          "claim": "Four brands of nonstick frying pans released 7-337 ng of PFOA per pan into the gas phase at normal cooking surface temperatures (179-233 °C).",
+          "accessed": "2026-10-02"
+        }
+      ]
+    },
+    {
+      "name": "Cast Iron Cookware",
+      "category": "Kitchen",
+      "context": "Seasoned cast-iron pans",
+      "hazard": 1,
+      "exposure": 2,
+      "persistence": 1,
+      "evidence": 2,
+      "swap": "—",
+      "note": "No synthetic coating to break down. A well-seasoned pan is naturally nonstick and can even add dietary iron."
+    },
+    {
+      "name": "Stainless Steel Cookware",
+      "category": "Kitchen",
+      "context": "18/10 stainless pans and pots",
+      "hazard": 1,
+      "exposure": 2,
+      "persistence": 1,
+      "evidence": 3,
+      "swap": "—",
+      "note": "Inert, durable, coating-free. The safe default for everyday high-heat cooking."
+    },
+    {
+      "name": "Uncoated Aluminum Cookware",
+      "category": "Kitchen",
+      "context": "Bare aluminum pots and foil with acidic food",
+      "hazard": 3,
+      "exposure": 4,
+      "persistence": 3,
+      "evidence": 2,
+      "swap": "Anodized aluminum or stainless steel",
+      "note": "Bare aluminum can leach into acidic foods like tomato sauce. Anodized or stainless removes the concern."
+    },
+    {
+      "name": "Plastic Cutting Boards",
+      "category": "Kitchen",
+      "context": "Cutting on soft plastic boards",
+      "hazard": 3,
+      "exposure": 6,
+      "persistence": 6,
+      "evidence": 2,
+      "swap": "Wood or bamboo boards",
+      "note": "Knife scoring sheds microplastic particles directly into your food. Wood is naturally antimicrobial and doesn't shed."
+    },
+    {
+      "name": "Conventional Strawberries",
+      "category": "Food",
+      "context": "Non-organic strawberries (a 'Dirty Dozen' crop)",
+      "hazard": 5,
+      "exposure": 6,
+      "persistence": 3,
+      "evidence": 2,
+      "swap": "Organic strawberries, or peel-heavy fruit instead",
+      "note": "Consistently among the most pesticide-laden produce. This is a crop where buying organic meaningfully cuts residue.",
+      "studies": [
+        {
+          "doi": "10.1080/19440049.2013.850537",
+          "pmid": "24303788",
+          "input": "exposure",
+          "locator": "Abstract",
+          "claim": "In 3 years of field trials, all active ingredients except propargite fell below EU maximum residue levels in ripe strawberries, but most of the fungicides tested often persisted above 0.01 mg/kg, the baby-food limit.",
+          "accessed": "2026-10-09"
+        }
+      ]
+    },
+    {
+      "name": "Organic Strawberries",
+      "category": "Food",
+      "context": "Certified-organic strawberries",
+      "hazard": 2,
+      "exposure": 3,
+      "persistence": 2,
+      "evidence": 2,
+      "swap": "—",
+      "note": "Grown without synthetic pesticides. For high-residue crops, the organic version is a genuine exposure reduction.",
+      "studies": [
+        {
+          "doi": "10.1017/S0007114514001366",
+          "pmid": "24968103",
+          "input": "exposure",
+          "locator": "Abstract",
+          "claim": "A meta-analysis of 343 peer-reviewed publications found pesticide residues four times more frequent in conventional crops than in organic ones, which also had lower cadmium.",
+          "accessed": "2026-10-09"
+        }
+      ]
+    },
+    {
+      "name": "Conventional Spinach",
+      "category": "Food",
+      "context": "Non-organic leafy greens",
+      "hazard": 5,
+      "exposure": 5,
+      "persistence": 3,
+      "evidence": 2,
+      "swap": "Organic greens; wash thoroughly",
+      "note": "Leafy greens carry high pesticide residue because you eat the whole leaf. A strong candidate for buying organic."
+    },
+    {
+      "name": "Canned Food (BPA Lining)",
+      "category": "Food",
+      "context": "Canned goods with epoxy linings",
+      "hazard": 4,
+      "exposure": 5,
+      "persistence": 3,
+      "evidence": 3,
+      "swap": "Glass jars, cartons, or 'BPA-free' cans",
+      "note": "BPA and its substitutes migrate from can linings into food, especially acidic and fatty contents. Choose glass or verified BPA-free packaging.",
+      "studies": [
+        {
+          "doi": "10.1016/j.envres.2016.06.008",
+          "pmid": "27362993",
+          "input": "exposure",
+          "locator": "Abstract, Results",
+          "claim": "In 7,669 NHANES 2003-2008 participants, one canned food in the past 24 hours went with 24% higher urinary BPA and two or more with 54%; canned soup with 229%.",
+          "accessed": "2026-10-02"
+        },
+        {
+          "doi": "10.2903/j.efsa.2023.6857",
+          "pmid": "37089179",
+          "input": "hazard",
+          "locator": "Abstract",
+          "claim": "EFSA's panel set a tolerable daily intake for BPA of 0.2 ng/kg body weight, with the immune system as the most sensitive target, and found average and high dietary exposures in all age groups exceeded it by two to three orders of magnitude.",
+          "accessed": "2026-10-09"
+        }
+      ]
+    },
+    {
+      "name": "Large Predatory Fish",
+      "category": "Food",
+      "context": "Tuna, swordfish, king mackerel, shark",
+      "hazard": 6,
+      "exposure": 5,
+      "persistence": 7,
+      "evidence": 3,
+      "swap": "Small fish: sardines, anchovies, wild salmon",
+      "swapSlot": {
+        "label": null,
+        "url": null,
+        "rel": "sponsored"
+      },
+      "note": "Mercury bioaccumulates up the food chain, concentrating in big long-lived predators. Small oily fish give the omega-3s with far less mercury.",
+      "studies": [
+        {
+          "doi": "10.1016/j.envres.2009.12.006",
+          "pmid": "20116785",
+          "input": "exposure",
+          "locator": "Abstract",
+          "claim": "Ranking 51 seafood varieties by their share of mercury in the US seafood supply, tuna (canned and fresh) accounted for 37.4% of total mercury inputs, while most of the highest-mercury fish except swordfish were minor contributors.",
+          "accessed": "2026-10-09"
+        },
+        {
+          "doi": "10.1016/s0892-0362(97)00097-4",
+          "pmid": "9392777",
+          "input": "hazard",
+          "locator": "Abstract",
+          "claim": "In a Faroe Islands birth cohort of 1,022 children, prenatal methylmercury exposure from the mother's diet was linked at age 7 to poorer language, attention and memory, still seen after excluding children whose mothers had hair mercury above 10 µg/g.",
+          "accessed": "2026-10-09"
+        },
+        {
+          "doi": "10.2131/jts.37.123",
+          "pmid": "22293416",
+          "input": "persistence",
+          "locator": "Abstract",
+          "claim": "In 27 volunteers who ate fish at the tolerable weekly methylmercury intake for 14 weeks, blood mercury rose from 6.7 to 26.9 ng/g, and its half-life after they stopped was 94 days (57 days after subtracting background).",
+          "accessed": "2026-10-09"
+        }
+      ]
+    },
+    {
+      "name": "Small Oily Fish (Sardines)",
+      "category": "Food",
+      "context": "Sardines, anchovies, herring",
+      "hazard": 2,
+      "exposure": 2,
+      "persistence": 2,
+      "evidence": 3,
+      "swap": "—",
+      "note": "Low on the food chain means low mercury, plus excellent omega-3s that support overall metabolic health."
+    },
+    {
+      "name": "Cruciferous Vegetables",
+      "category": "Food",
+      "context": "Broccoli, cauliflower, cabbage, Brussels sprouts",
+      "hazard": 1,
+      "exposure": 1,
+      "persistence": 1,
+      "evidence": 3,
+      "swap": "—",
+      "note": "Contain sulforaphane, which upregulates the body's own phase-II detoxification enzymes. One of the few foods that actively supports your detox systems."
+    },
+    {
+      "name": "Ultra-Processed Food",
+      "category": "Food",
+      "context": "Packaged snacks, sodas, ready meals",
+      "hazard": 4,
+      "exposure": 7,
+      "persistence": 3,
+      "evidence": 3,
+      "swap": "Whole, minimally processed foods",
+      "note": "Carries additives, emulsifiers, and packaging-derived compounds, and displaces the fiber and phytonutrients your detox pathways rely on.",
+      "studies": [
+        {
+          "doi": "10.1016/j.envint.2019.105057",
+          "pmid": "31398592",
+          "input": "exposure",
+          "locator": "Abstract, Results",
+          "claim": "Among 2,212 NHANES 2013-2014 participants, each 10% more energy from ultra-processed food went with 8.0% higher urinary MCOP, a phthalate metabolite, with a stronger association in children; bisphenols were not associated.",
+          "accessed": "2026-10-09"
+        }
+      ]
+    },
+    {
+      "name": "Charred Grilled Meat",
+      "category": "Food",
+      "context": "Blackened, flame-grilled red meat",
+      "hazard": 5,
+      "exposure": 4,
+      "persistence": 2,
+      "evidence": 2,
+      "swap": "Lower-temp cooking; trim char; marinate",
+      "note": "High-heat charring forms heterocyclic amines and PAHs. Marinating, avoiding flare-ups and scraping off char cuts their formation.",
+      "studies": [
+        {
+          "doi": "10.1080/19440049.2018.1425553",
+          "pmid": "29334335",
+          "input": "exposure",
+          "locator": "Abstract",
+          "claim": "In gas-grilled beef grilled at 150-350 °C, PAHs and heterocyclic amines both rose with temperature; benzo[a]pyrene was in every sample, and PAH4 at 300 and 350 °C exceeded the EU maximum level. Marinating cut most heterocyclic amines.",
+          "accessed": "2026-10-09"
+        }
+      ]
+    },
+    {
+      "name": "White Rice (Arsenic)",
+      "category": "Food",
+      "context": "Rice, especially for daily eaters and infants",
+      "hazard": 4,
+      "exposure": 4,
+      "persistence": 4,
+      "evidence": 2,
+      "swap": "Rinse well, cook in excess water; vary grains",
+      "note": "Rice takes up inorganic arsenic from soil and water. Rinsing and cooking in a high water-to-rice ratio removes a meaningful share.",
+      "studies": [
+        {
+          "doi": "10.1016/j.scitotenv.2020.143341",
+          "pmid": "33153748",
+          "input": "exposure",
+          "locator": "Abstract",
+          "claim": "Parboiling rice in fresh water and then cooking it by absorption removed 73% of the inorganic arsenic from white rice and 54% from brown rice.",
+          "accessed": "2026-10-09"
+        },
+        {
+          "doi": "10.2903/j.efsa.2024.8488",
+          "pmid": "38239496",
+          "input": "hazard",
+          "locator": "Abstract",
+          "claim": "EFSA's contaminants panel found chronic dietary inorganic arsenic linked to cancers of the skin, bladder and lung, treated it as a genotoxic carcinogen, and judged that adult exposure margins (2 to 0.4 for average consumers) raise a health concern.",
+          "accessed": "2026-10-09"
+        }
+      ]
+    },
+    {
+      "name": "Filtered Black Coffee",
+      "category": "Food",
+      "context": "Paper-filtered coffee",
+      "hazard": 1,
+      "exposure": 2,
+      "persistence": 1,
+      "evidence": 2,
+      "swap": "—",
+      "note": "Paper filtering removes cafestol; the drink itself is rich in antioxidants. A low-burden daily habit for most people."
+    },
+    {
+      "name": "Synthetic Fragrance / Perfume",
+      "category": "Personal Care",
+      "context": "'Parfum' in perfume, lotion, and sprays",
+      "hazard": 5,
+      "exposure": 6,
+      "persistence": 4,
+      "evidence": 2,
+      "swap": "Fragrance-free, or essential-oil scented sparingly",
+      "note": "'Fragrance' is an undisclosed mixture that often includes phthalates used to make scent linger. Fragrance-free is the simplest cut."
+    },
+    {
+      "name": "Aluminum Antiperspirant",
+      "category": "Personal Care",
+      "context": "Daily aluminum-based antiperspirant",
+      "hazard": 3,
+      "exposure": 5,
+      "persistence": 3,
+      "evidence": 1,
+      "swap": "Aluminum-free deodorant if you prefer",
+      "note": "Evidence of harm is weak and contested, but it's an easy swap for anyone who wants to reduce daily aluminum contact on skin."
+    },
+    {
+      "name": "Conventional Shampoo",
+      "category": "Personal Care",
+      "context": "Shampoo with parabens and harsh surfactants",
+      "hazard": 3,
+      "exposure": 5,
+      "persistence": 2,
+      "evidence": 2,
+      "swap": "Paraben-free, simpler formulas",
+      "note": "Leave-on and rinse-off products add up across the day. Simpler, paraben- and fragrance-free formulas reduce the cumulative load."
+    },
+    {
+      "name": "Nail Salon Products",
+      "category": "Personal Care",
+      "context": "Gel/acrylic nails, frequent salon visits",
+      "hazard": 6,
+      "exposure": 5,
+      "persistence": 2,
+      "evidence": 2,
+      "swap": "'3-free/9-free' polish; ventilated salons",
+      "note": "The 'toxic trio' — toluene, formaldehyde, DBP — plus solvent fumes make salons a real inhalation exposure. Choose ventilated shops and cleaner polishes."
+    },
+    {
+      "name": "Oxybenzone Sunscreen",
+      "category": "Personal Care",
+      "context": "Chemical sunscreens with oxybenzone",
+      "hazard": 4,
+      "exposure": 5,
+      "persistence": 3,
+      "evidence": 2,
+      "swap": "Mineral (zinc oxide) sunscreen",
+      "note": "Oxybenzone absorbs through skin and is an environmental concern. Mineral sunscreens protect just as well without it — and sunscreen itself stays essential."
+    },
+    {
+      "name": "Fragrance-Free Basic Skincare",
+      "category": "Personal Care",
+      "context": "Simple, unscented moisturizer and cleanser",
+      "hazard": 1,
+      "exposure": 2,
+      "persistence": 1,
+      "evidence": 2,
+      "swap": "—",
+      "note": "Fewer ingredients means fewer unknowns. A short, fragrance-free routine is the low-burden default for skin."
+    },
+    {
+      "name": "Conventional All-Purpose Cleaner",
+      "category": "Home",
+      "context": "Fragranced spray cleaners with QUATs/VOCs",
+      "hazard": 4,
+      "exposure": 5,
+      "persistence": 2,
+      "evidence": 2,
+      "swap": "Simple vinegar/soap solutions; fragrance-free",
+      "note": "Sprays aerosolize cleaning chemicals right into your breathing zone. Fragrance-free or DIY basics handle most household jobs."
+    },
+    {
+      "name": "Frequent Unventilated Bleach",
+      "category": "Home",
+      "context": "Regular bleach use in closed rooms",
+      "hazard": 5,
+      "exposure": 5,
+      "persistence": 1,
+      "evidence": 2,
+      "swap": "Ventilate; use only when needed; never mix",
+      "note": "Bleach fumes irritate airways and form dangerous gases if mixed with ammonia or acids. Reserve it for real disinfection and open windows."
+    },
+    {
+      "name": "Dryer Sheets & Fabric Softener",
+      "category": "Home",
+      "context": "Scented laundry softeners and sheets",
+      "hazard": 4,
+      "exposure": 5,
+      "persistence": 3,
+      "evidence": 2,
+      "swap": "Wool dryer balls; skip softener",
+      "note": "Coat fabric — and skin — in fragrance and quaternary compounds, then vent scented VOCs outdoors. Wool dryer balls do the softening job cleanly.",
+      "studies": [
+        {
+          "doi": "10.1007/s11869-011-0156-1",
+          "input": "exposure",
+          "locator": "Abstract",
+          "claim": "More than 25 VOCs were emitted from dryer vents during use of fragranced laundry products, seven of them hazardous air pollutants and two carcinogenic (acetaldehyde, benzene).",
+          "accessed": "2026-10-02"
+        }
+      ]
+    },
+    {
+      "name": "Vinegar & Baking Soda Cleaning",
+      "category": "Home",
+      "context": "DIY cleaning basics: vinegar and baking soda",
+      "hazard": 1,
+      "exposure": 2,
+      "persistence": 1,
+      "evidence": 2,
+      "swap": "—",
+      "note": "Handles the majority of everyday cleaning with near-zero inhalation or residue burden. The low-cost, low-exposure baseline."
+    },
+    {
+      "name": "Home & Garden Pesticide Sprays",
+      "category": "Home",
+      "context": "DIY insecticides and weed killers",
+      "hazard": 6,
+      "exposure": 5,
+      "persistence": 5,
+      "evidence": 2,
+      "swap": "Physical controls; targeted, minimal use",
+      "note": "Consumer pesticides drift indoors and settle into dust. Prefer traps, barriers and spot-treatment over broadcast spraying."
+    },
+    {
+      "name": "Stain-Resistant Textiles (PFAS)",
+      "category": "Home",
+      "context": "'Stain-proof' carpets, sofas, jackets",
+      "hazard": 6,
+      "exposure": 4,
+      "persistence": 8,
+      "evidence": 3,
+      "swap": "Untreated fabrics; skip the stain-guard add-on",
+      "swapSlot": {
+        "label": null,
+        "url": null,
+        "rel": "sponsored"
+      },
+      "note": "Stain and water repellency usually means PFAS coatings that shed into dust and never break down. Decline the optional stain treatment.",
+      "studies": [
+        {
+          "doi": "10.1038/s41370-018-0109-y",
+          "pmid": "30622332",
+          "input": "exposure",
+          "locator": "Abstract",
+          "claim": "In 178 women, having stain-resistant carpet or furniture was associated with higher levels of some serum PFASs.",
+          "accessed": "2026-10-02"
+        },
+        {
+          "doi": "10.1038/s41370-018-0094-1",
+          "pmid": "30470793",
+          "input": "hazard",
+          "locator": "Abstract",
+          "claim": "Multiple studies link PFAS exposure to adverse immune outcomes in children, and dyslipidemia is the strongest metabolic outcome; cancer evidence is limited to manufacturing locations with extremely high exposures.",
+          "accessed": "2026-10-05"
+        },
+        {
+          "doi": "10.1136/oemed-2017-104651",
+          "pmid": "29133598",
+          "input": "persistence",
+          "locator": "Abstract, Results",
+          "claim": "After residents of Ronneby, Sweden, stopped drinking PFAS-contaminated water, their mean serum half-lives were estimated at 5.3 years for PFHxS, 3.4 years for PFOS and 2.7 years for PFOA.",
+          "accessed": "2026-10-05"
+        }
+      ]
+    },
+    {
+      "name": "Vinyl (PVC) Shower Curtain",
+      "category": "Home",
+      "context": "That 'new shower curtain' smell",
+      "hazard": 4,
+      "exposure": 4,
+      "persistence": 4,
+      "evidence": 2,
+      "swap": "Fabric (polyester/cotton) or EVA curtain",
+      "note": "The smell is phthalates off-gassing in a warm, humid room you breathe in daily. Fabric curtains wash and last without it."
+    },
+    {
+      "name": "Settled House Dust",
+      "category": "Home",
+      "context": "Accumulated dust on floors and surfaces",
+      "hazard": 4,
+      "exposure": 6,
+      "persistence": 5,
+      "evidence": 3,
+      "swap": "HEPA vacuum + damp dusting; doormats",
+      "note": "House dust concentrates flame retardants, PFAS and phthalates — a bigger everyday exposure route than most people realize. Regular HEPA vacuuming genuinely lowers it.",
+      "studies": [
+        {
+          "doi": "10.1021/acs.est.6b02023",
+          "pmid": "27623734",
+          "input": "exposure",
+          "locator": "Abstract",
+          "claim": "A meta-analysis of US indoor dust found phthalates, phenols, replacement flame retardants, fragrances and PFASs consistently present; several phthalates and flame retardants had the highest residential intakes.",
+          "accessed": "2026-10-02"
+        }
+      ]
+    },
+    {
+      "name": "Heating Food in Plastic",
+      "category": "Plastics",
+      "context": "Microwaving or storing hot food in plastic",
+      "hazard": 5,
+      "exposure": 7,
+      "persistence": 5,
+      "evidence": 3,
+      "swap": "Glass or ceramic for anything warm",
+      "note": "Heat dramatically increases how much plastic and its additives migrate into food. Never microwave in plastic; transfer hot food to glass."
+    },
+    {
+      "name": "Plastic Wrap on Hot Food",
+      "category": "Plastics",
+      "context": "Cling film touching warm, fatty food",
+      "hazard": 4,
+      "exposure": 5,
+      "persistence": 4,
+      "evidence": 2,
+      "swap": "Let food cool; use a plate or beeswax wrap",
+      "note": "Plasticizers migrate readily into hot, fatty foods. Cool food before covering, or use a lid instead of film."
+    },
+    {
+      "name": "Glass Food Storage",
+      "category": "Plastics",
+      "context": "Glass containers for leftovers and meal prep",
+      "hazard": 1,
+      "exposure": 1,
+      "persistence": 1,
+      "evidence": 3,
+      "swap": "—",
+      "note": "Inert, heat-safe and non-shedding. The single best swap to remove plastic-to-food migration from your kitchen."
+    },
+    {
+      "name": "Thermal Paper Receipts",
+      "category": "Plastics",
+      "context": "Handling glossy receipts, especially with lotion",
+      "hazard": 3,
+      "exposure": 4,
+      "persistence": 2,
+      "evidence": 2,
+      "swap": "Decline receipts; go digital; wash hands",
+      "note": "The coating is often BPA/BPS, absorbed through skin — more so with hand sanitizer or lotion on. Skip the paper receipt when you can.",
+      "studies": [
+        {
+          "doi": "10.1371/journal.pone.0110509",
+          "pmid": "25337790",
+          "input": "exposure",
+          "locator": "Abstract",
+          "claim": "Holding thermal receipt paper right after using a hand sanitizer transferred BPA to hands and food, raising unconjugated serum BPA to an average peak of about 7 ng/mL within 90 minutes.",
+          "accessed": "2026-10-02"
+        }
+      ]
+    },
+    {
+      "name": "Hot Greasy Takeout Containers",
+      "category": "Plastics",
+      "context": "Molded-fiber bowls and grease-proof wrappers",
+      "hazard": 5,
+      "exposure": 5,
+      "persistence": 7,
+      "evidence": 3,
+      "swap": "Transfer food out; cook at home more often",
+      "note": "Grease-resistant food packaging is a known PFAS source, and hot food speeds migration. Move takeout onto a plate promptly.",
+      "studies": [
+        {
+          "doi": "10.1021/acs.estlett.2c00926",
+          "pmid": "37970096",
+          "input": "exposure",
+          "locator": "Abstract",
+          "claim": "Of 42 Canadian fast-food packaging samples, molded “compostable” bowls had the highest total fluorine (1,010,000-1,300,000 µg F/m²); the high-fluorine samples each held 4-15 individual PFAS.",
+          "accessed": "2026-10-05"
+        },
+        {
+          "doi": "10.1080/02652030500183474",
+          "pmid": "16227186",
+          "input": "exposure",
+          "locator": "Abstract",
+          "claim": "US FDA migration tests found mg/kg amounts of perfluoro paper additives and coatings transferring to food oil.",
+          "accessed": "2026-10-05"
+        },
+        {
+          "doi": "10.1038/s41370-018-0094-1",
+          "pmid": "30470793",
+          "input": "hazard",
+          "locator": "Abstract",
+          "claim": "Multiple studies link PFAS exposure to adverse immune outcomes in children, and dyslipidemia is the strongest metabolic outcome; cancer evidence is limited to manufacturing locations with extremely high exposures.",
+          "accessed": "2026-10-05"
+        }
+      ],
+      "unsourced": [
+        {
+          "input": "persistence",
+          "searched": "2026-10-05",
+          "reason": "The PFAS measured here are mainly short-chain or fluorotelomer compounds; the human half-life studies found cover long-chain PFAS (PFOS, PFOA, PFHxS), so none is cited."
+        }
+      ]
+    },
+    {
+      "name": "Canned & Reused Plastic Bottles",
+      "category": "Plastics",
+      "context": "Refilling single-use bottles; canned drinks",
+      "hazard": 3,
+      "exposure": 5,
+      "persistence": 4,
+      "evidence": 2,
+      "swap": "A dedicated steel or glass reusable",
+      "note": "Single-use bottles aren't built for reuse — wear and heat increase leaching and bacterial growth. A proper reusable is cleaner and cheaper over time."
+    },
+    {
+      "name": "Roadside & Traffic Air",
+      "category": "Environment",
+      "context": "Living, running, or cycling next to heavy traffic",
+      "hazard": 6,
+      "exposure": 6,
+      "persistence": 2,
+      "evidence": 3,
+      "swap": "Exercise away from traffic; filter home air",
+      "note": "Traffic exhaust delivers PM2.5, benzene and ultrafine particles. Move workouts to parks and back streets, and filter indoor air near busy roads."
+    },
+    {
+      "name": "Regular Sauna Use",
+      "category": "Environment",
+      "context": "Consistent sauna or heat bathing",
+      "hazard": 1,
+      "exposure": 1,
+      "persistence": 1,
+      "evidence": 2,
+      "swap": "—",
+      "note": "Associated with cardiovascular benefits and supports the body's natural processes through heat adaptation and sweating. Hydrate well and listen to your body."
+    },
+    {
+      "name": "New-Car Interior Off-Gassing",
+      "category": "Environment",
+      "context": "That 'new car smell'",
+      "hazard": 3,
+      "exposure": 4,
+      "persistence": 3,
+      "evidence": 2,
+      "swap": "Ventilate; park in shade; air it out for weeks",
+      "note": "The smell is VOCs and flame retardants off-gassing from plastics and adhesives, worse in heat. Ventilate generously for the first months."
+    },
+    {
+      "name": "Dry-Cleaned Clothes (Perc)",
+      "category": "Environment",
+      "context": "Traditional perchloroethylene dry cleaning",
+      "hazard": 5,
+      "exposure": 4,
+      "persistence": 3,
+      "evidence": 2,
+      "swap": "Air out garments; choose 'green' cleaners",
+      "note": "Perc is a probable carcinogen that lingers in freshly cleaned fabric. Air garments outside the bag before wearing, or use wet/green cleaners.",
+      "studies": [
+        {
+          "doi": "10.1002/etc.665",
+          "pmid": "21898565",
+          "input": "persistence",
+          "locator": "Abstract",
+          "claim": "Polyester, cotton and wool retained micromolar levels of PCE that rose over successive dry-cleaning cycles and volatilised slowly in room air; silk retained little.",
+          "accessed": "2026-10-02"
+        }
+      ]
+    },
+    {
+      "name": "Untested Basement Radon",
+      "category": "Environment",
+      "context": "Lower-floor living space, never tested for radon",
+      "hazard": 8,
+      "exposure": 5,
+      "persistence": 2,
+      "evidence": 3,
+      "swap": "A cheap radon test kit, then mitigate if high",
+      "note": "Radon is the second-leading cause of lung cancer and is completely invisible. A one-time test is among the highest-value things on this whole list."
+    },
+    {
+      "name": "Regular Exercise & Sweat",
+      "category": "Environment",
+      "context": "Consistent physical activity",
+      "hazard": 1,
+      "exposure": 1,
+      "persistence": 1,
+      "evidence": 3,
+      "swap": "—",
+      "note": "Supports circulation, lymphatic flow and overall metabolic health — the foundation your body's own clearance systems run on. Not a 'detox' shortcut, but the real thing."
+    },
+    {
+      "name": "Microwave Popcorn Bags",
+      "category": "Kitchen",
+      "context": "The grease-proof lining of microwave popcorn bags",
+      "hazard": 5,
+      "exposure": 3,
+      "persistence": 8,
+      "evidence": 3,
+      "swap": "Air-pop plain kernels in a pot or a plain paper bag",
+      "note": "The non-stick lining has historically used PFAS 'forever chemicals' that can migrate into the oil and popcorn when heated. Loose kernels cost less and skip the coating entirely.",
+      "studies": [
+        {
+          "doi": "10.1021/es062377w",
+          "pmid": "17593716",
+          "input": "exposure",
+          "locator": "Abstract",
+          "claim": "5-34 ng of PFOA was found in the vapours produced from a prepacked microwave popcorn bag.",
+          "accessed": "2026-10-02"
+        },
+        {
+          "doi": "10.1289/EHP4092",
+          "pmid": "31596611",
+          "input": "exposure",
+          "locator": "Abstract, Results",
+          "claim": "In NHANES 2003-2014, eating popcorn was associated with significantly higher serum PFOA, PFNA, PFDA and PFOS.",
+          "accessed": "2026-10-02"
+        }
+      ]
+    },
+    {
+      "name": "Plastic Tea Bags",
+      "category": "Food",
+      "context": "Pyramid-style mesh tea bags steeped in boiling water",
+      "hazard": 3,
+      "exposure": 4,
+      "persistence": 4,
+      "evidence": 2,
+      "swap": "Loose-leaf tea with a stainless-steel infuser, or unbleached paper bags",
+      "note": "Nylon and PET mesh bags can shed microplastics into hot water. Loose leaf or paper bags avoid the plastic and often taste better.",
+      "studies": [
+        {
+          "doi": "10.1021/acs.est.9b02540",
+          "pmid": "31552738",
+          "input": "exposure",
+          "locator": "Abstract",
+          "claim": "Steeping one nylon or PET plastic teabag at 95 °C released about 11.6 billion microplastic and 3.1 billion nanoplastic particles into a single cup.",
+          "accessed": "2026-10-09"
+        }
+      ]
+    },
+    {
+      "name": "Dark Chocolate (Heavy Metals)",
+      "category": "Food",
+      "context": "Cocoa-heavy dark chocolate eaten regularly",
+      "hazard": 3,
+      "exposure": 3,
+      "persistence": 3,
+      "evidence": 3,
+      "swap": "Enjoy in moderation and favour brands that publish third-party heavy-metal testing",
+      "note": "Cocoa can carry trace cadmium and lead from soil and processing. Occasional squares are fine; the concern is large daily amounts, especially for children.",
+      "studies": [
+        {
+          "doi": "10.3389/fnut.2024.1366231",
+          "pmid": "39144282",
+          "input": "exposure",
+          "locator": "Abstract, Results and Discussion",
+          "claim": "Of 72 US cocoa products tested between 2014 and 2022, 43% exceeded California's Prop 65 daily maximum for lead and 35% for cadmium per serving; organic products were more likely to carry higher lead and cadmium.",
+          "accessed": "2026-10-09"
+        }
+      ]
+    },
+    {
+      "name": "Farmed Salmon",
+      "category": "Food",
+      "context": "Conventionally farmed Atlantic salmon",
+      "hazard": 2,
+      "exposure": 3,
+      "persistence": 4,
+      "evidence": 2,
+      "swap": "Wild-caught salmon, or smaller oily fish like sardines and mackerel",
+      "note": "Farmed fish can carry more of certain fat-soluble contaminants than wild. It is still a good protein source — variety and smaller species lower the load.",
+      "studies": [
+        {
+          "doi": "10.1126/science.1091447",
+          "pmid": "14716013",
+          "input": "exposure",
+          "locator": "Abstract",
+          "claim": "Analysing over 2 metric tons of farmed and wild salmon from around the world, organochlorine contaminant concentrations were significantly higher in farmed than in wild salmon, and highest in European-farmed fish.",
+          "accessed": "2026-10-09"
+        }
+      ]
+    },
+    {
+      "name": "Mothballs (Naphthalene)",
+      "category": "Home",
+      "context": "Naphthalene or paradichlorobenzene mothballs in closets",
+      "hazard": 6,
+      "exposure": 2,
+      "persistence": 3,
+      "evidence": 3,
+      "swap": "Cedar blocks, lavender sachets, or sealed garment bags",
+      "note": "Mothballs slowly sublimate into a gas you breathe in enclosed spaces. Physical barriers and natural deterrents protect clothes without the fumes."
+    },
+    {
+      "name": "Vinyl (PVC) Flooring",
+      "category": "Home",
+      "context": "Flexible vinyl plank or sheet flooring",
+      "hazard": 4,
+      "exposure": 4,
+      "persistence": 7,
+      "evidence": 2,
+      "swap": "Sealed hardwood, tile, or verified phthalate-free flooring",
+      "note": "Soft PVC flooring can off-gas phthalate plasticisers, especially when new and warm. Hard, inert surfaces avoid the issue.",
+      "studies": [
+        {
+          "doi": "10.1111/j.1600-0668.2012.00788.x",
+          "pmid": "22563949",
+          "input": "exposure",
+          "locator": "Abstract, Results",
+          "claim": "Infants with PVC flooring in the bedroom had significantly higher urinary levels of MBzP, a metabolite of the phthalate BBzP (83 urine samples).",
+          "accessed": "2026-10-02"
+        }
+      ]
+    },
+    {
+      "name": "Antibacterial Soap (Triclosan)",
+      "category": "Personal Care",
+      "context": "Hand and body washes marketed as antibacterial",
+      "hazard": 3,
+      "exposure": 3,
+      "persistence": 5,
+      "evidence": 3,
+      "swap": "Plain soap and water — equally effective for everyday handwashing",
+      "note": "Triclosan is a persistent antimicrobial with no proven benefit over plain soap for home use, and it ends up in waterways. Regulators have already pulled it from many products."
+    },
+    {
+      "name": "Talc-Based Body Powder",
+      "category": "Personal Care",
+      "context": "Loose talcum powder used on skin",
+      "hazard": 4,
+      "exposure": 2,
+      "persistence": 3,
+      "evidence": 2,
+      "swap": "Cornstarch-based powder",
+      "note": "The concern is possible asbestos contamination in mined talc and inhalation of fine particles. Cornstarch powders sidestep both."
+    },
+    {
+      "name": "Permanent Hair Dye",
+      "category": "Personal Care",
+      "context": "Oxidative permanent hair colour applied at home or salon",
+      "hazard": 3,
+      "exposure": 2,
+      "persistence": 2,
+      "evidence": 2,
+      "swap": "Henna, semi-permanent dyes, or less frequent application in a ventilated space",
+      "note": "Permanent dyes contain aromatic amines absorbed through the scalp. Spacing out applications and good ventilation reduce the dose."
+    },
+    {
+      "name": "Old Lead Paint",
+      "category": "Home",
+      "context": "Deteriorating paint in homes built before the late 1970s",
+      "hazard": 9,
+      "exposure": 3,
+      "persistence": 8,
+      "evidence": 3,
+      "swap": "Professional lead-safe remediation — never dry-sand it yourself",
+      "swapSlot": {
+        "label": null,
+        "url": null,
+        "rel": "sponsored"
+      },
+      "note": "Lead paint dust is one of the most serious avoidable household exposures, especially for young children. Disturbing it wrong makes it far worse; use certified remediation."
+    },
+    {
+      "name": "Plastic Children's Toys",
+      "category": "Plastics",
+      "context": "Soft plastic toys, especially older or imported ones",
+      "hazard": 3,
+      "exposure": 3,
+      "persistence": 6,
+      "evidence": 3,
+      "swap": "Wood, silicone, or certified phthalate-free toys",
+      "note": "Soft plastics can contain phthalates that children mouth and handle. Modern certified toys limit these; the risk is mostly older or unregulated imports."
+    },
+    {
+      "name": "Chlorinated Shower Water",
+      "category": "Water",
+      "context": "Hot showers in chlorinated municipal water",
+      "hazard": 2,
+      "exposure": 4,
+      "persistence": 2,
+      "evidence": 2,
+      "swap": "Shorter showers",
+      "note": "Hot showers release chloroform and other disinfection by-products into the air you breathe, and some are absorbed through the skin. In a volunteer study, one of them, bromodichloromethane, fell to near undetectable blood levels within a day of skin exposure.",
+      "studies": [
+        {
+          "doi": "10.1289/EHP89",
+          "pmid": "28636529",
+          "input": "hazard",
+          "locator": "Abstract, Results; Conclusions",
+          "claim": "In a New England case-control study, the highest showering/bathing category for brominated trihalomethanes gave a bladder-cancer odds ratio of 1.43 (95% CI 0.80–2.42); the authors concluded a modest association for ingestion.",
+          "accessed": "2026-10-02"
+        },
+        {
+          "doi": "10.1038/jes.2012.80",
+          "pmid": "22829048",
+          "input": "exposure",
+          "locator": "Abstract",
+          "claim": "In 100 volunteers taking controlled 10-minute showers, geometric mean total trihalomethanes in air rose from 5.8 to 351 μg/m3, and in blood from 16.5 to 299 ng/L.",
+          "accessed": "2026-10-02"
+        },
+        {
+          "doi": "10.1038/sj.jea.7500374",
+          "pmid": "15138448",
+          "input": "exposure",
+          "locator": "Abstract",
+          "claim": "In a controlled study of six people, 56% of chloroform was released from shower water to air, and inhalation during a typical 10–15 minute shower contributed significantly to total chloroform dose.",
+          "accessed": "2026-10-02"
+        },
+        {
+          "doi": "10.1093/toxsci/kfm190",
+          "pmid": "17656487",
+          "input": "persistence",
+          "locator": "Abstract",
+          "claim": "After a 1-hour forearm soak in water containing bromodichloromethane, blood levels fell to near or below detection by 24 hours; after drinking, levels returned near or below detection within 4 hours.",
+          "accessed": "2026-10-02"
+        }
+      ]
+    },
+    {
+      "name": "Black Plastic Kitchen Utensils",
+      "category": "Kitchen",
+      "context": "Black nylon/plastic spatulas and serving spoons",
+      "hazard": 5,
+      "exposure": 4,
+      "persistence": 5,
+      "evidence": 2,
+      "swap": "Stainless steel or solid wood utensils",
+      "note": "Some black plastic kitchenware is made from recycled electronic plastic and can carry brominated flame retardants that migrate into hot food. Metal or wood avoids the issue."
+    },
+    {
+      "name": "Nonstick Air Fryer Basket",
+      "category": "Kitchen",
+      "context": "PTFE-coated air fryer baskets and trays",
+      "hazard": 4,
+      "exposure": 5,
+      "persistence": 6,
+      "evidence": 2,
+      "swap": "A stainless-steel or ceramic-coated basket",
+      "note": "High-heat cooking on scratched PTFE coatings can release fumes and shed particles. Uncoated stainless or a ceramic liner sidesteps the fluorinated coating."
+    },
+    {
+      "name": "Melamine Dishware",
+      "category": "Kitchen",
+      "context": "Melamine plates and bowls used with hot food",
+      "hazard": 3,
+      "exposure": 4,
+      "persistence": 3,
+      "evidence": 2,
+      "swap": "Glass, ceramic or stainless dishware",
+      "note": "Melamine can migrate from the dish into hot, acidic or microwaved food. It is fine for cold use, but keep it away from heat, or switch to glass."
+    },
+    {
+      "name": "Silicone Bakeware",
+      "category": "Kitchen",
+      "context": "Food-grade silicone moulds and mats",
+      "hazard": 2,
+      "exposure": 3,
+      "persistence": 2,
+      "evidence": 1,
+      "swap": "—",
+      "note": "Good-quality food-grade silicone is stable and low-migration at normal baking temperatures. Choose platinum-cured silicone and avoid cheap fillers for the cleanest option."
+    },
+    {
+      "name": "Conventional Apples",
+      "category": "Food",
+      "context": "Non-organic apples eaten with skin",
+      "hazard": 4,
+      "exposure": 5,
+      "persistence": 3,
+      "evidence": 2,
+      "swap": "Organic apples, or wash and peel",
+      "note": "Apples rank high on pesticide-residue testing because residues concentrate in the skin. Washing helps, peeling helps more, and organic avoids most of it.",
+      "studies": [
+        {
+          "doi": "10.1080/19440049.2012.690347",
+          "pmid": "22738391",
+          "input": "exposure",
+          "locator": "Abstract",
+          "claim": "Residues of five pesticides were higher in apple peel and core than in the flesh; washing removed 6.7-67% depending on the compound, and peeling and coring significantly reduced residues in the edible part for all but beta-cypermethrin.",
+          "accessed": "2026-10-09"
+        }
+      ]
+    },
+    {
+      "name": "Conventional Grapes",
+      "category": "Food",
+      "context": "Non-organic table grapes",
+      "hazard": 4,
+      "exposure": 5,
+      "persistence": 3,
+      "evidence": 2,
+      "swap": "Organic grapes, or a thorough rinse",
+      "note": "Grapes routinely show multiple pesticide residues on residue-monitoring lists. A good rinse cuts surface residue; organic avoids most of it.",
+      "studies": [
+        {
+          "doi": "10.1021/acs.jafc.7b05707",
+          "pmid": "29364655",
+          "input": "exposure",
+          "locator": "Abstract",
+          "claim": "Of 280 table-grape samples bought in Turkey in 2016, 59.6% carried one or more pesticide residues and 20.4% exceeded EU maximum residue levels; the worst-case hazard index was 3.37% for adults and 9.42% for children.",
+          "accessed": "2026-10-09"
+        }
+      ]
+    },
+    {
+      "name": "Deli Meats",
+      "category": "Food",
+      "context": "Processed sliced ham, salami and cured meats",
+      "hazard": 4,
+      "exposure": 4,
+      "persistence": 2,
+      "evidence": 3,
+      "swap": "Fresh-roasted meat you slice yourself",
+      "note": "Processed meats are classified as a group 1 carcinogen, driven partly by nitrite-formed nitrosamines. Occasional use is one thing; daily deli sandwiches add up.",
+      "studies": [
+        {
+          "doi": "10.1038/s41430-020-0576-9",
+          "pmid": "32029911",
+          "input": "hazard",
+          "locator": "Abstract",
+          "claim": "Pooling 29 prospective cohort studies, high versus low processed-meat intake gave a relative risk of 1.13 for colorectal cancer and 1.19 for colon cancer; the authors judge most included studies at serious risk of bias and urge cautious interpretation.",
+          "accessed": "2026-10-09"
+        }
+      ]
+    },
+    {
+      "name": "Canned Tuna",
+      "category": "Food",
+      "context": "Albacore/white canned tuna eaten frequently",
+      "hazard": 5,
+      "exposure": 4,
+      "persistence": 6,
+      "evidence": 3,
+      "swap": "Light skipjack tuna or small oily fish like sardines",
+      "note": "Larger tuna accumulate methylmercury, which builds up in the body. Choosing smaller 'light' tuna or sardines keeps the omega-3s with far less mercury.",
+      "studies": [
+        {
+          "doi": "10.1016/j.envres.2003.12.001",
+          "pmid": "15364590",
+          "input": "exposure",
+          "locator": "Abstract",
+          "claim": "In 168 cans bought in New Jersey from 1998 to 2003, white (albacore) tuna averaged 0.407 ppm mercury against 0.118 ppm for light tuna, and 25% of white tuna cans exceeded 0.5 ppm.",
+          "accessed": "2026-10-09"
+        },
+        {
+          "doi": "10.1016/s0892-0362(97)00097-4",
+          "pmid": "9392777",
+          "input": "hazard",
+          "locator": "Abstract",
+          "claim": "In a Faroe Islands birth cohort of 1,022 children, prenatal methylmercury exposure from the mother's diet was linked at age 7 to poorer language, attention and memory, still seen after excluding children whose mothers had hair mercury above 10 µg/g.",
+          "accessed": "2026-10-09"
+        },
+        {
+          "doi": "10.2131/jts.37.123",
+          "pmid": "22293416",
+          "input": "persistence",
+          "locator": "Abstract",
+          "claim": "In 27 volunteers who ate fish at the tolerable weekly methylmercury intake for 14 weeks, blood mercury rose from 6.7 to 26.9 ng/g, and its half-life after they stopped was 94 days (57 days after subtracting background).",
+          "accessed": "2026-10-09"
+        }
+      ]
+    },
+    {
+      "name": "Protein Powder",
+      "category": "Food",
+      "context": "Daily protein-powder shakes",
+      "hazard": 4,
+      "exposure": 4,
+      "persistence": 5,
+      "evidence": 2,
+      "swap": "A third-party heavy-metal-tested powder, or whole-food protein",
+      "note": "Independent testing has found lead, cadmium and arsenic in some protein powders, especially plant and chocolate varieties. Look for published heavy-metal testing."
+    },
+    {
+      "name": "Conventional Makeup (PFAS)",
+      "category": "Personal Care",
+      "context": "Long-wear foundation, mascara and lipstick",
+      "hazard": 4,
+      "exposure": 4,
+      "persistence": 7,
+      "evidence": 2,
+      "swap": "Cosmetics labelled PFAS-free",
+      "note": "Studies have detected PFAS 'forever chemicals' in many long-wear and waterproof cosmetics, applied daily right on the skin. PFAS-free lines avoid them.",
+      "studies": [
+        {
+          "doi": "10.1021/acs.estlett.1c00240",
+          "input": "exposure",
+          "locator": "Abstract",
+          "claim": "Of 231 US and Canadian cosmetics screened, foundations, mascaras and lip products most often had elevated fluorine; 29 analysed products held PFAS at 22-10,500 ng/g, mostly undisclosed on the label.",
+          "accessed": "2026-10-02"
+        },
+        {
+          "doi": "10.1038/s41370-018-0094-1",
+          "pmid": "30470793",
+          "input": "hazard",
+          "locator": "Abstract",
+          "claim": "Multiple studies link PFAS exposure to adverse immune outcomes in children, and dyslipidemia is the strongest metabolic outcome; cancer evidence is limited to manufacturing locations with extremely high exposures.",
+          "accessed": "2026-10-05"
+        }
+      ],
+      "unsourced": [
+        {
+          "input": "persistence",
+          "searched": "2026-10-05",
+          "reason": "The PFAS measured here are mainly short-chain or fluorotelomer compounds; the human half-life studies found cover long-chain PFAS (PFOS, PFOA, PFHxS), so none is cited."
+        }
+      ]
+    },
+    {
+      "name": "Scented Body Wash",
+      "category": "Personal Care",
+      "context": "Fragranced shower gels and washes",
+      "hazard": 3,
+      "exposure": 5,
+      "persistence": 2,
+      "evidence": 2,
+      "swap": "A fragrance-free or essential-oil-only wash",
+      "note": "'Fragrance' can hide phthalates used to make scent last. You rinse it off, but daily whole-body use adds up — fragrance-free removes the guesswork."
+    },
+    {
+      "name": "Chemical Hair Relaxers",
+      "category": "Personal Care",
+      "context": "Chemical straightening and relaxer treatments",
+      "hazard": 5,
+      "exposure": 3,
+      "persistence": 3,
+      "evidence": 3,
+      "swap": "Skip chemical straightening; heat-style sparingly",
+      "note": "Large studies link frequent chemical hair-straightener use to hormone-related health risks, and some release formaldehyde. Reducing frequency lowers the exposure."
+    },
+    {
+      "name": "Conventional Body Lotion",
+      "category": "Personal Care",
+      "context": "Fragranced lotions with parabens",
+      "hazard": 3,
+      "exposure": 5,
+      "persistence": 2,
+      "evidence": 2,
+      "swap": "A fragrance-free, paraben-free lotion",
+      "note": "Applied over a large skin area daily, paraben-and-fragrance lotions are a steady low-level exposure. Simple fragrance-free formulas do the same job."
+    },
+    {
+      "name": "PFAS-Coated Dental Floss",
+      "category": "Personal Care",
+      "context": "Slick PTFE/PFAS-coated 'glide' floss",
+      "hazard": 3,
+      "exposure": 3,
+      "persistence": 7,
+      "evidence": 2,
+      "swap": "Uncoated or natural-wax floss",
+      "note": "Some smooth 'glide' flosses are PTFE-based, and research has associated their use with higher PFAS levels. Plain waxed floss works just as well.",
+      "studies": [
+        {
+          "doi": "10.1038/s41370-018-0109-y",
+          "pmid": "30622332",
+          "input": "exposure",
+          "locator": "Abstract",
+          "claim": "In 178 women, flossing with Oral-B Glide was associated with higher levels of some serum PFASs; Glide and competitor flosses tested positive for fluorine.",
+          "accessed": "2026-10-02"
+        }
+      ]
+    },
+    {
+      "name": "Flame-Retardant Furniture Foam",
+      "category": "Home",
+      "context": "Older upholstered sofas and chairs with FR foam",
+      "hazard": 5,
+      "exposure": 5,
+      "persistence": 6,
+      "evidence": 3,
+      "swap": "Furniture labelled free of added flame retardants (TB117-2013)",
+      "note": "Older upholstered foam often contains persistent flame retardants that migrate into house dust. Newer 'no added flame retardants' labelling avoids them."
+    },
+    {
+      "name": "Conventional Mattress",
+      "category": "Home",
+      "context": "New synthetic mattress off-gassing",
+      "hazard": 4,
+      "exposure": 5,
+      "persistence": 4,
+      "evidence": 2,
+      "swap": "A CertiPUR-US or GOTS/GOLS-certified mattress; air out new ones",
+      "note": "You spend a third of your life in contact with it, and new synthetic mattresses can off-gas VOCs and carry flame retardants. Certified low-emission foam or natural latex reduces both."
+    },
+    {
+      "name": "New Carpet",
+      "category": "Home",
+      "context": "Freshly installed wall-to-wall carpet",
+      "hazard": 4,
+      "exposure": 4,
+      "persistence": 6,
+      "evidence": 2,
+      "swap": "Low-VOC hard flooring or untreated wool rugs",
+      "note": "New carpet can off-gas VOCs and often carries PFAS-based stain treatment that ends up in house dust. Hard flooring or untreated natural fibres avoids the stain chemistry.",
+      "studies": [
+        {
+          "doi": "10.1016/j.envres.2021.110758",
+          "pmid": "33549621",
+          "input": "exposure",
+          "locator": "Abstract, Results",
+          "claim": "In NHANES 2005-2006, people in homes with low pile carpet had significantly higher serum PFHxS and MeFOSAA than those with smooth floors; about 24% and 19% of those body burdens were attributed to carpeting. The study did not separate new from old carpet.",
+          "accessed": "2026-10-02"
+        }
+      ]
+    },
+    {
+      "name": "Antibacterial Wipes",
+      "category": "Home",
+      "context": "Quat-based disinfecting wipes used daily",
+      "hazard": 3,
+      "exposure": 4,
+      "persistence": 3,
+      "evidence": 2,
+      "swap": "Plain soap and water, or plant-based cleaners",
+      "note": "Quaternary ammonium 'quat' disinfectants are respiratory irritants and are overkill for everyday surfaces. Soap and water handles most home cleaning."
+    },
+    {
+      "name": "Pressed-Wood Furniture",
+      "category": "Home",
+      "context": "Particleboard and MDF furniture off-gassing",
+      "hazard": 4,
+      "exposure": 4,
+      "persistence": 3,
+      "evidence": 3,
+      "swap": "Solid wood or CARB2 / formaldehyde-free rated pieces",
+      "note": "Particleboard and MDF glues can off-gas formaldehyde, a known irritant and carcinogen, for months. Solid wood or low-emission certified board reduces it."
+    },
+    {
+      "name": "Polyester Clothing",
+      "category": "Plastics",
+      "context": "Synthetic fabrics that shed microfibres",
+      "hazard": 3,
+      "exposure": 5,
+      "persistence": 6,
+      "evidence": 2,
+      "swap": "Natural fibres — cotton, wool, linen; a microfibre laundry bag",
+      "note": "Synthetic clothing sheds plastic microfibres in the wash and through wear, adding to microplastic exposure. Natural fibres and a filter bag cut the shedding.",
+      "studies": [
+        {
+          "doi": "10.1038/s41598-019-43023-x",
+          "pmid": "31036862",
+          "input": "exposure",
+          "locator": "Abstract, Results",
+          "claim": "Real-scale household washes released 124-308 mg of microfibres per kg of synthetic garments, i.e. 640,000 to 1,500,000 microfibres.",
+          "accessed": "2026-10-02"
+        }
+      ]
+    },
+    {
+      "name": "Disposable Coffee Cups",
+      "category": "Plastics",
+      "context": "Plastic-lined paper cups for hot drinks",
+      "hazard": 3,
+      "exposure": 4,
+      "persistence": 5,
+      "evidence": 2,
+      "swap": "A reusable ceramic or stainless cup",
+      "note": "The thin plastic lining that makes paper cups waterproof can shed microplastic particles into hot liquid. A reusable cup avoids the daily dose."
+    },
+    {
+      "name": "Vinyl (PVC) Yoga Mat",
+      "category": "Plastics",
+      "context": "Soft PVC exercise and yoga mats",
+      "hazard": 3,
+      "exposure": 3,
+      "persistence": 5,
+      "evidence": 2,
+      "swap": "A TPE, cork or natural-rubber mat",
+      "note": "Flexible PVC mats can contain phthalate plasticisers and give off that 'new plastic' smell. TPE, cork or rubber mats skip the PVC chemistry."
+    },
+    {
+      "name": "Old Lead Plumbing",
+      "category": "Water",
+      "context": "Lead service lines or old solder in home plumbing",
+      "hazard": 6,
+      "exposure": 5,
+      "persistence": 5,
+      "evidence": 3,
+      "swap": "Test the water, use a filter certified to NSF/ANSI 53 for lead, and replace the lead line",
+      "note": "Lead pipes and solder can leach lead into tap water, and harm has been measured even at low blood-lead levels. Have the water tested, and use a filter certified to NSF/ANSI 53 for lead until the line is replaced.",
+      "studies": [
+        {
+          "doi": "10.1016/S2468-2667(18)30025-2",
+          "pmid": "29544878",
+          "input": "hazard",
+          "locator": "Abstract, Findings",
+          "claim": "In 14,289 US adults followed for a median 19.3 years, a rise in blood lead from 1.0 to 6.7 μg/dL was associated with all-cause mortality (hazard ratio 1.37) and cardiovascular mortality (1.70).",
+          "accessed": "2026-10-02"
+        },
+        {
+          "doi": "10.1289/ehp.7688",
+          "pmid": "16002379",
+          "input": "hazard",
+          "locator": "Abstract",
+          "claim": "Pooling 1,333 children from seven cohorts, a rise in blood lead from 2.4 to 10 μg/dL was associated with a 3.9-point IQ decrement (95% CI 2.4–5.3).",
+          "accessed": "2026-10-02"
+        },
+        {
+          "doi": "10.1016/j.envres.2010.10.003",
+          "pmid": "21112052",
+          "input": "exposure",
+          "locator": "Abstract, Results",
+          "claim": "Among 63,854 Washington DC children, lead service lines were an independent risk factor for blood lead of 10 and 5 μg/dL or more, even when the water met the EPA 15 ppb action level.",
+          "accessed": "2026-10-02"
+        },
+        {
+          "doi": "10.1021/acs.est.5c06429",
+          "pmid": "41118322",
+          "input": "exposure",
+          "locator": "Abstract",
+          "claim": "Across census tracts served by the Cincinnati and Grand Rapids water systems, lead service line prevalence correlated strongly with children’s elevated blood lead (5 μg/dL or more): r = 0.71 and r = 0.83.",
+          "accessed": "2026-10-02"
+        },
+        {
+          "doi": "10.1289/ehp.919133",
+          "pmid": "2040248",
+          "input": "persistence",
+          "locator": "Abstract",
+          "claim": "After occupational exposure, blood lead declines slowly, with a 5- to 19-year half-life reflecting lead’s long stay in the skeleton; repeated bone measurements show slow elimination of lead from bone.",
+          "accessed": "2026-10-02"
+        }
+      ]
+    },
+    {
+      "name": "Chlorinated Pool Water",
+      "category": "Environment",
+      "context": "Frequent indoor chlorinated-pool swimming",
+      "hazard": 3,
+      "exposure": 4,
+      "persistence": 2,
+      "evidence": 2,
+      "swap": "Rinse before and after; well-ventilated or saltwater pools",
+      "note": "Chlorine reacts with sweat and skin oils to form disinfection by-products you absorb and inhale, worst in poorly ventilated indoor pools. Showering first and good ventilation help."
+    },
+    {
+      "name": "Wildfire Smoke",
+      "category": "Environment",
+      "context": "Fine-particle smoke during wildfire season",
+      "hazard": 5,
+      "exposure": 4,
+      "persistence": 2,
+      "evidence": 3,
+      "swap": "HEPA air purifier indoors; a fitted N95 outdoors",
+      "note": "Wildfire smoke is loaded with fine PM2.5 that reaches deep into the lungs. On smoky days, a HEPA purifier indoors and a fitted N95 outdoors cut what you breathe in."
+    },
+    {
+      "name": "Aluminum Foil (Cooking)",
+      "category": "Kitchen",
+      "context": "Wrapping or cooking hot, acidic food in foil",
+      "hazard": 3,
+      "exposure": 5,
+      "persistence": 3,
+      "evidence": 2,
+      "swap": "Parchment paper, or cook in a glass or ceramic dish",
+      "note": "Small amounts of aluminum migrate into food, more so with heat and acidic ingredients like tomato or lemon. Everyday amounts are generally considered low-risk, but you can avoid the transfer entirely with an inert surface."
+    },
+    {
+      "name": "Plastic Coffee Pods (K-Cups)",
+      "category": "Kitchen",
+      "context": "Single-serve plastic pods brewed with near-boiling water",
+      "hazard": 4,
+      "exposure": 5,
+      "persistence": 6,
+      "evidence": 2,
+      "swap": "A reusable stainless-steel pod, or a French press or moka pot",
+      "note": "Forcing hot water through a thin plastic pod can release microplastics and, from some plastics, trace additives. A steel filter avoids the disposable plastic entirely."
+    },
+    {
+      "name": "Fabric Protector Spray (PFAS)",
+      "category": "Home",
+      "context": "Aftermarket stain-repellent sprays for furniture, shoes and carpet",
+      "hazard": 7,
+      "exposure": 3,
+      "persistence": 8,
+      "evidence": 3,
+      "swap": "Skip the spray; choose untreated natural-fibre textiles and blot spills promptly",
+      "swapSlot": {
+        "label": null,
+        "url": null,
+        "rel": "sponsored"
+      },
+      "note": "Many stain and water repellents rely on PFAS, the persistent fluorinated compounds that build up in the body and environment. Aerosol application also means you inhale the mist.",
+      "studies": [
+        {
+          "doi": "10.1080/15459620490490084",
+          "pmid": "15559330",
+          "input": "exposure",
+          "locator": "Abstract, Results and conclusion",
+          "claim": "Spraying a fluorinated-polymer stain-repellent resin gave significant near-field exposure to overspray mist; the authors relate the sprayers' acute respiratory illness to the fluorinated polymer itself.",
+          "accessed": "2026-10-02"
+        }
+      ]
+    },
+    {
+      "name": "Glyphosate Weed Killer",
+      "category": "Environment",
+      "context": "Home garden and lawn herbicide use",
+      "hazard": 6,
+      "exposure": 3,
+      "persistence": 3,
+      "evidence": 2,
+      "swap": "Manual weeding, mulching, or a vinegar-based spot herbicide",
+      "note": "Glyphosate residues are widely detected and its hazard classification is debated by regulators. For home use, non-chemical weed control removes the exposure and the drift onto edible plants."
+    },
+    {
+      "name": "DEET Insect Repellent",
+      "category": "Personal Care",
+      "context": "Skin-applied mosquito and tick repellent",
+      "hazard": 3,
+      "exposure": 3,
+      "persistence": 2,
+      "evidence": 2,
+      "swap": "Apply to clothing rather than skin, or use a picaridin repellent",
+      "note": "DEET is registered and effective at preventing insect-borne disease, and that protection often outweighs the exposure. To reduce contact, use the lowest effective concentration and wash it off once indoors."
+    },
+    {
+      "name": "Conventional Kale",
+      "category": "Food",
+      "context": "Non-organic kale, a frequent pesticide-residue crop",
+      "hazard": 4,
+      "exposure": 4,
+      "persistence": 2,
+      "evidence": 2,
+      "swap": "Organic kale, or wash and soak thoroughly before eating",
+      "note": "Leafy greens like kale regularly appear high on pesticide-residue rankings. The vegetable itself is nutritious — the exposure is the residue, which washing and organic sourcing reduce."
+    },
+    {
+      "name": "Conventional Peaches",
+      "category": "Food",
+      "context": "Non-organic peaches and nectarines",
+      "hazard": 4,
+      "exposure": 4,
+      "persistence": 2,
+      "evidence": 2,
+      "swap": "Organic peaches, or peel and wash conventional ones",
+      "note": "Soft-skinned stone fruit tends to carry more surface pesticide residue. Choosing organic or peeling reduces the residue you consume without giving up the fruit."
+    },
+    {
+      "name": "Microwave Frozen Meals (Plastic Tray)",
+      "category": "Plastics",
+      "context": "Heating a ready meal in its plastic tray or film",
+      "hazard": 4,
+      "exposure": 5,
+      "persistence": 5,
+      "evidence": 3,
+      "swap": "Transfer the food to a glass or ceramic dish before microwaving",
+      "note": "Microwaving in plastic is one of the biggest drivers of chemical and microplastic migration into food, because heat accelerates the transfer. Moving the food to glass first avoids it."
+    },
+    {
+      "name": "Fast-Food Wrappers (PFAS)",
+      "category": "Food",
+      "context": "Grease-resistant wrappers, bags and boxes for hot food",
+      "hazard": 6,
+      "exposure": 4,
+      "persistence": 8,
+      "evidence": 3,
+      "swap": "Unwrap greasy food promptly, or cook the same meals at home",
+      "swapSlot": {
+        "label": null,
+        "url": null,
+        "rel": "sponsored"
+      },
+      "note": "Grease-proof food packaging has often been treated with PFAS, which can migrate into hot, oily food. Getting the food out of the wrapper quickly limits the contact time.",
+      "studies": [
+        {
+          "doi": "10.1021/acs.estlett.6b00435",
+          "pmid": "30148183",
+          "input": "exposure",
+          "locator": "Abstract",
+          "claim": "Of about 400 US fast-food packaging samples, 46% of food-contact papers and 20% of paperboard samples had detectable fluorine.",
+          "accessed": "2026-10-02"
+        }
+      ]
+    },
+    {
+      "name": "Turmeric Supplements (Lead)",
+      "category": "Food",
+      "context": "Bulk or imported turmeric powder and capsules",
+      "hazard": 6,
+      "exposure": 2,
+      "persistence": 5,
+      "evidence": 2,
+      "swap": "Buy turmeric from brands that publish heavy-metal testing",
+      "note": "Some turmeric has been adulterated with lead-based colourant to brighten it, a documented source of lead exposure. Third-party-tested brands avoid the problem.",
+      "studies": [
+        {
+          "doi": "10.1016/j.envres.2019.108722",
+          "pmid": "31550596",
+          "input": "exposure",
+          "locator": "Abstract",
+          "claim": "Across Bangladesh's turmeric supply chain, lead chromate pigment adulteration was found in 7 of the 9 major producing districts, with turmeric powder reaching 1,152 µg/g lead.",
+          "accessed": "2026-10-09"
+        }
+      ]
+    },
+    {
+      "name": "Ground Cinnamon (Lead)",
+      "category": "Food",
+      "context": "Some imported ground cinnamon and cinnamon products",
+      "hazard": 5,
+      "exposure": 3,
+      "persistence": 4,
+      "evidence": 2,
+      "swap": "Use Ceylon cinnamon from tested, reputable brands",
+      "note": "Recent recalls found elevated lead in certain cinnamon and cinnamon-flavoured products. The spice in normal amounts is fine — the concern is contamination in specific low-quality supply chains.",
+      "studies": [
+        {
+          "doi": "10.15585/mmwr.mm7414a2",
+          "pmid": "40273027",
+          "input": "exposure",
+          "locator": "Abstract",
+          "claim": "After FDA traced lead and chromium to the cinnamon in recalled applesauce pouches, 566 US cases with blood lead of at least 3.5 µg/dL were reported between November 2023 and April 2024, 55% in children under 2.",
+          "accessed": "2026-10-09"
+        }
+      ]
+    },
+    {
+      "name": "Aerosol Dry Shampoo (Benzene)",
+      "category": "Personal Care",
+      "context": "Spray-can dry shampoo used near the scalp",
+      "hazard": 6,
+      "exposure": 4,
+      "persistence": 3,
+      "evidence": 2,
+      "swap": "A non-aerosol powder dry shampoo, or simply washing your hair",
+      "note": "Testing has found benzene, a known carcinogen, contaminating some aerosol dry shampoos from the propellant. Powder formats avoid both the contaminant and the inhaled mist."
+    },
+    {
+      "name": "Aerosol Sunscreen Spray (Benzene)",
+      "category": "Personal Care",
+      "context": "Spray sunscreens found to contain benzene contamination",
+      "hazard": 5,
+      "exposure": 4,
+      "persistence": 3,
+      "evidence": 2,
+      "swap": "A mineral (zinc oxide) lotion sunscreen",
+      "note": "Several spray sunscreens were recalled after benzene was detected. Sun protection still matters — a lotion, especially a mineral one, gives the protection without the propellant and contamination risk."
+    },
+    {
+      "name": "Conventional Tampons",
+      "category": "Personal Care",
+      "context": "Scented or conventional cotton/rayon menstrual products",
+      "hazard": 4,
+      "exposure": 5,
+      "persistence": 3,
+      "evidence": 2,
+      "swap": "Unscented organic-cotton products, or a medical-grade silicone cup",
+      "note": "Menstrual products contact absorptive tissue, and studies have detected fragrance chemicals and trace metals in some. Unscented, tested materials reduce that contact exposure."
+    },
+    {
+      "name": "Baby Food Pouches (Heavy Metals)",
+      "category": "Food",
+      "context": "Commercial infant purees, especially rice-based ones",
+      "hazard": 6,
+      "exposure": 4,
+      "persistence": 4,
+      "evidence": 3,
+      "swap": "Vary grains away from rice and serve fresh homemade purees",
+      "note": "Investigations have found arsenic, lead and cadmium in some commercial baby foods, with rice-based products highest. Varying ingredients and making purees at home lowers the cumulative intake.",
+      "studies": [
+        {
+          "doi": "10.1016/j.scitotenv.2018.09.026",
+          "pmid": "30253364",
+          "input": "exposure",
+          "locator": "Abstract",
+          "claim": "Among 564 US baby foods, including pouches, lead was detected in 37% and cadmium in 57%; products containing rice were higher in both, and organic certification made no difference.",
+          "accessed": "2026-10-09"
+        }
+      ]
+    },
+    {
+      "name": "Laundry Detergent (1,4-Dioxane)",
+      "category": "Home",
+      "context": "Conventional and heavily fragranced laundry detergents",
+      "hazard": 4,
+      "exposure": 5,
+      "persistence": 3,
+      "evidence": 2,
+      "swap": "A fragrance-free detergent screened for 1,4-dioxane",
+      "note": "Some detergents contain 1,4-dioxane, a manufacturing by-product, plus fragrance allergens that linger on clothes against the skin. Certified fragrance-free products reduce both."
+    },
+    {
+      "name": "Artificial Turf (Crumb Rubber)",
+      "category": "Environment",
+      "context": "Synthetic sports and play surfaces with rubber infill",
+      "hazard": 5,
+      "exposure": 3,
+      "persistence": 7,
+      "evidence": 2,
+      "swap": "Natural grass where possible, and wash hands after play",
+      "note": "Crumb-rubber infill and turf fibres can contain PFAS, PAHs and metals. Skin and hand-to-mouth contact are the main routes, so washing up after use reduces it.",
+      "studies": [
+        {
+          "doi": "10.1021/acs.estlett.2c00260",
+          "pmid": "35966456",
+          "input": "exposure",
+          "locator": "Abstract",
+          "claim": "Total fluorine was found in all 51 artificial-turf samples from Stockholm, but extractable fluorine and targeted PFAS in under 42%; the authors attribute it to polymeric organofluorine that does not pose an imminent risk to users.",
+          "accessed": "2026-10-05"
+        }
+      ],
+      "unsourced": [
+        {
+          "input": "hazard",
+          "searched": "2026-10-05",
+          "reason": "No study found that rates this mix of PFAS, PAHs and metals for players; the one turf PFAS study traced the fluorine mainly to polymers."
+        },
+        {
+          "input": "persistence",
+          "searched": "2026-10-05",
+          "reason": "No study found that rates this mix of PFAS, PAHs and metals for players; the one turf PFAS study traced the fluorine mainly to polymers."
+        }
+      ]
+    },
+    {
+      "name": "Garden Hose Water",
+      "category": "Environment",
+      "context": "Drinking from or filling bottles with a standard garden hose",
+      "hazard": 4,
+      "exposure": 3,
+      "persistence": 4,
+      "evidence": 2,
+      "swap": "A hose labelled drinking-water-safe (lead-free), and let it run first",
+      "note": "Ordinary hoses can leach lead, BPA and phthalates, especially after sitting in the sun. A drinking-water-rated hose and flushing the warm water first avoid most of it."
+    },
+    {
+      "name": "Pressure-Treated Wood",
+      "category": "Home",
+      "context": "Chemically treated lumber for decks, raised beds and play sets",
+      "hazard": 5,
+      "exposure": 3,
+      "persistence": 6,
+      "evidence": 2,
+      "swap": "Seal it, or use untreated cedar or composite for garden and play surfaces",
+      "note": "Older pressure-treated wood used arsenic-based preservative; newer types use copper compounds that can still leach. Sealing the wood or choosing untreated material limits skin and soil contact."
+    },
+    {
+      "name": "Aerosol Air Freshener Spray",
+      "category": "Home",
+      "context": "Spray-can room and fabric fresheners",
+      "hazard": 4,
+      "exposure": 5,
+      "persistence": 3,
+      "evidence": 2,
+      "swap": "Open a window, or simmer citrus peel and herbs",
+      "note": "Aerosol fresheners release VOCs and often phthalates as fragrance carriers, which you then inhale in an enclosed room. Ventilation addresses odour at the source rather than masking it.",
+      "studies": [
+        {
+          "doi": "10.1016/j.envint.2020.106152",
+          "pmid": "33246244",
+          "input": "exposure",
+          "locator": "Abstract",
+          "claim": "Off-the-shelf UK domestic aerosol sprays were measured at source: household products such as air fresheners contained 62 wt% non-methane VOCs per can, and replacing LPG propellants with nitrogen showed a potential 50% emission reduction.",
+          "accessed": "2026-10-06"
+        }
+      ]
+    },
+    {
+      "name": "Plastic Baby Bottles (Heated)",
+      "category": "Plastics",
+      "context": "Polypropylene bottles used for hot formula preparation",
+      "hazard": 4,
+      "exposure": 7,
+      "persistence": 6,
+      "evidence": 2,
+      "swap": "Glass or stainless-steel bottles, and cool water before it touches plastic",
+      "note": "Research published in Nature Food found polypropylene infant bottles release very large numbers of microplastic particles when formula is prepared at high temperature, with release rising sharply with water temperature. Preparing in a non-plastic vessel and cooling before transfer lowers release substantially."
+    },
+    {
+      "name": "Paper & Bamboo Drinking Straws",
+      "category": "Plastics",
+      "context": "Plastic-free straws marketed as the eco option",
+      "hazard": 3,
+      "exposure": 3,
+      "persistence": 8,
+      "evidence": 2,
+      "swap": "Stainless-steel or glass straws, or simply no straw",
+      "note": "A Belgian survey published in Food Additives & Contaminants detected PFAS in the majority of paper and bamboo straws tested — often at higher rates than in plastic ones, because the coating that makes them water-resistant is itself fluorinated. Reusable metal or glass avoids the coating question entirely.",
+      "studies": [
+        {
+          "doi": "10.1080/19440049.2023.2240908",
+          "pmid": "37619405",
+          "input": "exposure",
+          "locator": "Abstract",
+          "claim": "In 39 brands of straws sold in Belgium, PFAS were found in almost every material except stainless steel, and were detected more often in paper and bamboo straws.",
+          "accessed": "2026-10-05"
+        },
+        {
+          "doi": "10.1038/s41370-018-0094-1",
+          "pmid": "30470793",
+          "input": "hazard",
+          "locator": "Abstract",
+          "claim": "Multiple studies link PFAS exposure to adverse immune outcomes in children, and dyslipidemia is the strongest metabolic outcome; cancer evidence is limited to manufacturing locations with extremely high exposures.",
+          "accessed": "2026-10-05"
+        }
+      ],
+      "unsourced": [
+        {
+          "input": "persistence",
+          "searched": "2026-10-05",
+          "reason": "The straw study's abstract does not name which PFAS it found, and the human half-life studies found cover only long-chain PFAS, so none is cited."
+        }
+      ]
+    },
+    {
+      "name": "Unlined Copper Cookware",
+      "category": "Kitchen",
+      "context": "Bare copper pots in contact with acidic food",
+      "hazard": 4,
+      "exposure": 3,
+      "persistence": 3,
+      "evidence": 3,
+      "swap": "Tin- or stainless-lined copper, or plain stainless steel",
+      "note": "Copper leaches readily into acidic foods, which is why food-safety codes restrict bare copper surfaces from contacting acidic ingredients. Lined copper keeps the heat-conduction benefit without the direct food contact."
+    },
+    {
+      "name": "Imported Glazed Ceramic Dishware",
+      "category": "Kitchen",
+      "context": "Traditional or artisanal glazed pottery used for food",
+      "hazard": 7,
+      "exposure": 4,
+      "persistence": 5,
+      "evidence": 3,
+      "swap": "Ceramics certified lead-free for food use, or plain porcelain and glass",
+      "note": "Health agencies have repeatedly documented lead leaching from traditional glazed pottery, particularly when it holds acidic or hot food. Decorative pieces are not always fired to food-safe standards; keep unverified glazed pottery ornamental."
+    },
+    {
+      "name": "Decorated Vintage Glassware",
+      "category": "Kitchen",
+      "context": "Enamelled or painted drinking glasses and dishes",
+      "hazard": 6,
+      "exposure": 3,
+      "persistence": 5,
+      "evidence": 2,
+      "swap": "Undecorated plain glass, or keep painted pieces for display only",
+      "note": "Analytical work published in Science of the Total Environment found lead and cadmium in the enamelled decoration on a large share of drinking glasses tested, including new items. The glass itself is inert — the concern is the exterior paint, especially where it meets the rim."
+    },
+    {
+      "name": "Unvented Portable Kerosene Heater",
+      "category": "Air",
+      "context": "Flueless kerosene or paraffin space heaters",
+      "hazard": 6,
+      "exposure": 6,
+      "persistence": 2,
+      "evidence": 3,
+      "swap": "Vented heating, or electric heaters with a window cracked",
+      "note": "Any unvented combustion appliance puts its entire exhaust — nitrogen dioxide, carbon monoxide and fine particles — into the room it is heating. Vented or electric heating removes the combustion products from the indoor air entirely.",
+      "studies": [
+        {
+          "doi": "10.1080/15287399209531629",
+          "pmid": "1608068",
+          "input": "hazard",
+          "locator": "Abstract",
+          "claim": "In a 27 m3 chamber study of unvented kerosene space heaters, both the semivolatile and the particle-bound organics they emitted were mutagenic in Salmonella typhimurium assays.",
+          "accessed": "2026-10-06"
+        }
+      ]
+    },
+    {
+      "name": "3D Printer Fumes",
+      "category": "Air",
+      "context": "Desktop filament printers running in an unventilated room",
+      "hazard": 4,
+      "exposure": 5,
+      "persistence": 2,
+      "evidence": 2,
+      "swap": "An enclosed printer vented outside, or a HEPA-and-carbon enclosure",
+      "note": "Melting filament emits ultrafine particles and VOCs, with emission rates varying widely by material — ABS is consistently measured higher than PLA. Enclosing and venting the printer, or running it in a room you are not sitting in, addresses most of it.",
+      "studies": [
+        {
+          "doi": "10.1021/acs.est.5b04983",
+          "pmid": "26741485",
+          "input": "exposure",
+          "locator": "Abstract",
+          "claim": "Five desktop 3D printers with up to nine filaments emitted ultrafine particles at median rates of about 10^8 to 10^11 per minute, plus VOCs such as styrene from ABS and HIPS (about 10-110 micrograms/min) and caprolactam from nylon-based filaments.",
+          "accessed": "2026-10-06"
+        }
+      ]
+    },
+    {
+      "name": "Laser Printer Toner Emissions",
+      "category": "Air",
+      "context": "Office laser printers on or beside a desk",
+      "hazard": 3,
+      "exposure": 4,
+      "persistence": 2,
+      "evidence": 2,
+      "swap": "Site the printer away from desks in a ventilated space",
+      "note": "Work published in Environmental Science & Technology found some laser printers emit substantial ultrafine particles during printing, driven by the hot fuser. Distance and ventilation are the practical levers, since emission is highest right at the machine.",
+      "studies": [
+        {
+          "doi": "10.1021/es063049z",
+          "pmid": "17937279",
+          "input": "exposure",
+          "locator": "Abstract",
+          "claim": "Of 62 printers in an office building, about 40% emitted submicrometer particles and 27% of those were high emitters; printer particles significantly affected submicrometer particle levels in the open-plan office (p = 0.01).",
+          "accessed": "2026-10-06"
+        }
+      ]
+    },
+    {
+      "name": "Scented Wax Melts",
+      "category": "Home",
+      "context": "Flame-free warmers marketed as a cleaner alternative to candles",
+      "hazard": 4,
+      "exposure": 5,
+      "persistence": 3,
+      "evidence": 2,
+      "swap": "Unscented warmers, or ventilation instead of fragrance",
+      "note": "Because they are flameless, wax melts are often assumed to be the clean option. Research from Purdue published in Environmental Science & Technology Letters found they release high levels of fragrance terpenes that react with indoor ozone to form nanoparticles, at levels comparable to combustion sources."
+    },
+    {
+      "name": "Ultrasonic Humidifier (Tap Water)",
+      "category": "Home",
+      "context": "Cool-mist humidifiers filled straight from the tap",
+      "hazard": 3,
+      "exposure": 5,
+      "persistence": 2,
+      "evidence": 2,
+      "swap": "Distilled or demineralised water, emptied and cleaned between uses",
+      "note": "Ultrasonic units aerosolise whatever is in the tank — dissolved minerals become the fine white dust that settles on surfaces, and a standing tank can grow microbial films. Distilled water and routine cleaning address both."
+    },
+    {
+      "name": "Damp & Mould in the Home",
+      "category": "Home",
+      "context": "Persistent damp, condensation or visible mould growth",
+      "hazard": 6,
+      "exposure": 7,
+      "persistence": 4,
+      "evidence": 3,
+      "swap": "Fix the moisture source, ventilate, and keep humidity below 50%",
+      "swapSlot": {
+        "label": null,
+        "url": null,
+        "rel": "sponsored"
+      },
+      "note": "WHO guidance on indoor air quality treats persistent indoor damp as a well-established respiratory irritant. Remediation works on the water, not the mould — cleaning visible growth without fixing the moisture source simply lets it return."
+    },
+    {
+      "name": "Nail Polish (Triphenyl Phosphate)",
+      "category": "Personal Care",
+      "context": "Conventional polish containing TPHP as a plasticiser",
+      "hazard": 4,
+      "exposure": 4,
+      "persistence": 4,
+      "evidence": 2,
+      "swap": "Polish labelled TPHP-free, and apply in a ventilated room",
+      "note": "A study in Environment International measured a clear rise in a TPHP metabolite in urine after participants painted their nails, showing the plasticiser is absorbed rather than staying on the surface. TPHP-free formulations are now widely available and labelled."
+    },
+    {
+      "name": "Keratin Hair Smoothing Treatments",
+      "category": "Personal Care",
+      "context": "Salon smoothing systems that release formaldehyde when heated",
+      "hazard": 7,
+      "exposure": 3,
+      "persistence": 2,
+      "evidence": 3,
+      "swap": "Formaldehyde-free smoothing systems, or skip the treatment",
+      "note": "Occupational safety regulators issued hazard alerts after air testing found formaldehyde released during these treatments, including from products labelled formaldehyde-free. Salon workers carry the heaviest exposure because it is repeated daily."
+    },
+    {
+      "name": "Gel Manicure UV Lamps",
+      "category": "Personal Care",
+      "context": "UV curing lamps used to set gel polish",
+      "hazard": 4,
+      "exposure": 3,
+      "persistence": 1,
+      "evidence": 2,
+      "swap": "UV-protective fingerless gloves, or regular polish",
+      "note": "These lamps emit UVA. Laboratory work published in Nature Communications documented DNA damage in human cells exposed to gel-lamp radiation. Fingerless UV gloves are an inexpensive way to keep the exposure off the skin while still curing the polish."
+    },
+    {
+      "name": "Recalled Hand Sanitiser (Benzene & Methanol)",
+      "category": "Personal Care",
+      "context": "Gel sanitisers from unverified manufacturers",
+      "hazard": 6,
+      "exposure": 4,
+      "persistence": 2,
+      "evidence": 3,
+      "swap": "Soap and water where available; check recall lists for your brand",
+      "note": "Regulators issued extensive recalls after testing found methanol substituted for ethanol in some sanitisers, and independent laboratory testing later flagged benzene contamination in specific batches. Washing with soap and water avoids the supply-chain question altogether."
+    },
+    {
+      "name": "Infant Rice Cereal (Inorganic Arsenic)",
+      "category": "Food",
+      "context": "Single-grain rice cereal as a first food",
+      "hazard": 6,
+      "exposure": 5,
+      "persistence": 4,
+      "evidence": 3,
+      "swap": "Rotate in oat, barley and multigrain cereals",
+      "note": "Rice takes up more inorganic arsenic from soil and water than other grains, and regulators set a specific action level for infant rice cereal because infants eat a large amount relative to body weight. Varying the grain is the straightforward move.",
+      "studies": [
+        {
+          "doi": "10.1001/jamapediatrics.2016.0120",
+          "pmid": "27111102",
+          "input": "exposure",
+          "locator": "Abstract, Results",
+          "claim": "In a New Hampshire cohort of 759 infants, about 80% had rice cereal in their first year; at 12 months, infants who ate it had geometric mean urinary arsenic of 9.53 µg/L against 2.85 µg/L in those who ate no rice products.",
+          "accessed": "2026-10-09"
+        },
+        {
+          "doi": "10.2903/j.efsa.2024.8488",
+          "pmid": "38239496",
+          "input": "hazard",
+          "locator": "Abstract",
+          "claim": "EFSA's contaminants panel found chronic dietary inorganic arsenic linked to cancers of the skin, bladder and lung, treated it as a genotoxic carcinogen, and judged that adult exposure margins (2 to 0.4 for average consumers) raise a health concern.",
+          "accessed": "2026-10-09"
+        }
+      ]
+    },
+    {
+      "name": "Ayurvedic Herbal Supplements",
+      "category": "Food",
+      "context": "Imported traditional herbal remedies",
+      "hazard": 7,
+      "exposure": 3,
+      "persistence": 5,
+      "evidence": 3,
+      "swap": "Third-party tested supplements carrying a USP or NSF mark",
+      "note": "Testing published in JAMA found detectable lead, mercury or arsenic in roughly one in five Ayurvedic products purchased in the United States, including products bought online. Independent third-party certification is the practical filter.",
+      "studies": [
+        {
+          "doi": "10.1001/jama.300.8.915",
+          "pmid": "18728265",
+          "input": "exposure",
+          "locator": "Abstract, Results",
+          "claim": "Of 193 Ayurvedic medicines bought online in 2005, 20.7% contained detectable lead, mercury or arsenic, with similar shares for US-made (21.7%) and Indian-made (19.5%) products.",
+          "accessed": "2026-10-09"
+        }
+      ]
+    },
+    {
+      "name": "Herbal Teas (Pyrrolizidine Alkaloids)",
+      "category": "Food",
+      "context": "Botanical infusions drunk daily from one source",
+      "hazard": 4,
+      "exposure": 4,
+      "persistence": 2,
+      "evidence": 2,
+      "swap": "Rotate varieties and brands rather than drinking one blend daily",
+      "note": "European food-safety surveys have found pyrrolizidine alkaloids in herbal and tea products, arriving as weed contamination during harvest rather than from the named plant. Rotating what you drink keeps any single contaminated source from becoming a daily habit.",
+      "studies": [
+        {
+          "doi": "10.1080/19440049.2017.1382726",
+          "pmid": "28942718",
+          "input": "exposure",
+          "locator": "Abstract",
+          "claim": "In 1,105 food samples from the European market in 2014-2015, 91% of (herbal) teas contained at least one pyrrolizidine alkaloid, at a mean of 460 µg/kg dry tea (6.13 µg/L as an infusion).",
+          "accessed": "2026-10-09"
+        },
+        {
+          "doi": "10.2903/j.efsa.2017.4908",
+          "pmid": "32625569",
+          "input": "hazard",
+          "locator": "Abstract",
+          "claim": "EFSA's contaminants panel set a reference point of 237 µg/kg body weight per day for the carcinogenic risk of pyrrolizidine alkaloids and concluded there is a possible concern for human health, in particular for frequent and high consumers of tea and herbal infusions.",
+          "accessed": "2026-10-09"
+        }
+      ]
+    },
+    {
+      "name": "Hijiki Seaweed",
+      "category": "Food",
+      "context": "A specific sea vegetable used in Japanese cooking",
+      "hazard": 7,
+      "exposure": 2,
+      "persistence": 4,
+      "evidence": 3,
+      "swap": "Nori, wakame or kombu, which do not carry the same finding",
+      "note": "Food-safety agencies in several countries advise against eating hijiki specifically, after testing found inorganic arsenic at levels far above other edible seaweeds. This is unusual among sea vegetables — the common alternatives are not implicated.",
+      "studies": [
+        {
+          "doi": "10.1016/j.fct.2007.01.007",
+          "pmid": "17336439",
+          "input": "exposure",
+          "locator": "Abstract",
+          "claim": "Of 31 retail seaweed samples of five varieties, inorganic arsenic was found only in the nine hijiki samples, at 67-96 mg/kg; the other types were all below 0.3 mg/kg.",
+          "accessed": "2026-10-09"
+        },
+        {
+          "doi": "10.2903/j.efsa.2024.8488",
+          "pmid": "38239496",
+          "input": "hazard",
+          "locator": "Abstract",
+          "claim": "EFSA's contaminants panel found chronic dietary inorganic arsenic linked to cancers of the skin, bladder and lung, treated it as a genotoxic carcinogen, and judged that adult exposure margins (2 to 0.4 for average consumers) raise a health concern.",
+          "accessed": "2026-10-09"
+        }
+      ]
+    },
+    {
+      "name": "Sea Salt (Microplastics)",
+      "category": "Food",
+      "context": "Salt evaporated from seawater",
+      "hazard": 2,
+      "exposure": 4,
+      "persistence": 7,
+      "evidence": 2,
+      "swap": "Mined rock salt, which does not pass through seawater",
+      "note": "Multiple international surveys have detected microplastic particles in the large majority of sea salt brands tested, tracking the plastic load of the source water. Rock salt comes from ancient deposits and consistently tests lower.",
+      "studies": [
+        {
+          "doi": "10.1021/acs.est.8b04180",
+          "pmid": "30285421",
+          "input": "exposure",
+          "locator": "Abstract",
+          "claim": "Across 39 salt brands, sea salts held 0-1,674 microplastic particles per kg (one outlier at 13,629), against 0-148 in rock salt; levels in unrefined sea salt tracked microplastic pollution in the surrounding seawater.",
+          "accessed": "2026-10-09"
+        }
+      ]
+    },
+    {
+      "name": "Harvested Rainwater",
+      "category": "Water",
+      "context": "Roof-collected rainwater used for drinking",
+      "hazard": 4,
+      "exposure": 3,
+      "persistence": 8,
+      "evidence": 2,
+      "swap": "Drink mains water rather than untreated roof rainwater",
+      "note": "Rain carries PFAS: a 2022 global analysis in Environmental Science & Technology found PFOA and PFOS in rainwater often far above US EPA drinking-water advisory levels, and 28% of roof-harvested samples in an Arizona study exceeded the then 70 ng/L advisory. Roofs and tanks add their own: 1–4% of 100 Australian household tanks exceeded drinking-water health values for metals.",
+      "studies": [
+        {
+          "doi": "10.1038/s41370-018-0094-1",
+          "pmid": "30470793",
+          "input": "hazard",
+          "locator": "Abstract",
+          "claim": "Multiple studies link PFAS exposure to adverse immune outcomes in children, and dyslipidemia is the strongest metabolic outcome; cancer evidence is limited to manufacturing locations with extremely high exposures.",
+          "accessed": "2026-10-02"
+        },
+        {
+          "doi": "10.1016/j.scitotenv.2023.162662",
+          "pmid": "36898538",
+          "input": "exposure",
+          "locator": "Abstract",
+          "claim": "In about 200 roof-harvested rainwater samples a year in Arizona (2017–2020), 28% exceeded the then US EPA advisory of 70 ng/L for PFOS plus PFOA, with a mean exceedance concentration of 189 ng/L.",
+          "accessed": "2026-10-02"
+        },
+        {
+          "doi": "10.1021/acs.est.2c02765",
+          "pmid": "35916421",
+          "input": "exposure",
+          "locator": "Abstract",
+          "claim": "Comparing global measurements with guideline levels, the authors conclude that PFOA and PFOS levels in rainwater often greatly exceed US EPA Lifetime Drinking Water Health Advisory levels.",
+          "accessed": "2026-10-02"
+        },
+        {
+          "doi": "10.1016/j.jenvman.2026.130884",
+          "pmid": "42705031",
+          "input": "exposure",
+          "locator": "Abstract",
+          "claim": "Of 100 Adelaide household rainwater tanks, 1–4% exceeded Australian drinking-water health values for cadmium, iron, manganese, lead and arsenic; 67% of surveyed households drank the rainwater.",
+          "accessed": "2026-10-02"
+        },
+        {
+          "doi": "10.1039/d0em00355g",
+          "pmid": "33230514",
+          "input": "persistence",
+          "locator": "Abstract",
+          "claim": "All PFAS contain perfluoroalkyl moieties extremely resistant to environmental and metabolic degradation; most are non-degradable or transform into stable PFAS products, so they classify as very persistent under EU chemicals rules.",
+          "accessed": "2026-10-02"
+        },
+        {
+          "doi": "10.1136/oemed-2017-104651",
+          "pmid": "29133598",
+          "input": "persistence",
+          "locator": "Abstract, Results",
+          "claim": "After contaminated drinking water was replaced in Ronneby, Sweden, estimated mean serum half-lives were 5.3 years for PFHxS, 3.4 years for PFOS and 2.7 years for PFOA.",
+          "accessed": "2026-10-02"
+        }
+      ]
+    },
+    {
+      "name": "Idling a Vehicle in an Attached Garage",
+      "category": "Environment",
+      "context": "Warming up or running an engine with the garage door closed",
+      "hazard": 8,
+      "exposure": 4,
+      "persistence": 1,
+      "evidence": 3,
+      "swap": "Reverse out first, and never run an engine in a closed garage",
+      "note": "Exhaust in an attached garage carries carbon monoxide and benzene into the living space through the shared wall, and concentrations build quickly in an enclosed space. Backing out before starting removes the exposure completely and costs nothing."
+    },
+    {
+      "name": "Conventional Blueberries",
+      "category": "Food",
+      "context": "Non-organic fresh or frozen blueberries",
+      "hazard": 4,
+      "exposure": 5,
+      "persistence": 3,
+      "evidence": 2,
+      "swap": "Organic blueberries, or a good rinse before eating",
+      "note": "EWG added blueberries to its Dirty Dozen after USDA testing found residues of organophosphate insecticides on a large share of samples. Organic removes the concern, and even conventional berries stay a nutritious choice once washed."
+    },
+    {
+      "name": "Conventional Green Beans",
+      "category": "Food",
+      "context": "Non-organic fresh or frozen green beans",
+      "hazard": 4,
+      "exposure": 4,
+      "persistence": 3,
+      "evidence": 2,
+      "swap": "Organic green beans, or wash conventional ones well",
+      "note": "USDA sampling behind EWG's Dirty Dozen found residues of acephate — an insecticide the EPA banned on the crop decades ago — on some conventional green beans. Buying organic sidesteps it entirely."
+    },
+    {
+      "name": "Conventional Bell Peppers",
+      "category": "Food",
+      "context": "Non-organic sweet bell peppers",
+      "hazard": 4,
+      "exposure": 5,
+      "persistence": 3,
+      "evidence": 2,
+      "swap": "Organic peppers, or wash and peel where practical",
+      "note": "Peppers sit high on EWG's Dirty Dozen because their thin skin retains multiple pesticide residues per sample. They are worth eating; buying the organic version is the clean upgrade."
+    },
+    {
+      "name": "Conventional Celery",
+      "category": "Food",
+      "context": "Non-organic celery stalks",
+      "hazard": 4,
+      "exposure": 4,
+      "persistence": 3,
+      "evidence": 2,
+      "swap": "Organic celery",
+      "note": "Celery is a perennial Dirty Dozen entry: with no protective peel, USDA tests routinely find several pesticide residues on a single stalk. Organic is the straightforward swap."
+    },
+    {
+      "name": "Conventional Cherries",
+      "category": "Food",
+      "context": "Non-organic fresh cherries",
+      "hazard": 4,
+      "exposure": 4,
+      "persistence": 3,
+      "evidence": 2,
+      "swap": "Organic cherries, or wash thoroughly",
+      "note": "Cherries appear on EWG's Dirty Dozen, with USDA testing detecting organophosphate residues on many samples. A thorough rinse helps; organic removes the issue."
+    },
+    {
+      "name": "Conventional Potatoes",
+      "category": "Food",
+      "context": "Non-organic potatoes",
+      "hazard": 3,
+      "exposure": 6,
+      "persistence": 3,
+      "evidence": 2,
+      "swap": "Organic potatoes, or peel before cooking",
+      "note": "Conventional potatoes are treated with chlorpropham, a sprout-inhibitor found on the skin of many samples. Because potatoes are eaten so often, the cumulative exposure adds up — peeling or buying organic reduces it.",
+      "studies": [
+        {
+          "doi": "10.1080/03601230802519470",
+          "pmid": "19089708",
+          "input": "exposure",
+          "locator": "Abstract",
+          "claim": "In stored potatoes treated with the sprout inhibitor chlorpropham, whole tubers carried about 15 mg/kg after 28 days and 9 mg/kg after 85 days, peels 20-50 mg/kg, and peeled tubers about 1 mg/kg.",
+          "accessed": "2026-10-09"
+        }
+      ]
+    },
+    {
+      "name": "Skin-Lightening Creams (Mercury)",
+      "category": "Personal Care",
+      "context": "Imported or unregulated skin-whitening and anti-aging creams",
+      "hazard": 9,
+      "exposure": 3,
+      "persistence": 6,
+      "evidence": 3,
+      "swap": "Avoid entirely; use mercury-free vitamin C or niacinamide brighteners",
+      "swapSlot": {
+        "label": null,
+        "url": null,
+        "rel": "sponsored"
+      },
+      "note": "The FDA and EPA warn that some imported skin-lightening creams contain mercury at dangerous levels, which absorbs through skin and accumulates in the body and nervous system. There is no safe use — check labels for 'mercurous chloride', 'calomel' or 'mercurio' and discard them."
+    },
+    {
+      "name": "Kohl / Kajal Eyeliner (Lead)",
+      "category": "Personal Care",
+      "context": "Traditional kohl, kajal, surma or tiro eye cosmetics",
+      "hazard": 8,
+      "exposure": 3,
+      "persistence": 5,
+      "evidence": 3,
+      "swap": "FDA-approved eyeliner from a regulated brand",
+      "note": "The FDA has repeatedly warned that traditional kohl and kajal can be largely lead salts, and their use near the eye is linked to raised blood-lead levels, especially in children. Only cosmetics with an FDA-approved colour additive list are safe substitutes."
+    },
+    {
+      "name": "Imported Candy (Lead)",
+      "category": "Food",
+      "context": "Certain imported tamarind, chili or clay-based sweets",
+      "hazard": 6,
+      "exposure": 2,
+      "persistence": 5,
+      "evidence": 2,
+      "swap": "Reputable domestic brands; avoid candies in unlabeled or ceramic wrappers",
+      "note": "California and the FDA have documented lead in some imported candies, traced to chili powder, tamarind and the ink or ceramic of the wrapper. Children are most vulnerable; choosing regulated brands avoids the risk.",
+      "studies": [
+        {
+          "doi": "10.1093/phr/115.6.537",
+          "pmid": "11354337",
+          "input": "exposure",
+          "locator": "Abstract",
+          "claim": "Oklahoma testing of two imported tamarind suckers found over half exceeded the FDA level of concern for lead; a child eating a quarter to a half of one a day would exceed the FDA's provisional tolerable intake, and the wrappers were high in lead.",
+          "accessed": "2026-10-09"
+        }
+      ]
+    },
+    {
+      "name": "Vaping / E-Cigarette Aerosol",
+      "category": "Air",
+      "context": "Inhaling and exhaling e-cigarette vapour indoors",
+      "hazard": 7,
+      "exposure": 5,
+      "persistence": 2,
+      "evidence": 2,
+      "swap": "Quit vaping; seek nicotine-cessation support",
+      "note": "E-cigarette aerosol is not just water vapour: peer-reviewed analyses find heavy metals such as lead, nickel and chromium leached from the coil, plus formaldehyde and fine particulate. Secondhand vapour exposes bystanders too.",
+      "studies": [
+        {
+          "doi": "10.1016/j.ijheh.2013.11.003",
+          "pmid": "24373737",
+          "input": "exposure",
+          "locator": "Abstract",
+          "claim": "In six two-hour vaping sessions in a ventilated room, indoor air carried 1,2-propanediol, glycerine and nicotine, PM2.5 averaging 197 micrograms/m3, a 20% rise in PAH to 147 ng/m3 and a 2.4-fold rise in aluminium.",
+          "accessed": "2026-10-06"
+        }
+      ]
+    },
+    {
+      "name": "Vinyl Tablecloth (Phthalates & Lead)",
+      "category": "Home",
+      "context": "Flexible PVC tablecloths and placemats",
+      "hazard": 5,
+      "exposure": 3,
+      "persistence": 4,
+      "evidence": 2,
+      "swap": "Cotton, linen, or PEVA/EVA tablecloths",
+      "note": "Independent testing has found flexible vinyl tablecloths that contain phthalate plasticizers and, in some products, lead used as a stabilizer — both of which can transfer to hands and food. Natural-fibre or PVC-free covers avoid it."
+    },
+    {
+      "name": "Faux-Leather (PVC) Furniture",
+      "category": "Home",
+      "context": "Sofas and chairs upholstered in vinyl 'bonded leather'",
+      "hazard": 4,
+      "exposure": 4,
+      "persistence": 4,
+      "evidence": 2,
+      "swap": "Real leather, wool, or polyurethane (PU) upholstery",
+      "note": "Most inexpensive faux leather is PVC softened with phthalate plasticizers that migrate out and settle into house dust over the years you own the piece. Genuine leather, wool or PU alternatives skip the softeners."
+    },
+    {
+      "name": "Costume Jewelry (Lead & Cadmium)",
+      "category": "Personal Care",
+      "context": "Cheap metal fashion jewelry and children's trinkets",
+      "hazard": 6,
+      "exposure": 2,
+      "persistence": 4,
+      "evidence": 2,
+      "swap": "Solid stainless steel, titanium, or precious metals",
+      "note": "CPSC recalls and independent testing regularly find high levels of lead and cadmium in low-cost metal jewelry, a hazard mainly through skin contact and, for children, mouthing. Stainless steel, titanium or solid gold/silver are inert."
+    },
+    {
+      "name": "Ceramic-Coated Nonstick Pans",
+      "category": "Kitchen",
+      "context": "Sol-gel 'ceramic' nonstick cookware marketed as PFAS-free",
+      "hazard": 3,
+      "exposure": 4,
+      "persistence": 3,
+      "evidence": 1,
+      "swap": "Bare cast iron or stainless steel",
+      "note": "Ceramic nonstick avoids PTFE, which is a genuine plus, but the thin sol-gel coating wears off within a year or two and its full nanoparticle composition is rarely disclosed. Cast iron and stainless last for decades with nothing to shed.",
+      "unsourced": [
+        {
+          "input": "hazard",
+          "searched": "2026-10-05",
+          "reason": "No study measuring what sol-gel ceramic nonstick coatings release in use was found on PubMed."
+        },
+        {
+          "input": "exposure",
+          "searched": "2026-10-05",
+          "reason": "No study measuring what sol-gel ceramic nonstick coatings release in use was found on PubMed."
+        },
+        {
+          "input": "persistence",
+          "searched": "2026-10-05",
+          "reason": "No study measuring what sol-gel ceramic nonstick coatings release in use was found on PubMed."
+        }
+      ]
+    },
+    {
+      "name": "Bentonite Clay Detox Products (Lead)",
+      "category": "Food",
+      "context": "Edible 'detox' clay powders and cleanses",
+      "hazard": 6,
+      "exposure": 2,
+      "persistence": 5,
+      "evidence": 2,
+      "swap": "Skip clay cleanses; support your body's own clearance",
+      "note": "The FDA has warned that some edible bentonite clay 'detox' products contain elevated lead, which the clay draws from its geological source. Ironically, a product sold to remove toxins can add one — and there is no evidence it detoxes anything."
+    },
+    {
+      "name": "Chewing Gum (Microplastics)",
+      "category": "Food",
+      "context": "Conventional gum made with a synthetic polymer base",
+      "hazard": 3,
+      "exposure": 4,
+      "persistence": 3,
+      "evidence": 1,
+      "swap": "Natural chicle-based gum, or skip gum",
+      "note": "The 'gum base' in most conventional chewing gum is synthetic rubber — essentially plastic. A 2025 laboratory study reported that chewing a single piece can release hundreds to thousands of microplastic particles into saliva. Natural chicle gum avoids the synthetic base."
+    },
+    {
+      "name": "Conventional Pears",
+      "category": "Food",
+      "context": "Non-organic pears, eaten with the skin",
+      "hazard": 3,
+      "exposure": 3,
+      "persistence": 2,
+      "evidence": 2,
+      "swap": "Organic pears, or wash and peel conventional ones",
+      "note": "Pears appear on the EWG Dirty Dozen because residues of several pesticides are commonly detected. Washing helps and peeling removes more, though it also removes fiber."
+    },
+    {
+      "name": "Conventional Nectarines",
+      "category": "Food",
+      "context": "Non-organic nectarines with edible skin",
+      "hazard": 3,
+      "exposure": 3,
+      "persistence": 2,
+      "evidence": 2,
+      "swap": "Organic nectarines, or thorough washing",
+      "note": "A recurring Dirty Dozen fruit: the thin, edible skin holds detectable multi-pesticide residues. Buying organic for the ones you eat most is a reasonable, budget-aware move."
+    },
+    {
+      "name": "Canned Tomatoes (BPA-Lined)",
+      "category": "Food",
+      "context": "Acidic canned tomatoes in a can with epoxy lining",
+      "hazard": 4,
+      "exposure": 4,
+      "persistence": 3,
+      "evidence": 3,
+      "swap": "Tomatoes in glass jars or Tetra cartons, or fresh",
+      "note": "Acidity increases how much bisphenol migrates from an epoxy can lining into the food. Glass or carton packaging sidesteps the lining entirely.",
+      "studies": [
+        {
+          "doi": "10.2903/j.efsa.2023.6857",
+          "pmid": "37089179",
+          "input": "hazard",
+          "locator": "Abstract",
+          "claim": "EFSA's panel set a tolerable daily intake for BPA of 0.2 ng/kg body weight, with the immune system as the most sensitive target, and found average and high dietary exposures in all age groups exceeded it by two to three orders of magnitude.",
+          "accessed": "2026-10-09"
+        }
+      ]
+    },
+    {
+      "name": "Swordfish (High Mercury)",
+      "category": "Food",
+      "context": "A large, long-lived predatory fish high on the food chain",
+      "hazard": 8,
+      "exposure": 3,
+      "persistence": 7,
+      "evidence": 3,
+      "swap": "Lower-mercury fish like salmon, sardines or trout",
+      "swapSlot": {
+        "label": null,
+        "url": null,
+        "rel": "sponsored"
+      },
+      "note": "Swordfish is on the FDA/EPA 'avoid' list for its high methylmercury content, which accumulates in the body. Pregnant people and young children are advised to skip it.",
+      "studies": [
+        {
+          "doi": "10.4315/0362-028X.JFP-14-449",
+          "pmid": "25710157",
+          "input": "exposure",
+          "locator": "Abstract",
+          "claim": "In muscle from 82 Pacific swordfish, total mercury ranged from 228 to 2,090 ppb; fish over about 96 kg dressed weight are predicted to exceed the 1,000 ppb action level used in the US, Canada and Europe.",
+          "accessed": "2026-10-09"
+        },
+        {
+          "doi": "10.1016/s0892-0362(97)00097-4",
+          "pmid": "9392777",
+          "input": "hazard",
+          "locator": "Abstract",
+          "claim": "In a Faroe Islands birth cohort of 1,022 children, prenatal methylmercury exposure from the mother's diet was linked at age 7 to poorer language, attention and memory, still seen after excluding children whose mothers had hair mercury above 10 µg/g.",
+          "accessed": "2026-10-09"
+        },
+        {
+          "doi": "10.2131/jts.37.123",
+          "pmid": "22293416",
+          "input": "persistence",
+          "locator": "Abstract",
+          "claim": "In 27 volunteers who ate fish at the tolerable weekly methylmercury intake for 14 weeks, blood mercury rose from 6.7 to 26.9 ng/g, and its half-life after they stopped was 94 days (57 days after subtracting background).",
+          "accessed": "2026-10-09"
+        }
+      ]
+    },
+    {
+      "name": "Rice-Based Drinks (Arsenic)",
+      "category": "Food",
+      "context": "Rice milk used as a dairy alternative",
+      "hazard": 6,
+      "exposure": 3,
+      "persistence": 4,
+      "evidence": 3,
+      "swap": "Oat, soy or pea-protein milk",
+      "note": "Rice concentrates inorganic arsenic from soil and water. UK and other agencies advise that young children in particular should not rely on rice drinks; other plant milks avoid the issue.",
+      "studies": [
+        {
+          "doi": "10.1039/b800981c",
+          "pmid": "18385862",
+          "input": "exposure",
+          "locator": "Abstract",
+          "claim": "All 19 supermarket rice milks tested would fail the EU 10 µg/L drinking-water limit for arsenic, at up to 3 times that level; 80% of the 15 speciated samples had inorganic arsenic above 10 µg/L.",
+          "accessed": "2026-10-09"
+        },
+        {
+          "doi": "10.2903/j.efsa.2024.8488",
+          "pmid": "38239496",
+          "input": "hazard",
+          "locator": "Abstract",
+          "claim": "EFSA's contaminants panel found chronic dietary inorganic arsenic linked to cancers of the skin, bladder and lung, treated it as a genotoxic carcinogen, and judged that adult exposure margins (2 to 0.4 for average consumers) raise a health concern.",
+          "accessed": "2026-10-09"
+        }
+      ]
+    },
+    {
+      "name": "Imported Farmed Shrimp",
+      "category": "Food",
+      "context": "Cheap imported farmed shrimp of uncertain provenance",
+      "hazard": 4,
+      "exposure": 3,
+      "persistence": 3,
+      "evidence": 2,
+      "swap": "Certified (ASC/BAP) or wild-caught shrimp",
+      "note": "Some imported farmed shrimp has been flagged for antibiotic and contaminant residues due to weak oversight. Certification schemes and known wild sources reduce that uncertainty.",
+      "studies": [
+        {
+          "doi": "10.1016/j.jhazmat.2014.08.075",
+          "pmid": "25449970",
+          "input": "exposure",
+          "locator": "Abstract",
+          "claim": "Testing seafood bought in the US for 47 antibiotics, all 27 samples complied with FDA rules; residues were low, including sulfadimethoxine at 0.3 ng/g in farmed shrimp.",
+          "accessed": "2026-10-09"
+        }
+      ]
+    },
+    {
+      "name": "Instant Noodle Cups (Boiling Water in Plastic)",
+      "category": "Plastics",
+      "context": "Pouring boiling water directly into a polystyrene or plastic-lined cup",
+      "hazard": 5,
+      "exposure": 4,
+      "persistence": 4,
+      "evidence": 2,
+      "swap": "Cook the noodles in a pot and eat from a ceramic bowl",
+      "note": "Boiling water in a plastic or foam cup increases microplastic and chemical migration into the broth. Transferring to a pot and bowl avoids heating the plastic."
+    },
+    {
+      "name": "Lipstick (Lead & Metals)",
+      "category": "Personal Care",
+      "context": "Colour lipstick reapplied throughout the day",
+      "hazard": 5,
+      "exposure": 4,
+      "persistence": 5,
+      "evidence": 2,
+      "swap": "Fewer reapplications and brands that publish metal-testing",
+      "note": "FDA surveys have detected trace lead and other metals in many lipsticks. Because lipstick is worn on the lips and partly ingested, frequency of reapplication is the main lever."
+    },
+    {
+      "name": "Aerosol Hair Spray (VOCs)",
+      "category": "Personal Care",
+      "context": "Propellant hair spray used in an unventilated bathroom",
+      "hazard": 4,
+      "exposure": 4,
+      "persistence": 2,
+      "evidence": 3,
+      "swap": "A non-aerosol pump spray, used with the door open",
+      "note": "Aerosols create a fine, easily inhaled mist of solvents and propellants. A pump product and good ventilation cut how much you breathe in."
+    },
+    {
+      "name": "Petroleum-Based Lip Balm",
+      "category": "Personal Care",
+      "context": "Mineral-oil / petrolatum lip balm applied and ingested daily",
+      "hazard": 3,
+      "exposure": 4,
+      "persistence": 3,
+      "evidence": 2,
+      "swap": "Beeswax or plant-oil balms from refined sources",
+      "note": "Poorly refined mineral oils can carry aromatic hydrocarbon impurities, and lip products are partly swallowed. Well-made plant- or beeswax-based balms avoid the concern."
+    },
+    {
+      "name": "Scented Menstrual Pads",
+      "category": "Personal Care",
+      "context": "Fragranced disposable pads worn against sensitive tissue",
+      "hazard": 4,
+      "exposure": 4,
+      "persistence": 3,
+      "evidence": 2,
+      "swap": "Fragrance-free or organic-cotton pads and tampons",
+      "note": "Added fragrance can include undisclosed phthalates and irritants placed against thin, absorptive skin. Fragrance-free products remove an exposure that serves no functional purpose."
+    },
+    {
+      "name": "Octinoxate Sunscreen",
+      "category": "Personal Care",
+      "context": "A chemical UV filter absorbed through skin",
+      "hazard": 5,
+      "exposure": 4,
+      "persistence": 3,
+      "evidence": 2,
+      "swap": "A mineral (zinc oxide) sunscreen",
+      "note": "Octinoxate is a chemical filter with hormone-disruption questions and measurable skin absorption. Mineral zinc-oxide sunscreens sit on the skin and avoid the issue while still protecting you — sun protection still matters."
+    },
+    {
+      "name": "Coloured Tattoo Ink (Metals & PAHs)",
+      "category": "Personal Care",
+      "context": "Pigmented tattoo inks deposited permanently in the skin",
+      "hazard": 6,
+      "exposure": 2,
+      "persistence": 7,
+      "evidence": 2,
+      "swap": "A reputable artist using REACH-compliant, disclosed inks",
+      "note": "Some coloured inks contain heavy metals and polycyclic aromatic hydrocarbons, and the pigment stays in skin and lymph nodes for life. Choosing a professional using regulated inks reduces what goes in."
+    },
+    {
+      "name": "Fresh Latex Paint (VOCs)",
+      "category": "Home",
+      "context": "Newly painted interior walls off-gassing solvents",
+      "hazard": 4,
+      "exposure": 3,
+      "persistence": 2,
+      "evidence": 3,
+      "swap": "Zero- or low-VOC paint, with windows open while it cures",
+      "note": "Conventional paint releases volatile organic compounds for days to weeks after application. Zero-VOC formulas plus ventilation dramatically cut what you breathe."
+    },
+    {
+      "name": "Vinyl Mini-Blinds (Lead Dust)",
+      "category": "Home",
+      "context": "Imported PVC window blinds that degrade in sunlight",
+      "hazard": 5,
+      "exposure": 3,
+      "persistence": 6,
+      "evidence": 2,
+      "swap": "Aluminium, wood, or certified lead-free blinds",
+      "note": "Older or imported PVC blinds can be stabilised with lead, which forms a fine dust on the surface as the plastic ages in sunlight. Non-PVC blinds avoid it entirely."
+    },
+    {
+      "name": "Air-Conditioner & HVAC Mould",
+      "category": "Home",
+      "context": "Mould growing on damp cooling coils and filters, then circulated",
+      "hazard": 4,
+      "exposure": 5,
+      "persistence": 3,
+      "evidence": 3,
+      "swap": "Regular filter changes, coil cleaning and fixing condensation",
+      "note": "Damp air-handling equipment can grow mould whose spores are then blown through the home. Routine maintenance and controlling moisture keep it from spreading."
+    },
+    {
+      "name": "In-Tank Toilet Cleaner Tablets",
+      "category": "Home",
+      "context": "Chlorine-releasing tablets sitting in the toilet cistern",
+      "hazard": 3,
+      "exposure": 2,
+      "persistence": 2,
+      "evidence": 2,
+      "swap": "A brush plus vinegar or an as-needed bowl cleaner",
+      "note": "In-tank tablets slowly release chlorine chemicals into standing water and the bathroom air. Manual cleaning as needed avoids a constant low-level release."
+    },
+    {
+      "name": "Aerosol Oven Cleaner (Lye Fumes)",
+      "category": "Home",
+      "context": "Caustic spray oven cleaner used in an enclosed kitchen",
+      "hazard": 6,
+      "exposure": 2,
+      "persistence": 2,
+      "evidence": 2,
+      "swap": "A baking-soda paste left overnight, then wiped",
+      "note": "Spray oven cleaners atomise sodium hydroxide and solvents that are corrosive to airways. A baking-soda paste does the same job without the caustic mist."
+    },
+    {
+      "name": "Chemical Drain Cleaner",
+      "category": "Home",
+      "context": "Lye- or acid-based liquid drain openers",
+      "hazard": 7,
+      "exposure": 2,
+      "persistence": 2,
+      "evidence": 2,
+      "swap": "A drain snake, plunger or enzyme-based opener",
+      "note": "Strong chemical drain cleaners are highly corrosive and can release fumes or splash. Mechanical tools and enzyme products clear most clogs without the hazard."
+    },
+    {
+      "name": "Fabric & Upholstery Stain Cleaner",
+      "category": "Home",
+      "context": "Solvent-based spot cleaners for carpets and sofas",
+      "hazard": 4,
+      "exposure": 3,
+      "persistence": 3,
+      "evidence": 2,
+      "swap": "Water-based cleaners or a DIY vinegar solution",
+      "note": "Many spot cleaners rely on volatile solvents and sometimes fluorinated repellents that linger in soft furnishings. Water-based options cut the residual off-gassing."
+    },
+    {
+      "name": "Cigarette Smoking (Firsthand)",
+      "category": "Environment",
+      "context": "Directly inhaling tobacco combustion products",
+      "hazard": 10,
+      "exposure": 8,
+      "persistence": 6,
+      "evidence": 3,
+      "swap": "Evidence-based cessation support and nicotine-replacement",
+      "swapSlot": {
+        "label": null,
+        "url": null,
+        "rel": "sponsored"
+      },
+      "note": "Firsthand tobacco smoke is one of the largest avoidable exposures there is, delivering thousands of toxicants including known carcinogens. Cessation services meaningfully improve the odds of quitting."
+    },
+    {
+      "name": "Charcoal Grill Briquettes (PAH Smoke)",
+      "category": "Environment",
+      "context": "Fat dripping onto hot charcoal, coating food in smoke",
+      "hazard": 5,
+      "exposure": 3,
+      "persistence": 3,
+      "evidence": 3,
+      "swap": "Lump charcoal or gas, and avoid charring the food",
+      "note": "Flare-ups and heavy smoke deposit polycyclic aromatic hydrocarbons on grilled food. Lower heat, trimming fat and avoiding charring reduce how much forms."
+    },
+    {
+      "name": "Gas-Powered Leaf Blower (2-Stroke)",
+      "category": "Environment",
+      "context": "Standing behind a two-stroke engine that burns oil with fuel",
+      "hazard": 5,
+      "exposure": 3,
+      "persistence": 3,
+      "evidence": 2,
+      "swap": "A battery-electric leaf blower",
+      "note": "Two-stroke engines burn a fuel-oil mix inefficiently, producing high levels of unburned hydrocarbons and fine particles right at head height. Battery models eliminate the exhaust."
+    },
+    {
+      "name": "Fireworks Smoke (Perchlorate & Metals)",
+      "category": "Environment",
+      "context": "Standing downwind of consumer fireworks",
+      "hazard": 5,
+      "exposure": 2,
+      "persistence": 4,
+      "evidence": 1,
+      "swap": "Watch from a distance, upwind",
+      "note": "Firework smoke carries perchlorate and metal particulates that briefly spike local air pollution. Watching from upwind and at a distance limits what you inhale."
+    },
+    {
+      "name": "Hookah / Shisha Smoke",
+      "category": "Environment",
+      "context": "Water-pipe tobacco smoked over a long session",
+      "hazard": 8,
+      "exposure": 4,
+      "persistence": 5,
+      "evidence": 3,
+      "swap": "Avoiding it — the water does not make it safe",
+      "swapSlot": {
+        "label": null,
+        "url": null,
+        "rel": "sponsored"
+      },
+      "note": "A hookah session can deliver more smoke, carbon monoxide and polycyclic aromatic hydrocarbons than a single cigarette. The water pipe cools the smoke but does not filter out the toxicants."
+    },
+    {
+      "name": "Engineered Stone Countertop Dust",
+      "category": "Home",
+      "context": "Dry-cutting or drilling quartz countertops during a fit-out",
+      "hazard": 9,
+      "exposure": 1,
+      "persistence": 8,
+      "evidence": 3,
+      "swap": "Slabs cut off-site, or wet-cutting with on-tool dust extraction",
+      "swapSlot": {
+        "label": null,
+        "url": null,
+        "rel": "sponsored"
+      },
+      "note": "Engineered 'quartz' stone is typically over 90% crystalline silica, against 40–50% for granite. Dry-cutting it releases respirable silica that permanently scars the lungs; hundreds of silicosis cases have been counted among fabricators. Householders are barely exposed unless a slab is dry-cut indoors.",
+      "studies": [
+        {
+          "doi": "10.1001/jamainternmed.2023.3295",
+          "pmid": "37486642",
+          "input": "hazard",
+          "locator": "Abstract, Results",
+          "claim": "California surveillance (2019-2022) found 52 silicosis cases among engineered-stone countertop fabricators; 10 (19%) were fatal, at a median age at death of 46.",
+          "accessed": "2026-10-02"
+        },
+        {
+          "doi": "10.1186/s12995-025-00455-8",
+          "pmid": "40098042",
+          "input": "hazard",
+          "locator": "Abstract, Background",
+          "claim": "Engineered stone is over 90% crystalline silica by weight, against 40-50% for granite and under 10% for marble.",
+          "accessed": "2026-10-02"
+        }
+      ]
+    },
+    {
+      "name": "Methylene Chloride Paint Stripper",
+      "category": "Home",
+      "context": "Solvent paint and coating removers used in a closed room",
+      "hazard": 9,
+      "exposure": 2,
+      "persistence": 2,
+      "evidence": 3,
+      "swap": "A benzyl-alcohol or soy-based stripper, or sanding with dust extraction",
+      "note": "Methylene chloride vapour displaces oxygen in the blood and has killed people refinishing bathtubs in unventilated spaces. US regulators banned it from consumer paint and coating removal in 2019 and tightened the remaining uses under a 2024 risk-management rule."
+    },
+    {
+      "name": "Coal-Tar Driveway Sealant (PAHs)",
+      "category": "Environment",
+      "context": "Black sealer coating a drive, path or parking lot",
+      "hazard": 8,
+      "exposure": 3,
+      "persistence": 8,
+      "evidence": 3,
+      "swap": "An asphalt-based sealer, or leaving the surface unsealed",
+      "swapSlot": {
+        "label": null,
+        "url": null,
+        "rel": "sponsored"
+      },
+      "note": "Coal-tar sealcoat is loaded with polycyclic aromatic hydrocarbons. Worn particles track indoors on shoes and tyres: US Geological Survey sampling found PAH in house dust about 25 times higher in homes beside coal-tar-sealed lots than beside plain asphalt or concrete."
+    },
+    {
+      "name": "Ozone-Generating Air Purifiers",
+      "category": "Air",
+      "context": "'Ionic' or ozone air cleaners run in an occupied room",
+      "hazard": 6,
+      "exposure": 4,
+      "persistence": 1,
+      "evidence": 3,
+      "swap": "A true-HEPA purifier with activated carbon, and open windows",
+      "note": "Ozone is a lung irritant, and the EPA's review concluded these devices do not control indoor pollutants effectively at concentrations that stay below public-health limits. Some ionisers also make ozone as a by-product, then sell the resulting smell as 'fresh air' when it is the irritant itself.",
+      "studies": [
+        {
+          "doi": "10.1080/10473289.2006.10464467",
+          "pmid": "16739796",
+          "input": "exposure",
+          "locator": "Abstract",
+          "claim": "Ionization and ozonolysis air purifiers tested in offices, bathrooms, bedrooms and cars often produced ozone concentrations well in excess of public and/or industrial safety levels set by US EPA, California ARB and OSHA.",
+          "accessed": "2026-10-06"
+        }
+      ]
+    },
+    {
+      "name": "Vermiculite Attic Insulation (Asbestos)",
+      "category": "Home",
+      "context": "Loose grey-brown pebble insulation in a pre-1990 attic",
+      "hazard": 10,
+      "exposure": 2,
+      "persistence": 9,
+      "evidence": 3,
+      "swap": "Leaving it sealed and undisturbed; an accredited asbestos contractor if it must move",
+      "swapSlot": {
+        "label": null,
+        "url": null,
+        "rel": "sponsored"
+      },
+      "note": "A single Montana mine supplied over 70% of US vermiculite between 1919 and 1990 and its ore was contaminated with asbestos, so vermiculite loft insulation from that era — often sold as Zonolite — should be assumed to contain it. Undisturbed it releases little; disturbing it during DIY is the risk.",
+      "studies": [
+        {
+          "doi": "10.1289/ehp.9481",
+          "pmid": "17450227",
+          "input": "hazard",
+          "locator": "Abstract, Results",
+          "claim": "Workers who mined and processed the asbestos-contaminated Libby vermiculite died significantly more often of asbestosis (SMR 165.8), lung cancer (SMR 1.7) and mesothelioma, rising with cumulative exposure.",
+          "accessed": "2026-10-02"
+        },
+        {
+          "doi": "10.1179/107735210799160219",
+          "pmid": "20662420",
+          "input": "exposure",
+          "locator": "Abstract",
+          "claim": "In tests in three homes, airborne amphibole asbestos was not elevated when Zonolite attic insulation was undisturbed; cleaning, remodeling and other activities that disturbed it produced significant airborne concentrations.",
+          "accessed": "2026-10-02"
+        },
+        {
+          "pmid": "23091967",
+          "input": "exposure",
+          "locator": "Abstract",
+          "claim": "In homes with vermiculite attic insulation or other asbestos materials, amphibole asbestos was detected in the living space of 12 (26%) of the homes tested, chrysotile in 45 (98%).",
+          "accessed": "2026-10-02"
+        },
+        {
+          "doi": "10.1002/ajim.22674",
+          "pmid": "27859510",
+          "input": "persistence",
+          "locator": "Abstract, Results",
+          "claim": "Among 198 adults exposed to Libby amphibole only in childhood and adolescence, 96 (48%) had pleural thickening as adults, with likelihood rising with years lived in the area.",
+          "accessed": "2026-10-02"
+        },
+        {
+          "doi": "10.1186/s12989-016-0130-z",
+          "pmid": "27083413",
+          "input": "persistence",
+          "locator": "Abstract, Results",
+          "claim": "In rats inhaling Libby amphibole for 13 weeks, lung fibre burdens declined only gradually over 18 months, and inflammation and interstitial fibrosis persisted up to 18 months after exposure.",
+          "accessed": "2026-10-02"
+        }
+      ],
+      "sources": [
+        {
+          "name": "US EPA — Protect your family from asbestos-contaminated vermiculite insulation (updated 2026-04-17)",
+          "url": "https://www.epa.gov/asbestos/protect-your-family-asbestos-contaminated-vermiculite-insulation",
+          "retrieved": "2026-10-02"
+        },
+        {
+          "name": "US EPA — My attic has vermiculite insulation in it. Am I at risk? (updated 2026-07-20)",
+          "url": "https://www.epa.gov/asbestos/my-attic-has-vermiculite-insulation-it-am-i-risk-should-i-take-it-out",
+          "retrieved": "2026-10-02"
+        },
+        {
+          "name": "US DOE — Energy Renovations: Insulation, a guide for contractors to share with homeowners (May 2012), Table 2.2",
+          "url": "https://www.energy.gov/sites/prod/files/2013/11/f5/insulation_guide.pdf",
+          "retrieved": "2026-10-02"
+        }
+      ],
+      "guidance": {
+        "title": "If it is in your attic",
+        "steps": [
+          "Recognise it: a pebble-like, pour-in insulation, usually grey-brown or silver-gold, often sold as Zonolite.",
+          "Assume it contains asbestos. EPA says further testing is not needed to take the right precautions.",
+          "Leave it undisturbed. Do not store boxes in that attic, and do not let children play there.",
+          "Do not remove it yourself. Before any remodelling or renovation that would disturb it, or if it must come out, hire a trained, accredited asbestos contractor — EPA advises one independent of the firm that assessed it.",
+          "Its insulating value: about R-2.7 per inch of depth, per a 2012 US Department of Energy guide for contractors."
+        ]
+      }
+    },
+    {
+      "name": "Titanium Dioxide (E171) in Food",
+      "category": "Food",
+      "context": "A white colourant in sweets, icing, sauces and supplements",
+      "hazard": 5,
+      "exposure": 5,
+      "persistence": 5,
+      "evidence": 2,
+      "swap": "Products with no 'titanium dioxide' or 'E171' on the ingredient list",
+      "note": "In 2021 the European food-safety regulator concluded E171 can no longer be considered safe as a food additive, because genotoxicity could not be ruled out and the particles accumulate slowly in the body. The EU withdrew it from food; it is still permitted in the US, so labels are worth reading.",
+      "studies": [
+        {
+          "doi": "10.2903/j.efsa.2021.6585",
+          "pmid": "33976718",
+          "input": "hazard",
+          "locator": "Abstract, genotoxicity conclusion",
+          "claim": "EFSA's panel could not rule out a genotoxicity concern for TiO2 particles and concluded E 171 can no longer be considered safe as a food additive.",
+          "accessed": "2026-10-02"
+        },
+        {
+          "doi": "10.2903/j.efsa.2021.6585",
+          "pmid": "33976718",
+          "input": "persistence",
+          "locator": "Abstract, absorption and accumulation",
+          "claim": "Gastrointestinal absorption of TiO2 particles is low, but they may accumulate in the body.",
+          "accessed": "2026-10-02"
+        }
+      ]
+    },
+    {
+      "name": "Red Dye No. 3 (Erythrosine)",
+      "category": "Food",
+      "context": "A bright cherry-red synthetic colour in sweets and drinks",
+      "hazard": 3,
+      "exposure": 3,
+      "persistence": 2,
+      "evidence": 1,
+      "swap": "Colour from beetroot, paprika extract or carmine",
+      "note": "The US regulator revoked its authorisation in January 2025 — as a point of law, not of demonstrated human harm. The Delaney Clause forbids any additive that causes cancer in animals, and the agency stated plainly that the rat mechanism involved does not occur in people. A low priority next to real exposures."
+    },
+    {
+      "name": "Brominated Vegetable Oil (Citrus Sodas)",
+      "category": "Food",
+      "context": "A flavour stabiliser in some citrus-flavoured soft drinks",
+      "hazard": 5,
+      "exposure": 2,
+      "persistence": 5,
+      "evidence": 2,
+      "swap": "Sparkling water with fresh citrus, or any soda not listing BVO",
+      "note": "BVO kept citrus flavouring from separating out, at up to 15 parts per million. In July 2024 the US regulator revoked the authorisation after studies run with the NIH found the potential for adverse effects in humans; bromine accumulates in fat. Most drinks makers had already reformulated.",
+      "studies": [
+        {
+          "doi": "10.1016/j.fct.2022.113137",
+          "pmid": "35588981",
+          "input": "hazard",
+          "locator": "Abstract",
+          "claim": "In a 90-day feeding study, rats given 0.1% and 0.5% BVO in their diet developed thyroid follicular cell hypertrophy, with raised TSH at the highest dose; the authors name the thyroid as a potential target organ.",
+          "accessed": "2026-10-09"
+        },
+        {
+          "doi": "10.1016/j.fct.2022.113137",
+          "pmid": "35588981",
+          "input": "persistence",
+          "locator": "Abstract",
+          "claim": "In the same 90-day rat study, di- and tetra-bromostearic acid built up in the heart, liver and inguinal fat in a clear dose-response.",
+          "accessed": "2026-10-09"
+        }
+      ]
+    },
+    {
+      "name": "Parabens in Cosmetics",
+      "category": "Personal Care",
+      "context": "Preservatives in lotions, shampoos and make-up",
+      "hazard": 4,
+      "exposure": 6,
+      "persistence": 2,
+      "evidence": 2,
+      "swap": "Products preserved with phenoxyethanol or sodium benzoate",
+      "note": "The longer-chain parabens are the ones regulators acted on: the EU caps propyl- and butylparaben at 0.14% and bars them from leave-on nappy-area products for under-threes, on weak oestrogenic-activity grounds. Methyl- and ethylparaben are better tolerated and still permitted at higher levels."
+    },
+    {
+      "name": "Homosalate Sunscreen",
+      "category": "Personal Care",
+      "context": "A chemical UV filter in daily face and body sunscreen",
+      "hazard": 4,
+      "exposure": 5,
+      "persistence": 3,
+      "evidence": 2,
+      "swap": "A mineral zinc-oxide sunscreen, or a filter such as Tinosorb",
+      "note": "After an EU scientific committee flagged possible endocrine activity, the permitted level was cut from 10% to 7.34% and restricted to face products. It is still allowed at 10% elsewhere, including the US. Do not stop using sunscreen over this — change the filter instead."
+    },
+    {
+      "name": "Locally Caught Freshwater Fish",
+      "category": "Food",
+      "context": "Fish taken from local rivers and lakes rather than bought",
+      "hazard": 6,
+      "exposure": 4,
+      "persistence": 8,
+      "evidence": 3,
+      "swap": "Check your state, Tribal or territory fish advisory before eating the catch",
+      "note": "In July 2024 the EPA added twelve PFAS to the contaminants it recommends states and Tribes monitor in locally caught freshwater fish, and says its national fish-tissue survey has found PFAS at levels that may affect health. Advisories are issued water by water, so which lake or river the fish came from matters more than the species.",
+      "sources": [
+        {
+          "name": "US EPA news release, 11 July 2024, 'EPA Releases New Science-Based Recommendations to Help More States, Tribes, and Territories Reduce Exposure to PFAS in Fish'",
+          "url": "https://www.epa.gov/newsreleases/epa-releases-new-science-based-recommendations-help-more-states-tribes-and-territories",
+          "retrieved": "2026-09-28"
+        },
+        {
+          "name": "US EPA, 'Meaningful and Achievable Steps You Can Take to Reduce Your Risk'",
+          "url": "https://www.epa.gov/pfas/meaningful-and-achievable-steps-you-can-take-reduce-your-risk",
+          "retrieved": "2026-09-28"
+        }
+      ],
+      "studies": [
+        {
+          "doi": "10.1016/j.envres.2022.115165",
+          "pmid": "36584847",
+          "input": "exposure",
+          "locator": "Abstract",
+          "claim": "In over 500 composite fillet samples from US EPA monitoring (2013-2015), median total PFAS was 9,500 ng/kg in rivers and streams and 11,800 ng/kg in the Great Lakes, 278 times the levels FDA found in commercially relevant fish; PFOS averaged 74% of the total.",
+          "accessed": "2026-10-05"
+        },
+        {
+          "doi": "10.1016/j.scitotenv.2014.07.126",
+          "pmid": "25190044",
+          "input": "exposure",
+          "locator": "Abstract",
+          "claim": "In US EPA's national surveys of fish fillets from 164 urban river and 157 Great Lakes sites, PFOS was the most frequently detected perfluorinated compound, at up to 127 ng/g in rivers and 80 ng/g in the Great Lakes.",
+          "accessed": "2026-10-05"
+        },
+        {
+          "doi": "10.2903/j.efsa.2020.6223",
+          "pmid": "32994824",
+          "input": "hazard",
+          "locator": "Abstract",
+          "claim": "EFSA's contaminants panel judged effects on the immune system the most critical for PFOA, PFNA, PFHxS and PFOS, set a tolerable weekly intake of 4.4 ng/kg body weight for their sum, and concluded that parts of the European population exceed it.",
+          "accessed": "2026-10-05"
+        },
+        {
+          "doi": "10.1136/oemed-2017-104651",
+          "pmid": "29133598",
+          "input": "persistence",
+          "locator": "Abstract, Results",
+          "claim": "After residents of Ronneby, Sweden, stopped drinking PFAS-contaminated water, their mean serum half-lives were estimated at 5.3 years for PFHxS, 3.4 years for PFOS and 2.7 years for PFOA.",
+          "accessed": "2026-10-05"
+        }
+      ]
+    },
+    {
+      "name": "Sewage-Sludge Fertiliser on Garden Soil",
+      "category": "Environment",
+      "context": "Biosolids spread or sold as a soil conditioner or fertiliser",
+      "hazard": 6,
+      "exposure": 3,
+      "persistence": 8,
+      "evidence": 2,
+      "swap": "A soil amendment whose feedstock is stated on the bag, or compost you make yourself",
+      "note": "The EPA released a draft risk assessment on 14 January 2025 covering PFOA and PFOS in sewage sludge that is land-applied as a soil conditioner or fertiliser. It is a draft that went out for public comment, not a rule, so the useful response is knowing what an amendment is made from rather than treating any number as settled.",
+      "sources": [
+        {
+          "name": "US EPA, 'Draft Sewage Sludge Risk Assessment for Perfluorooctanoic Acid (PFOA) and Perfluorooctane Sulfonic Acid (PFOS)', released 14 Jan 2025, EPA 820-P-25-001, Docket EPA-HQ-OW-2024-0504",
+          "url": "https://www.epa.gov/biosolids/draft-sewage-sludge-risk-assessment-perfluorooctanoic-acid-pfoa-and-perfluorooctane",
+          "retrieved": "2026-09-28"
+        }
+      ]
+    },
+    {
+      "name": "Fluorinated Plastic Containers",
+      "category": "Home",
+      "context": "Fluorine-treated HDPE bottles holding household and garden liquids",
+      "hazard": 5,
+      "exposure": 3,
+      "persistence": 8,
+      "evidence": 2,
+      "swap": "The same product in an untreated container; ask the maker whether the bottle is fluorinated",
+      "note": "Treating a plastic bottle with fluorine to stop it leaking or swelling can form PFAS on the inner wall. EPA testing detected eight PFAS in rinsate from fluorinated HDPE containers at 20 to 50 parts per billion, and its September 2022 study found they leach into the liquid stored inside and keep leaching the longer it sits. The EPA says such containers are used for household consumer, pesticide, fuel and automotive products.",
+      "sources": [
+        {
+          "name": "US EPA, 'Per- and Polyfluoroalkyl Substances (PFAS) in Pesticide and Other Packaging' (page updated 3 Nov 2025; container leaching study 8 Sept 2022; TSCA s.21 petition granted 10 July 2024)",
+          "url": "https://www.epa.gov/pesticides/pfas-packaging",
+          "retrieved": "2026-09-28"
+        }
+      ],
+      "studies": [
+        {
+          "doi": "10.1021/acs.estlett.3c00083",
+          "input": "exposure",
+          "locator": "Abstract",
+          "claim": "A directly fluorinated container held about 64 ng/g of PFAS; 7-day leaching into water, solvents and foods released 0.99-66.92 ng/g, up to 830% more at elevated temperature, mostly short-chain PFCAs.",
+          "accessed": "2026-10-05"
+        },
+        {
+          "doi": "10.1038/s41370-018-0094-1",
+          "pmid": "30470793",
+          "input": "hazard",
+          "locator": "Abstract",
+          "claim": "Multiple studies link PFAS exposure to adverse immune outcomes in children, and dyslipidemia is the strongest metabolic outcome; cancer evidence is limited to manufacturing locations with extremely high exposures.",
+          "accessed": "2026-10-05"
+        }
+      ],
+      "unsourced": [
+        {
+          "input": "persistence",
+          "searched": "2026-10-05",
+          "reason": "The PFAS measured here are mainly short-chain or fluorotelomer compounds; the human half-life studies found cover long-chain PFAS (PFOS, PFOA, PFHxS), so none is cited."
+        }
+      ]
+    },
+    {
+      "name": "Dairy from PFAS-Affected Farmland",
+      "category": "Food",
+      "context": "Milk and dairy from livestock grazing land carrying PFAS",
+      "hazard": 5,
+      "exposure": 4,
+      "persistence": 8,
+      "evidence": 2,
+      "swap": "Where a local advisory names affected farms, dairy sourced outside that area",
+      "note": "The EPA lists dairy products from livestock exposed to PFAS among the routes by which PFAS reach food, alongside fish from contaminated water, and notes that biosolids used on agricultural land can affect animals that graze it. The pathway runs through the land, so it surfaces near known contamination rather than everywhere.",
+      "sources": [
+        {
+          "name": "US EPA, 'Our Current Understanding of the Human Health and Environmental Risks of PFAS' (page updated 14 July 2026)",
+          "url": "https://www.epa.gov/pfas/our-current-understanding-human-health-and-environmental-risks-pfas",
+          "retrieved": "2026-09-28"
+        }
+      ],
+      "studies": [
+        {
+          "doi": "10.1021/acs.jafc.5c07211",
+          "pmid": "41758925",
+          "input": "exposure",
+          "locator": "Abstract",
+          "claim": "At 22 Swedish dairy farms within 10 km of PFAS contamination hotspots, PFOA, PFOS and PFNA were found in 5-77% of milk samples and one exceeded the EU indicative level for PFOA; all PFAS were below detection in milk from 20 regional dairies.",
+          "accessed": "2026-10-05"
+        },
+        {
+          "doi": "10.2903/j.efsa.2020.6223",
+          "pmid": "32994824",
+          "input": "hazard",
+          "locator": "Abstract",
+          "claim": "EFSA's contaminants panel judged effects on the immune system the most critical for PFOA, PFNA, PFHxS and PFOS, set a tolerable weekly intake of 4.4 ng/kg body weight for their sum, and concluded that parts of the European population exceed it.",
+          "accessed": "2026-10-05"
+        },
+        {
+          "doi": "10.1136/oemed-2017-104651",
+          "pmid": "29133598",
+          "input": "persistence",
+          "locator": "Abstract, Results",
+          "claim": "After residents of Ronneby, Sweden, stopped drinking PFAS-contaminated water, their mean serum half-lives were estimated at 5.3 years for PFHxS, 3.4 years for PFOS and 2.7 years for PFOA.",
+          "accessed": "2026-10-05"
+        }
+      ]
+    }
+  ]
+}

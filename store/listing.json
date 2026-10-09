@@ -1,0 +1,48 @@
+{
+  "_note": "Store listing fields for Detoxcellence (HEALTH-TRIO-DAY C1 draft; C2 adds the camera lens and C3 finishes them with screenshots). Every sentence is a fact about the app as built (repo-app) and the Index on detoxcellence.com. `npm run check:listing` R16 forbids generic-claim wording on every field; `check:listing:launch` enforces the limits.",
+  "_constraints": {
+    "name": {
+      "max": 30
+    },
+    "subtitle": {
+      "max": 30,
+      "store": "apple"
+    },
+    "shortDescription": {
+      "max": 80,
+      "store": "play"
+    },
+    "fullDescription": {
+      "max": 4000,
+      "mustEndWith": "descriptionClose"
+    },
+    "promotionalText": {
+      "max": 170,
+      "store": "apple"
+    },
+    "keywords": {
+      "max": 100,
+      "store": "apple"
+    },
+    "reviewNotes": {
+      "mustNameNativeValueFeatures": true,
+      "mustIncludeContact": true
+    }
+  },
+  "name": "Detoxcellence",
+  "nameApple": "Detoxcellence: Exposure Index",
+  "subtitle": "Everyday exposures, sourced",
+  "shortDescription": "The Exposure Index offline: everyday products rated, with studies and swaps.",
+  "fullDescription": "Detoxcellence rates everyday products and habits by the avoidable exposure they add — and names a cleaner swap for each.\n\nTHE EXPOSURE INDEX\n189 entries across water, air, kitchen, plastics, food, personal care, home and environment: nonstick pans, plastic food containers, scented candles, tap water, canned food and more. Each has a Detox Score from 1 to 100 (higher means lower avoidable burden), built openly from three ratings — chemical hazard, everyday exposure and persistence — with the arithmetic shown. Each rating lists the peer-reviewed or agency studies behind it, or says plainly that it is unsourced.\n\nWORKS OFFLINE\nThe whole Index is on your phone, so it works in a shop or on a plane. When you are online it updates from detoxcellence.com's open data.\n\nYOUR EXPOSURE SCORE\nFifteen quick questions about water, air, cooking, personal care, cleaning and food give you a score out of 100 and the one change that cuts yours most. Every result is kept on your phone, so you can watch your score move as you make swaps.\n\nA WEEKLY SWAP\nSwitch on the weekly reminder and pick a day and time: one swap from the Index each week, starting with the area your score points to.\n\nPRIVATE BY DESIGN\nNo account, no ads, no tracking. Your answers, scores and settings stay on your phone.\n\nInformation, not medical advice. The ratings are editorial; every study and source is shown and the data is open (CC BY 4.0).\n\nBuilt by JukkaBlomberg.com — one founder, an AI-native team, on Portfolio OS. More apps at jukkablomberg.com/apps.",
+  "promotionalText": "Look up any everyday product — a pan, a container, a candle — and see its Detox Score, the studies behind it and a cleaner swap. Works offline.",
+  "keywords": "exposure,PFAS,microplastics,nonstick,plastic,swap,indoor air,water filter,household,index",
+  "reviewNotes": "Native features: (1) exposure lookup offline — the whole Exposure Index (189 entries, each with its Detox Score, studies and swap) is bundled; try airplane mode, then the Index tab and any entry; (2) swap reminders — Swaps tab → switch on Weekly swap reminder, pick a day and time; the app schedules local notifications on the device (no push server), each naming one swap and opening its entry when tapped; (3) score history — Score tab → Start the Exposure Score (15 questions); each result is saved on the device with its date and listed under Your history. No account, no sign-in, no in-app purchase, no advertising, no analytics. Health information: educational ratings of avoidable everyday exposure with the studies shown; not a medical device; no diagnosis or treatment. Contact: Jukka Blomberg, hello@jukkablomberg.com.",
+  "firstScreenDisclosure": "Information, not medical advice. Ratings are editorial and every source is shown.",
+  "categoryPlay": "Health & Fitness",
+  "categoryApple": "Health & Fitness",
+  "screenshots": {
+    "_note": "iOS caption band per shot (scripts/shot-frame.mjs): [headline ≤5 words, subline ≤60 chars] — one feature per shot; first two frames sell (NEW-APP-CHECKLIST 10-08). Filled at C3 with the camera lens first.",
+    "displayFontFile": "LeagueGothic-Regular",
+    "captions": {}
+  }
+}

@@ -1,0 +1,17 @@
+{
+  "_rule": "README.md § 7, standing: no automated PRODUCTION submission on either store until Jukka lifts this in writing. The 'Submit for review' / 'Promote to production' click is his (Sitting 4). This file is the machine-readable form of that sentence; scripts/listing-readiness.mjs refuses to pass while `productionSubmission` is locked AND any config would in fact submit to production.",
+  "productionSubmission": "lifted-both-stores",
+  "liftedBy": "Jukka Blomberg",
+  "liftedOn": "2026-09-09",
+  "liftedScope": "EVERY STUDIO APP, BOTH STORES. Google Play: lifted 2026-09-09 (Jukka: 'A2. Yes, lift the submission gate now'), widened 2026-10-01 to every app, internal testing AND production submit (queues/jukka-did.md 2026-10-01 'play lift scope'). Apple: lifted 2026-10-05 by Jukka in the CoS session that completed the entity conversion (PLA assigned to NorthPoint Marketing Solutions Oy, DSA trader ACTIVE, ASC API key 'EAS Submit' in EAS) — answer to the gate question: 'All apps, TestFlight + App Store' — every studio app may build for iOS, upload to TestFlight and submit to the App Store. On BOTH stores the 'Submit for review' / 'Promote to production' click itself stays Jukka's (Sitting 4); no script may invoke a production submit non-interactively. Paid Apps Agreement is NOT signed (parked 2026-10-05): no IAP / paid app may be submitted on Apple until it is.",
+  "allowedSubmitProfiles": [
+    "internal",
+    "production"
+  ],
+  "forbiddenAndroidTracks": [
+    "beta",
+    "alpha"
+  ],
+  "forbiddenAppleDestinations": [],
+  "liftedScopeAmendedOn": "2026-10-05"
+}

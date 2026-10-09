@@ -1,0 +1,26 @@
+node_modules/
+.expo/
+dist/
+*.log
+.env
+.env.local
+*.p8
+*.p12
+*.keystore
+*.mobileprovision
+google-services.json
+GoogleService-Info.plist
+play-service-account.json
+
+# expo web export used only to generate store screenshots
+web-export/
+# --- lock-park (DE-LOCKPARK-CONVENTION) ---
+# A lock a builder could not unlink is parked, never committed. See _meta/conventions.md.
+_git_locks_to_delete/
+_to_delete/
+.locks-aside/
+stale-locks-*/
+parked-locks/
+
+# build marker (DE handshake) — never committed
+.pb-build-active

@@ -1,0 +1,15 @@
+{
+  "_note": "Apple-only listing inputs for scripts/store-config.mjs. `advisory` = App Store age-rating questionnaire answers that differ from the all-NONE/false default (keys as App Store Connect names them; values NONE | INFREQUENT_OR_MILD | FREQUENT_OR_INTENSE or booleans). `review` = App Review contact (NOT public — the private number is allowed here per the PHONE RULE; the public SIM is for DSA/listing surfaces). `release` = what happens after approval.",
+  "locale": "en-US",
+  "advisory": {},
+  "review": {
+    "firstName": "Jukka",
+    "lastName": "Blomberg",
+    "email": "hello@jukkablomberg.com",
+    "phone": "+358405644703"
+  },
+  "release": {
+    "automaticRelease": true,
+    "phasedRelease": false
+  }
+}

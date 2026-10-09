@@ -1,0 +1,32 @@
+{
+  "_note": "THE per-venture parameter file. Every identifier, URL and store field in this app derives from this object — nothing below is typed twice. `scripts/listing-readiness.mjs` cross-checks it against ../../app-stores/apps.json, which stays the registry of record.",
+  "slug": "detoxcellence",
+  "venture": "Detoxcellence",
+  "domain": "detoxcellence.com",
+  "wave": 2,
+  "nativeValue": [
+    {
+      "id": "exposure-lookup-offline",
+      "name": "exposure lookup offline",
+      "evidence": "src/lib/exposures.ts"
+    },
+    {
+      "id": "swap-reminders",
+      "name": "swap reminders",
+      "evidence": "src/lib/reminders.ts"
+    },
+    {
+      "id": "score-history",
+      "name": "score history",
+      "evidence": "src/lib/history.ts"
+    }
+  ],
+  "policyEdges": ["apple-1.4.1-health-methodology", "play-health-apps-declaration"],
+  "_policyEdgesNote": "Health-adjacent information app (HEALTH-TRIO-DAY § 1 firewall): information, not medical advice; Apple regulated-medical-device declaration = No; no diagnosis or treatment claims; no detox-tea / supplement framing; no 'non-toxic' or equivalent wording on any surface (EU 2024/825; `check:listing` R16 guards it). Every Exposure Index rating is editorial and says so; sources and studies are shown per row as the site's /data/ door carries them.",
+  "colors": {
+    "primary": "#FFFFFF",
+    "accent": "#46615B"
+  },
+  "easProjectId": "a42833cd-c1e7-4ef4-a460-3f96ade31109",
+  "_easProjectIdNote": "Set by `eas init` — paste the UUID it prints here. A PUBLIC project identifier, not a secret. app.config.ts omits the eas key (never nulls it) until a real id exists."
+}
