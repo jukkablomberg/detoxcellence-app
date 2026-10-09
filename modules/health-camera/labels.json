@@ -1,0 +1,817 @@
+{
+ "_note": "The deployed label space (99). One label space for all three lenses; the engine ranks all of it, each app shows the labels its lens maps. Names are the exact text the prompt templates were filled with (run 1, camera-lab/PROTOCOL-2026-10-07.md). Changing a name means re-exporting label-emb.json AND re-measuring.",
+ "templates": [
+  "a photo of {}.",
+  "a close-up photo of {}.",
+  "{} in a shop."
+ ],
+ "labels": [
+  {
+   "id": "food:avocado",
+   "name": "an avocado",
+   "lens": [
+    "fattonic"
+   ],
+   "kind": "food"
+  },
+  {
+   "id": "food:banana",
+   "name": "bananas",
+   "lens": [
+    "fattonic"
+   ],
+   "kind": "food"
+  },
+  {
+   "id": "food:apple",
+   "name": "an apple",
+   "lens": [
+    "fattonic",
+    "detoxcellence"
+   ],
+   "kind": "food"
+  },
+  {
+   "id": "food:orange",
+   "name": "an orange",
+   "lens": [
+    "fattonic"
+   ],
+   "kind": "food"
+  },
+  {
+   "id": "food:grapes",
+   "name": "grapes",
+   "lens": [
+    "fattonic",
+    "detoxcellence"
+   ],
+   "kind": "food"
+  },
+  {
+   "id": "food:pear",
+   "name": "a pear",
+   "lens": [
+    "fattonic",
+    "detoxcellence"
+   ],
+   "kind": "food"
+  },
+  {
+   "id": "food:kiwi",
+   "name": "a kiwi fruit",
+   "lens": [
+    "fattonic"
+   ],
+   "kind": "food"
+  },
+  {
+   "id": "food:mango",
+   "name": "a mango",
+   "lens": [
+    "fattonic"
+   ],
+   "kind": "food"
+  },
+  {
+   "id": "food:pineapple",
+   "name": "a pineapple",
+   "lens": [
+    "fattonic"
+   ],
+   "kind": "food"
+  },
+  {
+   "id": "food:watermelon",
+   "name": "a watermelon",
+   "lens": [
+    "fattonic"
+   ],
+   "kind": "food"
+  },
+  {
+   "id": "food:strawberries",
+   "name": "strawberries",
+   "lens": [
+    "fattonic",
+    "detoxcellence"
+   ],
+   "kind": "food"
+  },
+  {
+   "id": "food:blueberries",
+   "name": "blueberries",
+   "lens": [
+    "fattonic",
+    "detoxcellence"
+   ],
+   "kind": "food"
+  },
+  {
+   "id": "food:raspberries",
+   "name": "raspberries",
+   "lens": [
+    "fattonic"
+   ],
+   "kind": "food"
+  },
+  {
+   "id": "food:cherries",
+   "name": "cherries",
+   "lens": [
+    "fattonic",
+    "detoxcellence"
+   ],
+   "kind": "food"
+  },
+  {
+   "id": "food:lemon",
+   "name": "a lemon",
+   "lens": [
+    "fattonic"
+   ],
+   "kind": "food"
+  },
+  {
+   "id": "food:lingonberries",
+   "name": "lingonberries",
+   "lens": [
+    "fattonic"
+   ],
+   "kind": "food"
+  },
+  {
+   "id": "food:tomato",
+   "name": "tomatoes",
+   "lens": [
+    "fattonic"
+   ],
+   "kind": "food"
+  },
+  {
+   "id": "food:cucumber",
+   "name": "a cucumber",
+   "lens": [
+    "fattonic"
+   ],
+   "kind": "food"
+  },
+  {
+   "id": "food:broccoli",
+   "name": "broccoli",
+   "lens": [
+    "fattonic"
+   ],
+   "kind": "food"
+  },
+  {
+   "id": "food:carrot",
+   "name": "carrots",
+   "lens": [
+    "fattonic"
+   ],
+   "kind": "food"
+  },
+  {
+   "id": "food:cauliflower",
+   "name": "a cauliflower",
+   "lens": [
+    "fattonic"
+   ],
+   "kind": "food"
+  },
+  {
+   "id": "food:bell-pepper",
+   "name": "a bell pepper",
+   "lens": [
+    "fattonic",
+    "detoxcellence"
+   ],
+   "kind": "food"
+  },
+  {
+   "id": "food:cabbage",
+   "name": "a cabbage",
+   "lens": [
+    "fattonic"
+   ],
+   "kind": "food"
+  },
+  {
+   "id": "food:zucchini",
+   "name": "a zucchini",
+   "lens": [
+    "fattonic"
+   ],
+   "kind": "food"
+  },
+  {
+   "id": "food:eggplant",
+   "name": "an eggplant",
+   "lens": [
+    "fattonic"
+   ],
+   "kind": "food"
+  },
+  {
+   "id": "food:mushrooms",
+   "name": "white mushrooms",
+   "lens": [
+    "fattonic"
+   ],
+   "kind": "food"
+  },
+  {
+   "id": "food:onion",
+   "name": "onions",
+   "lens": [
+    "fattonic"
+   ],
+   "kind": "food"
+  },
+  {
+   "id": "food:sweet-potato",
+   "name": "sweet potatoes",
+   "lens": [
+    "fattonic"
+   ],
+   "kind": "food"
+  },
+  {
+   "id": "food:potato",
+   "name": "potatoes",
+   "lens": [
+    "fattonic",
+    "detoxcellence"
+   ],
+   "kind": "food"
+  },
+  {
+   "id": "food:asparagus",
+   "name": "asparagus",
+   "lens": [
+    "fattonic"
+   ],
+   "kind": "food"
+  },
+  {
+   "id": "food:kale",
+   "name": "kale",
+   "lens": [
+    "fattonic",
+    "detoxcellence"
+   ],
+   "kind": "food"
+  },
+  {
+   "id": "food:rye-bread",
+   "name": "rye bread",
+   "lens": [
+    "fattonic"
+   ],
+   "kind": "food"
+  },
+  {
+   "id": "food:white-bread",
+   "name": "white bread",
+   "lens": [
+    "fattonic"
+   ],
+   "kind": "food"
+  },
+  {
+   "id": "food:croissant",
+   "name": "a croissant",
+   "lens": [
+    "fattonic"
+   ],
+   "kind": "food"
+  },
+  {
+   "id": "food:baguette",
+   "name": "a baguette",
+   "lens": [
+    "fattonic"
+   ],
+   "kind": "food"
+  },
+  {
+   "id": "food:bagel",
+   "name": "a bagel",
+   "lens": [
+    "fattonic"
+   ],
+   "kind": "food"
+  },
+  {
+   "id": "food:sourdough-bread",
+   "name": "sourdough bread",
+   "lens": [
+    "fattonic"
+   ],
+   "kind": "food"
+  },
+  {
+   "id": "food:whole-grain-bread",
+   "name": "whole grain bread",
+   "lens": [
+    "fattonic"
+   ],
+   "kind": "food"
+  },
+  {
+   "id": "food:crispbread",
+   "name": "crispbread",
+   "lens": [
+    "fattonic"
+   ],
+   "kind": "food"
+  },
+  {
+   "id": "food:karelian-pasty",
+   "name": "a karelian pasty",
+   "lens": [
+    "fattonic"
+   ],
+   "kind": "food"
+  },
+  {
+   "id": "food:peach",
+   "name": "a peach",
+   "lens": [
+    "fattonic",
+    "detoxcellence"
+   ],
+   "kind": "food"
+  },
+  {
+   "id": "food:plum",
+   "name": "plums",
+   "lens": [
+    "fattonic"
+   ],
+   "kind": "food"
+  },
+  {
+   "id": "food:blackberries",
+   "name": "blackberries",
+   "lens": [
+    "fattonic"
+   ],
+   "kind": "food"
+  },
+  {
+   "id": "food:grapefruit",
+   "name": "a grapefruit",
+   "lens": [
+    "fattonic"
+   ],
+   "kind": "food"
+  },
+  {
+   "id": "food:clementine",
+   "name": "clementines",
+   "lens": [
+    "fattonic"
+   ],
+   "kind": "food"
+  },
+  {
+   "id": "food:pomegranate",
+   "name": "a pomegranate",
+   "lens": [
+    "fattonic"
+   ],
+   "kind": "food"
+  },
+  {
+   "id": "food:papaya",
+   "name": "a papaya",
+   "lens": [
+    "fattonic"
+   ],
+   "kind": "food"
+  },
+  {
+   "id": "food:dragon-fruit",
+   "name": "a dragon fruit",
+   "lens": [
+    "fattonic"
+   ],
+   "kind": "food"
+  },
+  {
+   "id": "food:passion-fruit",
+   "name": "passion fruit",
+   "lens": [
+    "fattonic"
+   ],
+   "kind": "food"
+  },
+  {
+   "id": "food:lychee",
+   "name": "lychees",
+   "lens": [
+    "fattonic"
+   ],
+   "kind": "food"
+  },
+  {
+   "id": "food:persimmon",
+   "name": "a persimmon",
+   "lens": [
+    "fattonic"
+   ],
+   "kind": "food"
+  },
+  {
+   "id": "food:guava",
+   "name": "a guava",
+   "lens": [
+    "fattonic"
+   ],
+   "kind": "food"
+  },
+  {
+   "id": "food:nectarine",
+   "name": "a nectarine",
+   "lens": [
+    "fattonic",
+    "detoxcellence"
+   ],
+   "kind": "food"
+  },
+  {
+   "id": "food:apricot",
+   "name": "apricots",
+   "lens": [
+    "fattonic"
+   ],
+   "kind": "food"
+  },
+  {
+   "id": "food:cantaloupe",
+   "name": "a cantaloupe melon",
+   "lens": [
+    "fattonic"
+   ],
+   "kind": "food"
+  },
+  {
+   "id": "food:honeydew",
+   "name": "a honeydew melon",
+   "lens": [
+    "fattonic"
+   ],
+   "kind": "food"
+  },
+  {
+   "id": "food:dates",
+   "name": "dates",
+   "lens": [
+    "fattonic"
+   ],
+   "kind": "food"
+  },
+  {
+   "id": "food:corn",
+   "name": "corn on the cob",
+   "lens": [
+    "fattonic"
+   ],
+   "kind": "food"
+  },
+  {
+   "id": "food:green-peas",
+   "name": "green peas",
+   "lens": [
+    "fattonic"
+   ],
+   "kind": "food"
+  },
+  {
+   "id": "food:beetroot",
+   "name": "beetroot",
+   "lens": [
+    "fattonic"
+   ],
+   "kind": "food"
+  },
+  {
+   "id": "food:butternut-squash",
+   "name": "a butternut squash",
+   "lens": [
+    "fattonic"
+   ],
+   "kind": "food"
+  },
+  {
+   "id": "food:pumpkin",
+   "name": "a pumpkin",
+   "lens": [
+    "fattonic"
+   ],
+   "kind": "food"
+  },
+  {
+   "id": "food:green-beans",
+   "name": "green beans",
+   "lens": [
+    "fattonic",
+    "detoxcellence"
+   ],
+   "kind": "food"
+  },
+  {
+   "id": "food:brussels-sprouts",
+   "name": "brussels sprouts",
+   "lens": [
+    "fattonic"
+   ],
+   "kind": "food"
+  },
+  {
+   "id": "food:parsnip",
+   "name": "parsnips",
+   "lens": [
+    "fattonic"
+   ],
+   "kind": "food"
+  },
+  {
+   "id": "food:okra",
+   "name": "okra",
+   "lens": [
+    "fattonic"
+   ],
+   "kind": "food"
+  },
+  {
+   "id": "food:plantain",
+   "name": "plantains",
+   "lens": [
+    "fattonic"
+   ],
+   "kind": "food"
+  },
+  {
+   "id": "food:spinach",
+   "name": "spinach leaves",
+   "lens": [
+    "fattonic",
+    "detoxcellence"
+   ],
+   "kind": "food"
+  },
+  {
+   "id": "food:celery",
+   "name": "celery",
+   "lens": [
+    "detoxcellence"
+   ],
+   "kind": "food"
+  },
+  {
+   "id": "food:naan",
+   "name": "naan bread",
+   "lens": [
+    "fattonic"
+   ],
+   "kind": "food"
+  },
+  {
+   "id": "food:pita",
+   "name": "pita bread",
+   "lens": [
+    "fattonic"
+   ],
+   "kind": "food"
+  },
+  {
+   "id": "food:english-muffin",
+   "name": "an english muffin",
+   "lens": [
+    "fattonic"
+   ],
+   "kind": "food"
+  },
+  {
+   "id": "food:hamburger-bun",
+   "name": "hamburger buns",
+   "lens": [
+    "fattonic"
+   ],
+   "kind": "food"
+  },
+  {
+   "id": "food:pumpernickel",
+   "name": "pumpernickel bread",
+   "lens": [
+    "fattonic"
+   ],
+   "kind": "food"
+  },
+  {
+   "id": "food:multigrain-bread",
+   "name": "multigrain bread",
+   "lens": [
+    "fattonic"
+   ],
+   "kind": "food"
+  },
+  {
+   "id": "food:tortilla",
+   "name": "flour tortillas",
+   "lens": [
+    "fattonic"
+   ],
+   "kind": "food"
+  },
+  {
+   "id": "food:pancakes",
+   "name": "pancakes",
+   "lens": [
+    "fattonic"
+   ],
+   "kind": "food"
+  },
+  {
+   "id": "food:waffle",
+   "name": "a waffle",
+   "lens": [
+    "fattonic"
+   ],
+   "kind": "food"
+  },
+  {
+   "id": "object:nonstick-pan",
+   "name": "a non-stick frying pan",
+   "lens": [
+    "detoxcellence"
+   ],
+   "kind": "object"
+  },
+  {
+   "id": "object:cast-iron-pan",
+   "name": "a cast iron skillet",
+   "lens": [
+    "detoxcellence"
+   ],
+   "kind": "object"
+  },
+  {
+   "id": "object:stainless-steel-pan",
+   "name": "a stainless steel pan",
+   "lens": [
+    "detoxcellence"
+   ],
+   "kind": "object"
+  },
+  {
+   "id": "object:plastic-food-container",
+   "name": "a plastic food storage container",
+   "lens": [
+    "detoxcellence"
+   ],
+   "kind": "object"
+  },
+  {
+   "id": "object:glass-food-container",
+   "name": "a glass food storage container",
+   "lens": [
+    "detoxcellence"
+   ],
+   "kind": "object"
+  },
+  {
+   "id": "object:takeout-container",
+   "name": "a takeout food container",
+   "lens": [
+    "detoxcellence"
+   ],
+   "kind": "object"
+  },
+  {
+   "id": "object:scented-candle",
+   "name": "a scented candle in a jar",
+   "lens": [
+    "detoxcellence"
+   ],
+   "kind": "object"
+  },
+  {
+   "id": "object:shampoo-bottle",
+   "name": "a shampoo bottle",
+   "lens": [
+    "detoxcellence"
+   ],
+   "kind": "object"
+  },
+  {
+   "id": "object:plastic-cutting-board",
+   "name": "a plastic cutting board",
+   "lens": [
+    "detoxcellence"
+   ],
+   "kind": "object"
+  },
+  {
+   "id": "object:plastic-water-bottle",
+   "name": "a plastic water bottle",
+   "lens": [
+    "detoxcellence"
+   ],
+   "kind": "object"
+  },
+  {
+   "id": "object:canned-food",
+   "name": "a tin can of food",
+   "lens": [
+    "detoxcellence"
+   ],
+   "kind": "object"
+  },
+  {
+   "id": "drink:coffee",
+   "name": "a cup of coffee",
+   "lens": [
+    "snapstress"
+   ],
+   "kind": "drink"
+  },
+  {
+   "id": "drink:espresso",
+   "name": "an espresso",
+   "lens": [
+    "snapstress"
+   ],
+   "kind": "drink"
+  },
+  {
+   "id": "drink:energy-drink",
+   "name": "an energy drink can",
+   "lens": [
+    "snapstress"
+   ],
+   "kind": "drink"
+  },
+  {
+   "id": "drink:cola",
+   "name": "a cola",
+   "lens": [
+    "snapstress"
+   ],
+   "kind": "drink"
+  },
+  {
+   "id": "drink:wine",
+   "name": "a glass of wine",
+   "lens": [
+    "snapstress"
+   ],
+   "kind": "drink"
+  },
+  {
+   "id": "drink:beer",
+   "name": "a glass of beer",
+   "lens": [
+    "snapstress"
+   ],
+   "kind": "drink"
+  },
+  {
+   "id": "food:chocolate-bar",
+   "name": "a chocolate bar",
+   "lens": [
+    "snapstress",
+    "fattonic",
+    "detoxcellence"
+   ],
+   "kind": "food"
+  },
+  {
+   "id": "object:phone-screen-night",
+   "name": "a phone screen glowing in the dark",
+   "lens": [
+    "snapstress"
+   ],
+   "kind": "object"
+  },
+  {
+   "id": "food:lime",
+   "name": "a lime",
+   "lens": [
+    "fattonic"
+   ],
+   "kind": "food"
+  },
+  {
+   "id": "food:ginger",
+   "name": "ginger root",
+   "lens": [
+    "fattonic"
+   ],
+   "kind": "food"
+  }
+ ]
+}

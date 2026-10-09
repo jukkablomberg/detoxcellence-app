@@ -53,8 +53,8 @@ const config: ExpoConfig = {
       backgroundImage: "./assets/adaptive-icon-background.png",
       monochromeImage: "./assets/adaptive-icon-monochrome.png",
     },
-    // The only runtime permission is POST_NOTIFICATIONS, contributed by
-    // expo-notifications' manifest and asked for only when the reader turns the
+    // Runtime permissions: CAMERA (expo-camera's plugin), asked only when the reader taps the
+    // scan target, and POST_NOTIFICATIONS (expo-notifications), asked only when the reader turns the
     // weekly swap reminder on (Swaps tab). The reminder is a LOCAL notification —
     // no push token, no server. The Exposure Index is bundled; quiz results and
     // score history stay in app storage on the phone.
@@ -68,6 +68,19 @@ const config: ExpoConfig = {
   },
   plugins: [
     "expo-router",
+    // health-camera (HEALTH-TRIO-DAY C2): the studio's one engine (a byte copy of FatTonic's, scripts/sync-camera-engine.mjs
+    // --check) — SigLIP 2 in ONNX Runtime on the phone; scripts/patch-ort-native.mjs makes it build on Gradle 9.
+    "onnxruntime-react-native",
+    [
+      // Scan + room check: the camera recognises everyday products ON the phone. Photos are classified and deleted;
+      // nothing is stored or sent (modules/health-camera). No microphone: stills only.
+      "expo-camera",
+      {
+        cameraPermission: "Detoxcellence uses the camera to recognise everyday products on your phone. Photos are not stored or sent.",
+        microphonePermission: false,
+        recordAudioAndroid: false,
+      },
+    ],
     [
       // Local notifications only (the weekly swap reminder, src/lib/reminders.ts). The small
       // icon is white-on-transparent, derived from the mark by scripts/store-assets.mjs.

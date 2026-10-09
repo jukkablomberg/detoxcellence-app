@@ -1,0 +1,24 @@
+{
+ "_note": "The image encoder the phones run. Not in git (95 MB): scripts/fetch-camera-model.mjs downloads it on the EAS builder (eas-build-post-install) and verifies sha256 before Metro bundles it. Licence read on the model's own page 2026-10-07.",
+ "name": "SigLIP 2 base/16 224 px \u2014 image encoder, uint8 dynamic quantisation",
+ "url": "https://huggingface.co/onnx-community/siglip2-base-patch16-224-ONNX/resolve/ba1f3b0843/onnx/vision_model_uint8.onnx",
+ "file": "model/vision_model_uint8.onnx",
+ "bytes": 94553333,
+ "sha256": "5f2b401c1a4fc095702a5d45348e17ad46c4f87064085365b43c6e8eaa5c0070",
+ "weights": "google/siglip2-base-patch16-224",
+ "licence": "Apache-2.0",
+ "licence_source": "https://huggingface.co/google/siglip2-base-patch16-224",
+ "licence_read": "2026-10-07",
+ "input": {
+  "name": "pixel_values",
+  "shape": [
+   1,
+   3,
+   224,
+   224
+  ],
+  "resize": "224x224 bilinear (Pillow triangle filter), no crop",
+  "normalize": "(v/255-0.5)/0.5"
+ },
+ "output": "pooler_output [1,768]"
+}

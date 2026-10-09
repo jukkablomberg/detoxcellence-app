@@ -1,0 +1,106 @@
+{
+ "_note": "Detoxcellence's camera lens: engine label → Exposure Index row slug (src/data/exposures.json via slugify(name)). App-owned, NOT synced with the engine (docs/camera-engine.md). Every label the engine tags with lens 'detoxcellence' is mapped; rows+ask = one follow-up tap where the row depends on it (coating, use, contents, organic or conventional) — HEALTH-TRIO-DAY C2. Produce maps to the index's 'Conventional …' row (only strawberries have an organic row). Checked by scripts/lens.test.mjs: every row resolves, every detox label is mapped.",
+ "lens": "detoxcellence",
+ "version": "2026-10-09.1",
+ "map": {
+  "object:nonstick-pan": {
+   "rows": [
+    "nonstick-ptfe-cookware",
+    "ceramic-coated-nonstick-pans"
+   ],
+   "ask": "Which coating is it?"
+  },
+  "object:cast-iron-pan": {
+   "row": "cast-iron-cookware"
+  },
+  "object:stainless-steel-pan": {
+   "row": "stainless-steel-cookware"
+  },
+  "object:plastic-food-container": {
+   "rows": [
+    "heating-food-in-plastic",
+    "fluorinated-plastic-containers"
+   ],
+   "ask": "Which describes it best?"
+  },
+  "object:glass-food-container": {
+   "row": "glass-food-storage"
+  },
+  "object:takeout-container": {
+   "row": "hot-greasy-takeout-containers"
+  },
+  "object:scented-candle": {
+   "row": "scented-candles-paraffin"
+  },
+  "object:shampoo-bottle": {
+   "row": "conventional-shampoo"
+  },
+  "object:plastic-cutting-board": {
+   "row": "plastic-cutting-boards"
+  },
+  "object:plastic-water-bottle": {
+   "rows": [
+    "bottled-water-plastic",
+    "canned-reused-plastic-bottles"
+   ],
+   "ask": "Bought bottled water, or a bottle you refill?"
+  },
+  "object:canned-food": {
+   "rows": [
+    "canned-food-bpa-lining",
+    "canned-tomatoes-bpa-lined",
+    "canned-tuna"
+   ],
+   "ask": "What is in the can?"
+  },
+  "food:strawberries": {
+   "rows": [
+    "conventional-strawberries",
+    "organic-strawberries"
+   ],
+   "ask": "Organic or conventional?"
+  },
+  "food:apple": {
+   "row": "conventional-apples"
+  },
+  "food:grapes": {
+   "row": "conventional-grapes"
+  },
+  "food:pear": {
+   "row": "conventional-pears"
+  },
+  "food:blueberries": {
+   "row": "conventional-blueberries"
+  },
+  "food:cherries": {
+   "row": "conventional-cherries"
+  },
+  "food:bell-pepper": {
+   "row": "conventional-bell-peppers"
+  },
+  "food:potato": {
+   "row": "conventional-potatoes"
+  },
+  "food:kale": {
+   "row": "conventional-kale"
+  },
+  "food:peach": {
+   "row": "conventional-peaches"
+  },
+  "food:nectarine": {
+   "row": "conventional-nectarines"
+  },
+  "food:green-beans": {
+   "row": "conventional-green-beans"
+  },
+  "food:spinach": {
+   "row": "conventional-spinach"
+  },
+  "food:celery": {
+   "row": "conventional-celery"
+  },
+  "food:chocolate-bar": {
+   "row": "dark-chocolate-heavy-metals"
+  }
+ }
+}

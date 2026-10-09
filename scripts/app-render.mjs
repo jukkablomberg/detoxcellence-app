@@ -10,7 +10,13 @@
  * C1 checks (stated before running, HEALTH-TRIO-DAY § 5 C1): the Index lists every bundled entry offline · search
  * narrows it · an entry page opens at /exposure/<slug> with the site's own Detox Score · back returns to the list ·
  * the quiz runs 15 questions to a result whose score equals scoreQuiz() and lands in the history · the result's
- * next step opens the Index on that area · Swaps lists the next 8 swaps · the "i" opens About · 3 tabs with labels.
+ * next step opens the Index on that area · Swaps lists the next 8 swaps · the "i" opens About · tabs with labels.
+ * C2 checks (docs/scan-flow.md rules 1–4, stated before running): the front page is the target, ≥ 35 % of the
+ * screen, above the fold, ≤ 25 words above it, aisles below · "Is it…" chips with a reference photo and a header
+ * back · a two-row label asks its question, then opens the entry; back returns to the question · header back, the
+ * Scan tab, the brand and Scan another each land on the front page · all 12 Detox evaluation classes resolve to
+ * their row through the chips (?demo=<label>, web only) · the room check lists rows highest burden first with a top
+ * swap · an aisle opens the Index on that category.
  */
 import http from "node:http";
 import fs from "node:fs";
@@ -22,6 +28,7 @@ import { launchChromium } from "./browser.mjs";
 const here = path.dirname(fileURLToPath(import.meta.url));
 register(pathToFileURL(path.join(here, "ts-resolve-hook.mjs")));
 const { scoreItem, slugify } = await import(pathToFileURL(path.join(here, "../src/lib/score.ts")).href);
+const { rowsFor } = await import(pathToFileURL(path.join(here, "../src/lib/lens.ts")).href);
 const { scoreQuiz, QUESTIONS } = await import(pathToFileURL(path.join(here, "../src/lib/quiz.ts")).href);
 const rows = JSON.parse(fs.readFileSync(path.join(here, "../src/data/exposures.json"), "utf8")).rows;
 
@@ -52,12 +59,105 @@ const backCtl = () => page.getByRole("link", { name: /back/i }).or(page.getByRol
 const checks = {}, facts = {};
 const step = async (name, fn) => { try { checks[name] = !!(await fn()); } catch (e) { checks[name] = false; facts[`${name}:error`] = String(e).slice(0, 300); } };
 
+/* ---------------- C2: the scan flow (docs/scan-flow.md) ---------------- */
+const H = 844;
+const target = () => tid("scan-target");
+const atHome = async () => (await target().count()) === 1 && (await vis("Is it…").count()) === 0;
 await page.goto(BASE + "/", { waitUntil: "networkidle" });
+await target().waitFor({ timeout: 20000 });
+await page.getByLabel("Detoxcellence, built by JukkaBlomberg.com").waitFor({ state: "detached", timeout: 5000 }).catch(() => {});
+await page.screenshot({ path: `${out}/0-scan-home.png` });
+const box = await target().boundingBox();
+facts.target = box;
+facts.copyAboveTarget = await page.evaluate((top) => {
+  const w = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT); const words = [];
+  while (w.nextNode()) { const n = w.currentNode; if (!n.textContent.trim()) continue; const r = document.createRange(); r.selectNodeContents(n); const b = r.getBoundingClientRect(); if (b.width && b.bottom <= top && b.top >= 0) words.push(n.textContent.trim()); }
+  return words;
+}, box.y);
+await step("r1TargetAboveFold", () => box.y >= 0 && box.y + box.height <= H);
+await step("r1TargetBig", () => box.height >= 0.35 * H);
+await step("r1LittleAboveTarget", () => facts.copyAboveTarget.join(" ").split(/\s+/).filter(Boolean).length <= 25);
+await step("r1HasAisles", async () => (await vis("Browse the aisles").count()) === 1);
+await page.screenshot({ path: `${out}/0b-scan-home-full.png`, fullPage: true });
+
+await target().click();
+await vis("Is it…").first().waitFor({ timeout: 10000 });
+await page.screenshot({ path: `${out}/0c-pick.png` });
+await step("r2ChipsWithPhoto", async () => (await page.locator('[data-testid="chip-photo"]:visible').count()) >= 1);
+await step("r4PickHasBack", async () => (await tid("scan-back").count()) === 1);
+await page.getByRole("button", { name: "Plastic water bottle" }).filter({ visible: true }).first().click();
+await vis("Bought bottled water, or a bottle you refill?").first().waitFor({ timeout: 5000 });
+await step("r2AskQuestion", async () => (await tid("ask-bottled-water-plastic").count()) === 1 && (await tid("ask-canned-reused-plastic-bottles").count()) === 1);
+await tid("ask-bottled-water-plastic").click();
+await page.waitForURL(/\/exposure\/bottled-water-plastic$/, { timeout: 10000 });
+await step("r3OneEntryPage", async () => (await tid("entry-score").count()) === 1);
+await step("r4EntryEndsScanAnother", async () => (await tid("scan-another").count()) === 1);
+await backCtl().first().click();
+await vis("Bought bottled water, or a bottle you refill?").first().waitFor({ timeout: 10000 }).catch(() => {});
+await step("r3BackReturnsToQuestion", async () => pathname() === "/" && (await vis("Bought bottled water, or a bottle you refill?").count()) >= 1);
+await tid("scan-back").click();
+await step("r4HeaderBackHome", atHome);
+await target().click();
+await vis("Is it…").first().waitFor({ timeout: 10000 });
+await tab("Scan").click();
+await page.waitForTimeout(400);
+// NativeTabs on the WEB is a Radix tab list, which does not fire on re-selecting the active tab, so the Scan tab's
+// "press me again → home" (tabPress, emitted by the native tab bars on iOS + Android) cannot be driven here. Recorded,
+// not counted: it is on the phone-check list (scan-flow rule 5 — native-only paths go to the phone).
+facts.r4ScanTabHomeWeb = (await atHome()) ? "home" : "not driveable on web (Radix ignores re-selecting the active tab) → phone check";
+if (!(await atHome())) await tid("scan-back").click();
+// Scan another, from an entry page three deep
+await target().click();
+await vis("Is it…").first().waitFor({ timeout: 10000 });
+await page.getByRole("button", { name: "Shampoo bottle" }).filter({ visible: true }).first().click();
+await page.waitForURL(/\/exposure\/conventional-shampoo$/, { timeout: 10000 });
+await tid("scan-another").click();
+await page.waitForTimeout(500);
+await step("r4ScanAnotherHome", async () => pathname() === "/" && (await atHome()));
+
+// every Detox evaluation class → its row, through the chips
+const DETOX = ["object:nonstick-pan", "object:cast-iron-pan", "object:stainless-steel-pan", "object:plastic-food-container", "object:glass-food-container", "object:takeout-container", "object:scented-candle", "object:shampoo-bottle", "object:plastic-cutting-board", "object:plastic-water-bottle", "object:canned-food", "food:strawberries"];
+facts.classes = {};
+for (const label of DETOX) {
+  try {
+    await page.goto(`${BASE}/?demo=${encodeURIComponent(label)}`, { waitUntil: "networkidle" });
+    await vis("Is it…").first().waitFor({ timeout: 10000 });
+    const want = rowsFor(label)[0];
+    const name = (await import(pathToFileURL(path.join(here, "../src/lib/lens.ts")).href)).displayName(label);
+    await page.getByRole("button", { name, exact: true }).filter({ visible: true }).first().click();
+    if (rowsFor(label).length > 1) await tid(`ask-${want}`).click();
+    await page.waitForURL(new RegExp(`/exposure/${want}$`), { timeout: 10000 });
+    await tid("entry-score").waitFor({ timeout: 5000 });
+    facts.classes[label] = want;
+  } catch (e) { facts.classes[label] = `FAIL ${String(e).slice(0, 120)}`; }
+}
+await step("c2TwelveDetoxClassesResolve", () => DETOX.every((l) => facts.classes[l] === rowsFor(l)[0]));
+
+// the room check (web: the demo photo's real ranking)
+await page.goto(BASE + "/", { waitUntil: "networkidle" });
+await tid("room-check").click();
+await tid("room-result").waitFor({ timeout: 10000 });
+await page.screenshot({ path: `${out}/0d-room.png`, fullPage: true });
+facts.room = await page.locator('[data-testid^="room-"]:visible').evaluateAll((els) => els.map((e) => e.getAttribute("data-testid")).filter((id) => !["room-result", "room-top-swap", "room-check"].includes(id)).map((id) => id.slice(5)));
+await step("roomOrderedByBurden", () => { const sc = facts.room.map((s) => scoreItem(rows.find((r) => slugify(r.name) === s))); return sc.length >= 2 && sc.every((v, i) => i === 0 || sc[i - 1] <= v); });
+await step("roomTopSwap", async () => (await tid("room-top-swap").count()) === 1);
+await tid("scan-back").click();
+await page.getByRole("button", { name: /^Kitchen, \d+ entries$/ }).filter({ visible: true }).first().click();
+await tid("index-search").waitFor({ timeout: 10000 });
+await page.waitForTimeout(300);
+await step("aisleOpensIndexCategory", async () => (await vis(`${rows.filter((r) => r.category === "Kitchen").length} of ${rows.length}`).count()) >= 1);
+// On the web the native tab bar is drawn as a floating pill over the header (web-only); press the brand directly.
+await page.getByRole("button", { name: "Index — go to Scan" }).filter({ visible: true }).first().dispatchEvent("click");
+await page.waitForTimeout(500);
+await step("r4BrandHome", async () => pathname() === "/" && (await atHome()));
+
+/* ---------------- C1: Index, entry, quiz, swaps, About ---------------- */
+await tab("Index").click();
 await tid("index-search").waitFor({ timeout: 20000 });
-await page.getByLabel("Detoxcellence, built by JukkaBlomberg.com").waitFor({ state: "detached", timeout: 5000 }).catch(() => {}); // the brand moment (≤ 1 s)
+await tid("cat-all").click();
 await page.screenshot({ path: `${out}/1-index.png` });
 
-await step("tabsThreeLabelled", async () => (await Promise.all(["Index", "Score", "Swaps"].map(async (n) => (await tab(n).count()) >= 1))).every(Boolean));
+await step("tabsFourLabelled", async () => (await Promise.all(["Scan", "Index", "Score", "Swaps"].map(async (n) => (await tab(n).count()) >= 1))).every(Boolean));
 await step("indexListsAllOffline", async () => (await vis(`${rows.length} of ${rows.length}`).count()) >= 1 && (await vis("bundled with the app").count()) >= 1);
 await step("disclosureOnFirstScreen", async () => (await vis("Information, not medical advice").count()) >= 1);
 
@@ -78,7 +178,7 @@ facts.headerControls = await page.evaluate(() => [...document.querySelectorAll("
 await step("entryHasPlatformBack", async () => (await backCtl().count()) >= 1);
 await backCtl().first().click();
 await tid("index-search").waitFor({ timeout: 10000 });
-await step("backReturnsToIndex", () => pathname() === "/");
+await step("backReturnsToIndex", () => pathname() === "/exposures");
 
 // the quiz: all-worst answers, compared with scoreQuiz()
 await tab("Score").click();
@@ -121,7 +221,7 @@ await step("infoOpensAbout", () => pathname() === "/about");
 facts.siteCallsBlocked = siteCalls;
 facts.pageErrors = errors;
 const ok = Object.values(checks).every(Boolean) && errors.length === 0;
-fs.writeFileSync(`${out}/c1-render-result.json`, JSON.stringify({ ok, checks, facts }, null, 2));
+fs.writeFileSync(`${out}/render-result.json`, JSON.stringify({ ok, checks, facts }, null, 2));
 console.log(JSON.stringify({ ok, checks, facts }, null, 2));
 await browser.close();
 server.close();

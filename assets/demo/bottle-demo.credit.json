@@ -1,0 +1,11 @@
+{
+  "file": "assets/demo/bottle-demo.jpg",
+  "title": "Empty plastic bottle",
+  "author": "KDADA",
+  "licence": "CC0",
+  "licence_url": "http://creativecommons.org/publicdomain/zero/1.0/deed.en",
+  "source_page": "https://commons.wikimedia.org/wiki/File:Empty_plastic_bottle.png",
+  "accessed": "2026-10-08",
+  "via": "projects/fattonic/camera-lab/train/object__plastic-water-bottle/co-008.jpg (A8 training pool, train-manifest.csv) — a training photo, not an evaluation photo",
+  "classified": "2026-10-09 by the shipped engine (core.ts + vision_model_uint8.onnx via onnxruntime-node, rank k=8) — the scores in src/lib/scan-demo.ts are that run's output, copied"
+}

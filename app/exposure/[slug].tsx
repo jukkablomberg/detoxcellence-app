@@ -3,11 +3,13 @@ import { Pressable, Text, View } from "react-native";
 import { bySlug, entryUrl, EVIDENCE, hasSwap, INPUTS, studyUrl, useIndex, type Entry } from "../../src/lib/exposures";
 import { openOutbound } from "../../src/lib/outbound";
 import { space, type, useTheme } from "../../src/lib/theme";
-import { BandPill, Body, Display, Heading, Label, Screen, Tile } from "../../src/ui/primitives";
+import { scanHome } from "../../src/lib/nav";
+import { BandPill, Body, Button, Display, Heading, Label, Screen, Tile } from "../../src/ui/primitives";
 
 /**
  * One entry page per Index row (docs/scan-flow.md rule 3 — reached the same way from everywhere: the Index, the
- * Score's next step, a reminder, and from C2 a scan). Pushed on the root stack with the platform back.
+ * Score's next step, a reminder, a scan or the room check). Pushed on the root stack with the platform back; it ends
+ * with Scan another (rule 4 — home + camera from any depth).
  * Everything here is the site's own entry page in app form: score, band and verb, the score arithmetic, the swap,
  * the note, the studies behind each input (or "unsourced input" — never silence), sources, evidence strength.
  */
@@ -111,6 +113,7 @@ function EntryPage({ e }: { e: Entry }) {
       <Pressable onPress={() => openOutbound(entryUrl(e.slug), "entry-site")} accessibilityRole="link" style={{ minHeight: 44, justifyContent: "center" }}>
         <Text style={type.strong(15, t.link)}>This entry on detoxcellence.com ↗</Text>
       </Pressable>
+      <Button title="Scan another" onPress={() => scanHome(true)} testID="scan-another" />
       <Body muted size={12}>Information, not medical advice. Detoxcellence Exposure Index, CC BY 4.0.</Body>
     </Screen>
   );

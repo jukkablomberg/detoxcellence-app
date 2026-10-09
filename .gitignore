@@ -24,3 +24,6 @@ parked-locks/
 
 # build marker (DE handshake) — never committed
 .pb-build-active
+
+# health-camera: the 95 MB encoder is fetched + sha256-verified at build time (scripts/fetch-camera-model.mjs), never committed
+modules/health-camera/model/

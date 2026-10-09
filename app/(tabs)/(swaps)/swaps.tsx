@@ -1,4 +1,5 @@
-import { router, useFocusEffect } from "expo-router";
+import { useFocusEffect } from "expo-router";
+import { openEntry } from "../../../src/lib/nav";
 import { useCallback, useState } from "react";
 import { Platform, Pressable, ScrollView, Switch, Text, View } from "react-native";
 import { useIndex } from "../../../src/lib/exposures";
@@ -81,7 +82,7 @@ export default function SwapsScreen() {
           <Pressable
             key={date.toISOString()}
             testID={`swap-${entry.slug}`}
-            onPress={() => router.push(`/exposure/${entry.slug}` as never)}
+            onPress={() => openEntry(entry.slug)}
             accessibilityRole="button"
             style={({ pressed }) => ({ backgroundColor: t.panel, borderRadius: radius.card, padding: space.l, gap: 6, opacity: pressed ? 0.8 : 1 })}
           >

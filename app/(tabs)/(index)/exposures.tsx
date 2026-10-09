@@ -1,4 +1,5 @@
-import { router, useLocalSearchParams } from "expo-router";
+import { useLocalSearchParams } from "expo-router";
+import { openEntry } from "../../../src/lib/nav";
 import { useEffect, useMemo, useState } from "react";
 import { FlatList, Pressable, ScrollView, Text, TextInput, View } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
@@ -11,24 +12,25 @@ type Sort = "burden" | "cleanest";
 /**
  * The Exposure Index, offline: search, one category at a time, highest burden first (the site's sort=burden) or
  * cleanest first. Every row opens the one entry page (/exposure/<slug>), the same page from every surface.
- * `?cat=` arrives from the Score tab's next step ("See the highest-burden water entries").
+ * `?cat=` arrives from Scan's aisles and the Score tab's next step ("See the highest-burden water entries").
  */
 export default function IndexScreen() {
   const t = useTheme();
   const insets = useSafeAreaInsets();
   const { list, doc, from } = useIndex();
-  const params = useLocalSearchParams<{ cat?: string }>();
+  const params = useLocalSearchParams<{ cat?: string; t?: string }>();
   const [q, setQ] = useState("");
   const [cat, setCat] = useState<string | null>(null);
   const [sort, setSort] = useState<Sort>("burden");
 
+  // An aisle from Scan or the Score's next step (src/lib/nav.ts openAisle): that category, highest burden first,
+  // any old search cleared. `t` makes every arrival a new event.
   useEffect(() => {
-    if (params.cat && (CATEGORIES as readonly string[]).includes(params.cat)) {
-      setCat(params.cat);
-      setSort("burden");
-      setQ("");
-    }
-  }, [params.cat]);
+    if (params.cat === undefined) return;
+    setCat(params.cat && (CATEGORIES as readonly string[]).includes(params.cat) ? params.cat : null);
+    setSort("burden");
+    setQ("");
+  }, [params.cat, params.t]);
 
   const rows = useMemo(() => {
     const base = cat ? list.filter((e) => e.category === cat) : list;
@@ -88,7 +90,7 @@ function Row({ e }: { e: Entry }) {
   return (
     <Pressable
       testID={`row-${e.slug}`}
-      onPress={() => router.push(`/exposure/${e.slug}` as never)}
+      onPress={() => openEntry(e.slug)}
       accessibilityRole="button"
       accessibilityLabel={`${e.name}, Detox Score ${e.score}, ${e.band}`}
       style={({ pressed }) => ({ backgroundColor: t.panel, borderRadius: radius.card, padding: space.l, gap: 6, opacity: pressed ? 0.8 : 1 })}

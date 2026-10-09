@@ -5,6 +5,13 @@ The Exposure Index on the phone. Built 2026-10-09 by HEALTH-TRIO-DAY track C (`p
 FatTonic, reused here — the Detox lens is C2). Shell = the studio standard (`design/APP-STANDARD.md`,
 `design/APP-ABOUT-STANDARD.md`), look = `../repo/DESIGN.md` § App (Integrity).
 
+## Scan — the Detox lens (C2)
+
+The studio's one camera engine, a byte copy of FatTonic's (`modules/health-camera`, `npm run check:camera-sync`; the
+95 MB encoder is fetched at build, never committed). This app owns only its lens (`src/data/lens-detoxcellence.json`,
+`src/lib/lens.ts`) and its screen (`app/(tabs)/(scan)/index.tsx`, rules in `docs/scan-flow.md`). Room check = one
+photo → the lens labels in the engine's top 8 → their rows ordered by Detox Score → the top swap; no room score.
+
 ## The three native features (venture.json → apps.json → review notes)
 
 | feature | where | what proves it |
@@ -24,7 +31,7 @@ When online the app refreshes from the same export and keeps the last good copy.
 ## Checks
 
 ```
-npm test                       # parity: every row's id/score/band vs the site CSV; the quiz vs the site's own quiz.js
+npm test                       # lens (every detox label mapped, rows resolve, room order); parity: every row's id/score/band vs the site CSV; the quiz vs the site's own quiz.js
                                # (fixed vectors + 400 random); the swap plan; the sync red-proof
 npm run check:exposures-sync
 npm run check:listing          # R1–R16; R16 = no "non-toxic" / "toxin-free" / "chemical-free" on any surface

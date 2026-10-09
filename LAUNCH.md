@@ -10,6 +10,10 @@
   first-screen disclosure (R13 GREEN); `/app/privacy` + `/app/support` on detoxcellence.com (site `a796d90`); icon + adaptive layers +
   feature graphic derived from the site's mark (provisional — Jukka's word). Policy edges: Apple 1.4.1 health methodology · Play Health apps
   declaration; regulated-medical-device = No (to set in ASC at C3). Not yet: Firebase (no project), Play app + ASC record (§ 4 moment 2), builds (C3).
+- 2026-10-09 C2 — Detox lens: engine = byte copy of FatTonic `c5a4022` (`check:camera-sync` GREEN, its red-proof behaved); camera permission
+  string "Detoxcellence uses the camera to recognise everyday products on your phone. Photos are not stored or sent."; Scan first tab + room
+  check; 84 Detox eval photos through the lens: right label in the 3 chips 77/84 (91.7 %); web export 31/31 checks; `/app/privacy` camera
+  section live (site `80da532`). Phone-check list: `docs/scan-flow.md`.
 
 > Every ✅ needs capability evidence (L3): a URL that returns 200 with the expected body, a build that
 > installed on a device, a review status read from the console — never "configured".

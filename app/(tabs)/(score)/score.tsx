@@ -1,4 +1,5 @@
-import { router, useFocusEffect } from "expo-router";
+import { useFocusEffect } from "expo-router";
+import { openAisle } from "../../../src/lib/nav";
 import { useCallback, useState } from "react";
 import { Pressable, Text, View } from "react-native";
 import { appendHistory, clearHistory, newestFirst, readHistory, type HistoryEntry } from "../../../src/lib/history";
@@ -122,7 +123,7 @@ function ResultCard({ r, fresh }: { r: Result; fresh: boolean }) {
         <Text style={type.strong(15, t.ink)}>Your #1 lever right now</Text>
         <Body>{r.profile.fix}</Body>
       </View>
-      <Button testID="result-next" title={`${next.label} →`} onPress={() => router.navigate({ pathname: "/", params: cats[0] ? { cat: cats[0] } : {} } as never)} />
+      <Button testID="result-next" title={`${next.label} →`} onPress={() => openAisle(cats[0] ?? null)} />
     </Tile>
   );
 }

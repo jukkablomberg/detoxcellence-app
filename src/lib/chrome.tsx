@@ -1,4 +1,4 @@
-import { Text, useColorScheme } from "react-native";
+import { Pressable, Text, useColorScheme } from "react-native";
 import type { StudioTheme } from "../studio/theme";
 import { fonts, palettes } from "./theme";
 
@@ -22,7 +22,10 @@ export function useStudioTheme(): StudioTheme {
 
 export const VENTURE_NAME = "Detoxcellence";
 
-/** The tab-root title in the venture's display face: League Gothic, uppercase (DESIGN.md: display = scores and headings). */
-export function DisplayTitle({ title, color }: { title: string; color: string }) {
-  return <Text accessibilityRole="header" style={{ fontFamily: fonts.display, fontSize: 28, lineHeight: 30, letterSpacing: 0.3, textTransform: "uppercase", color }}>{title}</Text>;
+/** The tab-root title in the venture's display face: League Gothic, uppercase (DESIGN.md: display = scores and headings).
+ *  docs/scan-flow.md rule 4: the title in every tab header is a way home (onPress → the Scan front page). */
+export function DisplayTitle({ title, color, onPress }: { title: string; color: string; onPress?: () => void }) {
+  const text = <Text accessibilityRole="header" style={{ fontFamily: fonts.display, fontSize: 28, lineHeight: 30, letterSpacing: 0.3, textTransform: "uppercase", color }}>{title}</Text>;
+  if (!onPress) return text;
+  return <Pressable onPress={onPress} accessibilityRole="button" accessibilityLabel={`${title} — go to Scan`} hitSlop={8} testID="brand-home">{text}</Pressable>;
 }
