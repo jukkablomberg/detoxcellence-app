@@ -29,6 +29,14 @@ const edits = [
     to: `extractLibs "com.microsoft.onnxruntime:onnxruntime-android:${VERSION}@aar" // patched: pinned`,
   },
   {
+    // Play Console 2026-10-10 (SnapStress vc 3 production draft): "Your app does not support 16 KB memory page sizes".
+    // Read in the vc 3 AAB: 28/29 arm64 libs align 16384; libonnxruntimejsi.so (this package's own CMake target,
+    // built by RN 0.86's NDK 27 with no page-size flag) aligns 4096. Link it with 16 KB max page size.
+    file: "android/CMakeLists.txt",
+    from: 'find_library(log-lib log)\n',
+    to: 'find_library(log-lib log)\ntarget_link_options(onnxruntimejsi PRIVATE "-Wl,-z,max-page-size=16384") # patched: Play 16 KB page sizes\n',
+  },
+  {
     file: "onnxruntime-react-native.podspec",
     from: 'spec.dependency "onnxruntime-c"\n',
     to: `spec.dependency "onnxruntime-c", "${VERSION}" # patched: pinned\n`,
