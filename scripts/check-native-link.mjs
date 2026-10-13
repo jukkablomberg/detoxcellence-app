@@ -23,7 +23,7 @@ const self = fileURLToPath(import.meta.url);
 const appRoot = resolve(dirname(self), "..");
 
 /** package → the class its Android package instance must construct. */
-export const REQUIRED = { "onnxruntime-react-native": "OnnxruntimePackage" };
+export const REQUIRED = { "onnxruntime-react-native": "OnnxruntimePackage", "react-native-purchases": "RNPurchasesPackage" }; // + purchases: [FT-MENU-TIER] 2026-10-10
 const ENGINE = "modules/health-camera/classify.native.ts";
 
 export function check(root) {
@@ -72,4 +72,5 @@ if (process.argv.includes("--redproof")) {
 
 const fails = check(appRoot);
 if (fails.length) { console.error("check:native-link RED\n  " + fails.join("\n  ")); process.exit(1); }
-console.log(`check:native-link GREEN — ${Object.keys(REQUIRED).join(", ")} registered on Android; engine loads ONNX Runtime lazily`);
+const used = Object.keys(REQUIRED).filter((n) => JSON.parse(readFileSync(join(appRoot, "package.json"), "utf8")).dependencies?.[n]); // a sister without purchases does not claim it
+console.log(`check:native-link GREEN — ${used.join(", ")} registered on Android; engine loads ONNX Runtime lazily`);

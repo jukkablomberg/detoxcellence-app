@@ -2,6 +2,7 @@ import { Stack, useLocalSearchParams } from "expo-router";
 import { Pressable, Text, View } from "react-native";
 import { bySlug, entryUrl, EVIDENCE, hasSwap, INPUTS, studyUrl, useIndex, type Entry } from "../../src/lib/exposures";
 import { openOutbound } from "../../src/lib/outbound";
+import { sisterLine } from "../../modules/health-camera/sister-lines";
 import { space, type, useTheme } from "../../src/lib/theme";
 import { scanHome } from "../../src/lib/nav";
 import { BandPill, Body, Button, Display, Heading, Label, Screen, Tile } from "../../src/ui/primitives";
@@ -31,6 +32,7 @@ export default function ExposureScreen() {
 function EntryPage({ e }: { e: Entry }) {
   const t = useTheme();
   const raw = 100 - e.hazard * 4.6 - e.exposure * 3.4 - e.persistence * 2.6;
+  const sister = sisterLine("detoxcellence", e.slug); // [HT-SISTER-LINES] the one sister app that reads the same thing
   return (
     <Screen testID={`entry-${e.slug}`}>
       <Stack.Screen options={{ title: e.category }} />
@@ -51,6 +53,12 @@ function EntryPage({ e }: { e: Entry }) {
         <Body>{e.name} {e.verb}.</Body>
         <Body muted size={13}>Higher means lower avoidable burden. Evidence strength: {EVIDENCE[e.evidence]}.</Body>
       </Tile>
+
+      {sister ? (
+        <Pressable testID="sister-line" onPress={() => openOutbound(sister.url, "entry-sister")} accessibilityRole="link" style={{ minHeight: 44, justifyContent: "center" }}>
+          <Text style={type.body(15, t.link)}>{sister.text} ↗</Text>
+        </Pressable>
+      ) : null}
 
       {hasSwap(e) ? (
         <Tile testID="entry-swap" style={{ backgroundColor: t.link }}>

@@ -36,6 +36,9 @@ export const FILES = [
   "modules/health-camera/label-photos.json",
   "modules/health-camera/label-photos.ts",
   "scripts/check-label-photos.mjs",
+  // [HT-SISTER-LINES] built here by scripts/build-sister-lines.mjs (fattonic-only script: it reads all three lenses)
+  "modules/health-camera/sister-lines.json",
+  "modules/health-camera/sister-lines.ts",
 ];
 // A9: every reference photo the manifest lists travels with the engine (shared engine data).
 {
