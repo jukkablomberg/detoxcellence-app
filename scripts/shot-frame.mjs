@@ -1,11 +1,18 @@
 /**
- * shot-frame.mjs — the two store geometries behind every screenshots.mjs. Lives in
+ * shot-frame.mjs — the three store geometries behind every screenshots.mjs. Lives in
  * projects/app-stores/repo-template/scripts/ and is copied VERBATIM into each repo-app
  * (never edited per venture; per-venture facts come from venture.json + store/listing.json).
  *
  *   android  360×640 CSS px @3x → 1080×1920 PNG, no band (the Play phone size; unchanged since 10-01)
  *   ios      440×836 CSS px @3x app shot (1320×2508) composed UNDER a 120 CSS px caption band
  *            → 440×956 @3x = 1320×2868 PNG, the iPhone 6.9" App Store size (APPLE-DAY-2026-10-06.md § 2 step 1)
+ *   ios-medium  402×754 CSS px @3x app shot (1206×2262) composed UNDER the same 120 CSS px band
+ *            → 402×874 @3x = 1206×2622 PNG, App Store Connect's "iPhone with Dynamic Island (medium display)"
+ *            slot, reused for every iPhone size ([APP-TEMPLATE-SHOT-IOS-MEDIUM] 2026-10-11). Rendered natively
+ *            at its own viewport — never resampled from 1320×2868 (MonitoringRoom's sips set, 2977bba: aspect
+ *            0.4600 vs 0.4603). Every screenshots.mjs emits BOTH iOS sizes (platformsFromArgv's default is all
+ *            three geometries) and listing-readiness (L2) fails when either iOS set is missing or a shot is
+ *            missing from one of them.
  *
  * The band: venture `colors.primary` ground, headline ≤ 5 words + subline ≤ 60 chars, both from
  * store/listing.json `screenshots.captions[<shot name>]` — one concrete feature per shot, nothing the
@@ -16,7 +23,7 @@
  * cream is not a headline.
  *
  * Usage inside a screenshots.mjs (see the template's usephysics/boomcellar examples):
- *   const platforms = platformsFromArgv();                       // ["android","ios"] or --platform=ios
+ *   const platforms = platformsFromArgv();                       // ["android","ios","ios-medium"] or --platform=ios
  *   for (const platform of platforms) {
  *     const shot = await openShotContext(browser, { platform, root, exportDir, port, colorScheme });
  *     ... drive shot.page ...; await shot.shoot("01-home"); ...
@@ -31,7 +38,20 @@ import { join, relative, resolve } from "node:path";
 export const GEOMETRY = {
   android: { viewport: { width: 360, height: 640 }, band: 0, size: [1080, 1920] },
   ios: { viewport: { width: 440, height: 836 }, band: 120, size: [1320, 2868] },
+  "ios-medium": { viewport: { width: 402, height: 754 }, band: 120, size: [1206, 2622] },
 };
+/** The iOS sets (each composed under the caption band); every iOS shot is emitted at every one of them. */
+export const IOS_PLATFORMS = Object.keys(GEOMETRY).filter((p) => GEOMETRY[p].band > 0);
+
+/** The geometry arithmetic, as named problems: viewport × 3 (+ band × 3) must BE the store size. [] = sound. */
+export function geometryProblems(geometry = GEOMETRY) {
+  const out = [];
+  for (const [p, g] of Object.entries(geometry)) {
+    const w = g.viewport.width * 3, h = (g.viewport.height + g.band) * 3;
+    if (w !== g.size[0] || h !== g.size[1]) out.push(`${p}: viewport ${g.viewport.width}×${g.viewport.height} + band ${g.band} @3x = ${w}×${h}, but size says ${g.size.join("×")}`);
+  }
+  return out;
+}
 
 export const ABOUT_HEADLINE = "Built by JukkaBlomberg.com";
 const HEADLINE_MAX_WORDS = 5;
@@ -40,7 +60,7 @@ const SUBLINE_MAX_CHARS = 60;
 export function platformsFromArgv(argv = process.argv) {
   const arg = argv.find((a) => a.startsWith("--platform="));
   const list = arg ? arg.slice("--platform=".length).split(",").map((s) => s.trim()).filter(Boolean) : Object.keys(GEOMETRY);
-  for (const p of list) if (!GEOMETRY[p]) throw new Error(`shot-frame: unknown platform "${p}" (android|ios)`);
+  for (const p of list) if (!GEOMETRY[p]) throw new Error(`shot-frame: unknown platform "${p}" (${Object.keys(GEOMETRY).join("|")})`);
   return list;
 }
 
@@ -104,9 +124,10 @@ export function bandFontUrl(spec, exportDir, port) {
 
 function esc(s) { return s.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;"); }
 
-/** Compose the band above an app screenshot; returns the 1320×2868 PNG. */
-export async function frameIos(ctx, appPng, caption, spec, fontUrl) {
-  const geo = GEOMETRY.ios;
+/** Compose the band above an app screenshot; returns the PNG at the iOS geometry's size (1320×2868 or 1206×2622). */
+export async function frameIos(ctx, appPng, caption, spec, fontUrl, platform = "ios") {
+  const geo = GEOMETRY[platform];
+  if (!geo || !geo.band) throw new Error(`shot-frame: ${platform} is not a banded iOS geometry (${IOS_PLATFORMS.join("|")})`);
   const [w, h] = pngSize(appPng);
   const want = [geo.viewport.width * 3, geo.viewport.height * 3];
   if (w !== want[0] || h !== want[1]) throw new Error(`shot-frame: app shot is ${w}x${h}, expected ${want.join("x")} (viewport ${geo.viewport.width}×${geo.viewport.height} @3x)`);
@@ -150,15 +171,16 @@ export async function frameIos(ctx, appPng, caption, spec, fontUrl) {
 
 /**
  * A browser context at the platform's phone geometry plus a `shoot(name)` that writes
- * assets/screenshots/<platform>/<name>.png at exactly the store size (band composed for ios).
+ * assets/screenshots/<platform>/<name>.png at exactly the store size (band composed for ios + ios-medium).
  */
 export async function openShotContext(browser, { platform, root, exportDir, port, colorScheme = "light" }) {
   const geo = GEOMETRY[platform];
   if (!geo) throw new Error(`shot-frame: unknown platform "${platform}"`);
   const outDir = join(root, "assets/screenshots", platform);
   mkdirSync(outDir, { recursive: true });
-  const spec = platform === "ios" ? loadBandSpec(root) : null;
-  const fontUrl = platform === "ios" ? bandFontUrl(spec, resolve(exportDir), port) : null;
+  const banded = IOS_PLATFORMS.includes(platform);
+  const spec = banded ? loadBandSpec(root) : null;
+  const fontUrl = banded ? bandFontUrl(spec, resolve(exportDir), port) : null;
   const ctx = await browser.newContext({ viewport: geo.viewport, deviceScaleFactor: 3, isMobile: true, hasTouch: true, colorScheme });
   const page = await ctx.newPage();
   const errors = [];
@@ -168,9 +190,9 @@ export async function openShotContext(browser, { platform, root, exportDir, port
     await page.waitForTimeout(400);
     let buf = await page.screenshot({ type: "png", fullPage: false });
     let note = "";
-    if (platform === "ios") {
+    if (banded) {
       const caption = captionFor(spec, name);
-      buf = await frameIos(ctx, buf, caption, spec, fontUrl);
+      buf = await frameIos(ctx, buf, caption, spec, fontUrl, platform);
       note = ` — "${caption.headline}" / "${caption.subline}"`;
     }
     const [w, h] = pngSize(buf);

@@ -3,7 +3,8 @@
  * listing-readiness — README § 10 / NEW-APP-CHECKLIST § 6, as executable tests.
  *
  * "Fails RED when: /app/privacy or /app/support is not 200 · icon has alpha or
- *  wrong size · feature graphic missing · a screenshot set is empty · apps.json
+ *  wrong size · feature graphic missing · a screenshot set is empty (both iOS
+ *  sizes, 1320×2868 + 1206×2622, each shot in both) · apps.json
  *  ids differ from the build config · description lacks the endorsement close ·
  *  a declaration in the checklist is unticked. Plant one breach and watch it go
  *  red before trusting it."
@@ -26,7 +27,7 @@
  * on a template whose Expo SDK is declared and deliberately not installed.
  */
 import { readFileSync, existsSync, readdirSync, statSync } from "node:fs";
-import { fileURLToPath } from "node:url";
+import { fileURLToPath, pathToFileURL } from "node:url";
 import { dirname, join, resolve } from "node:path";
 
 const root = resolve(join(dirname(fileURLToPath(import.meta.url)), ".."));
@@ -561,6 +562,30 @@ function pngDistinctColours(rel, sampleStep = 8) {
   else pass("R16-no-generic-claims", `${surfaces.length} surface file(s) carry no "non-toxic" / "toxin-free" / "chemical-free" wording`);
 }
 
+/* ---------------------------------------------------------------- R16
+   [APP-TEMPLATE-SHOT-IOS-MEDIUM 2026-10-11] The screenshot geometries are store sizes, not suggestions: shot-frame.mjs
+   declares android 1080×1920, ios 1320×2868 (6.9") and ios-medium 1206×2622 (App Store Connect's "iPhone with Dynamic
+   Island (medium display)" slot, reused for every iPhone size), and each one's viewport × 3 (+ the caption band × 3)
+   must BE its size — a geometry that only resamples into its size is the sips set this item replaced. */
+{
+  const STORE_SIZES = { android: [1080, 1920], ios: [1320, 2868], "ios-medium": [1206, 2622] };
+  if (!has("scripts/shot-frame.mjs")) fail("R16-shot-geometry", "scripts/shot-frame.mjs is missing — every screenshots.mjs frames its shots through it");
+  else {
+    const sf = await import(pathToFileURL(join(root, "scripts/shot-frame.mjs")).href);
+    const problems = [];
+    for (const [p, size] of Object.entries(STORE_SIZES)) {
+      const g = sf.GEOMETRY?.[p];
+      if (!g) problems.push(`geometry ${p} is missing (want ${size.join("×")})`);
+      else if (g.size?.join("x") !== size.join("x")) problems.push(`${p} is ${g.size?.join("×")}, the store size is ${size.join("×")}`);
+    }
+    problems.push(...(sf.geometryProblems ? sf.geometryProblems() : ["geometryProblems() is not exported"]));
+    const ios = sf.IOS_PLATFORMS ?? [];
+    if (!(ios.includes("ios") && ios.includes("ios-medium"))) problems.push(`IOS_PLATFORMS is [${ios.join(", ")}]; both iOS sizes must be emitted`);
+    if (problems.length) fail("R16-shot-geometry", problems.join("; "));
+    else pass("R16-shot-geometry", `shot-frame.mjs: ${Object.entries(STORE_SIZES).map(([p, z]) => `${p} ${z.join("×")}`).join(" · ")} — each viewport @3x + band is its store size; iOS emitted at both`);
+  }
+}
+
 /* --------------------------------------------------------- launch mode */
 if (MODE === "launch") {
   const domain = venture?.domain;
@@ -575,9 +600,23 @@ if (MODE === "launch") {
       skip(id, `${url} could not be reached (${e.message}) — unverified, not passed`);
     }
   }
-  for (const [id, dir] of [["L2-ios-screenshots", "assets/screenshots/ios"], ["L2-android-screenshots", "assets/screenshots/android"]]) {
-    const files = has(dir) ? readdirSync(join(root, dir)).filter((f) => /\.(png|jpg|jpeg)$/i.test(f)) : [];
-    if (files.length === 0) { fail(id, `${dir} is empty; a store listing cannot be submitted without a screenshot set`); continue; }
+  // [APP-TEMPLATE-SHOT-IOS-MEDIUM 2026-10-11] both iOS sets: 6.9" (assets/screenshots/ios) and the medium Dynamic
+  // Island slot (assets/screenshots/ios-medium, exactly 1206×2622), and every iOS shot present in BOTH — a shot missing
+  // from either set is RED by file name.
+  const shotsIn = (dir) => (has(dir) ? readdirSync(join(root, dir)).filter((f) => /\.(png|jpg|jpeg)$/i.test(f)).sort() : []);
+  const IOS_SETS = { "assets/screenshots/ios": "assets/screenshots/ios-medium", "assets/screenshots/ios-medium": "assets/screenshots/ios" };
+  for (const [id, dir] of [["L2-ios-screenshots", "assets/screenshots/ios"], ["L2-ios-medium-screenshots", "assets/screenshots/ios-medium"], ["L2-android-screenshots", "assets/screenshots/android"]]) {
+    const files = shotsIn(dir);
+    if (files.length === 0) { fail(id, `${dir} is empty; a store listing cannot be submitted without a screenshot set${dir.endsWith("/ios-medium") ? " (App Store Connect's iPhone slot is 1206×2622 — run screenshots.mjs, which emits both iOS sizes)" : ""}`); continue; }
+    if (IOS_SETS[dir]) {
+      const other = shotsIn(IOS_SETS[dir]);
+      const missing = other.filter((f) => !files.includes(f));
+      if (missing.length) { fail(id, `${dir} is missing ${missing.join(", ")} (${IOS_SETS[dir]} has ${missing.length === 1 ? "it" : "them"}) — every iOS shot is emitted at both sizes, 1320×2868 and 1206×2622`); continue; }
+    }
+    if (dir.endsWith("/ios-medium")) {
+      const bad = files.filter((f) => { const i = pngInfo(join(dir, f)); return !i || `${i.width}x${i.height}` !== "1206x2622"; });
+      if (bad.length) { fail(id, `${bad.length}/${files.length} screenshot(s) in ${dir} are not 1206×2622 (render at the ios-medium geometry, never resample): ${bad.join(", ")}`); continue; }
+    }
     if (dir.endsWith("/ios")) {
       // [APPLE-DAY 2026-10-05] App Store Connect rejects a screenshot that is not one of Apple's exact display
       // sizes at upload. Four of five repos carried 1080×1920 copies of the Android set here and this check
