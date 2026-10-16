@@ -29,7 +29,7 @@
       "mustIncludeContact": true
     }
   },
-  "name": "Detoxcellence",
+  "name": "Detoxcellence: Exposure Index",
   "nameApple": "Detoxcellence: Exposure Index",
   "subtitle": "Everyday exposures, sourced",
   "shortDescription": "Point at a pan, a container or a candle: its exposure score, studies and a swap.",
@@ -69,5 +69,6 @@
         "No account, no ads, photos never sent"
       ]
     }
-  }
+  },
+  "_name_rule": "2026-10-16 design/STORE-BADGES-STANDARD.md § 1 (Jukka app-naming: yes); previous name: Detoxcellence. Console titles are pasted by Jukka; this file is what the next train submits."
 }
