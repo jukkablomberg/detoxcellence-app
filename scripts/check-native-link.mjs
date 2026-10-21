@@ -10,8 +10,13 @@
  * on a native module the first screen never uses until the first scan).
  *
  *   node scripts/check-native-link.mjs             check this app
- *   node scripts/check-native-link.mjs --redproof  plant both defects in a scratch copy; each must go RED by name
+ *   node scripts/check-native-link.mjs --redproof  plant each defect in a scratch copy; each must go RED by name
  * CANONICAL in fattonic (camera engine); copied to sister apps by sync-camera-engine.
+ *
+ * WHAT IS REQUIRED IS PER APP ([HT-CAMERA-SYNC-REQUIRED] 2026-10-21). This file is a byte copy across the trio, so
+ * it names no package: each app's venture.json "nativeRequired" maps the native packages that app calls to the class
+ * its Android package instance must construct. A package named there but missing from package.json dependencies is
+ * RED — it used to be skipped as "the app does not use it", which let a dropped dependency pass silently.
  */
 import { spawnSync } from "node:child_process";
 import { cpSync, existsSync, mkdtempSync, readFileSync, rmSync, symlinkSync, writeFileSync } from "node:fs";
@@ -22,20 +27,27 @@ import { fileURLToPath } from "node:url";
 const self = fileURLToPath(import.meta.url);
 const appRoot = resolve(dirname(self), "..");
 
-/** package → the class its Android package instance must construct. */
-export const REQUIRED = { "onnxruntime-react-native": "OnnxruntimePackage", "react-native-purchases": "RNPurchasesPackage" }; // + purchases: [FT-MENU-TIER] 2026-10-10
+/** package → the class its Android package instance must construct, read from <root>/venture.json "nativeRequired". */
+export function requiredOf(root) {
+  const p = join(root, "venture.json");
+  if (!existsSync(p)) return null;
+  const r = JSON.parse(readFileSync(p, "utf8")).nativeRequired;
+  return r && typeof r === "object" && !Array.isArray(r) && Object.keys(r).length ? r : null;
+}
 const ENGINE = "modules/health-camera/classify.native.ts";
 
 export function check(root) {
   const fails = [];
+  const required = requiredOf(root);
+  if (!required) return [`NO nativeRequired: venture.json must map each native package this app calls to its Android package class, e.g. {"onnxruntime-react-native": "OnnxruntimePackage"}`];
   const pkg = JSON.parse(readFileSync(join(root, "package.json"), "utf8"));
   const deps = { ...pkg.dependencies };
   const bin = join(appRoot, "node_modules/.bin/expo-modules-autolinking");
   const r = spawnSync(bin, ["react-native-config", "--platform", "android", "--json", "--project-root", root], { cwd: root, encoding: "utf8" });
   if (r.status !== 0) return [`AUTOLINKING FAILED: ${(r.stderr || r.stdout).slice(0, 300)}`];
   const linked = JSON.parse(r.stdout).dependencies ?? {};
-  for (const [name, cls] of Object.entries(REQUIRED)) {
-    if (!deps[name]) continue; // the app does not use it
+  for (const [name, cls] of Object.entries(required)) {
+    if (!deps[name]) { fails.push(`REQUIRED BUT NOT A DEPENDENCY: ${name} — venture.json nativeRequired names it, package.json dependencies does not`); continue; }
     const a = linked[name]?.platforms?.android;
     if (!a) fails.push(`NOT AUTOLINKED (android): ${name} — PackageList will not register it`);
     else if (!String(a.packageInstance ?? "").includes(cls)) fails.push(`NO PACKAGE INSTANCE (android): ${name} — expected new ${cls}(), got ${a.packageInstance}`);
@@ -65,12 +77,15 @@ if (process.argv.includes("--redproof")) {
   };
   const a = plant("no-rn-config", (d) => rmSync(join(d, "react-native.config.js")), "NOT AUTOLINKED (android): onnxruntime-react-native");
   const b = plant("top-level-import", (d) => { const p = join(d, ENGINE); writeFileSync(p, 'import { InferenceSession } from "onnxruntime-react-native";\n' + readFileSync(p, "utf8")); }, "TOP-LEVEL IMPORT");
+  const first = Object.keys(requiredOf(appRoot))[0];
+  const c = plant("required-not-a-dependency", (d) => { const p = join(d, "package.json"); const j = JSON.parse(readFileSync(p, "utf8")); delete j.dependencies[first]; writeFileSync(p, JSON.stringify(j, null, 2)); }, `REQUIRED BUT NOT A DEPENDENCY: ${first}`);
+  const e = plant("no-nativeRequired", (d) => { const p = join(d, "venture.json"); const j = JSON.parse(readFileSync(p, "utf8")); delete j.nativeRequired; writeFileSync(p, JSON.stringify(j, null, 2)); }, "NO nativeRequired");
   rmSync(tmp, { recursive: true, force: true });
-  console.log(a && b ? "redproof: 2/2 planted defects RED by name; positive control GREEN" : "redproof: FAILED");
-  process.exit(a && b ? 0 : 1);
+  const ok = a && b && c && e;
+  console.log(ok ? "redproof: 4/4 planted defects RED by name; positive control GREEN" : "redproof: FAILED");
+  process.exit(ok ? 0 : 1);
 }
 
 const fails = check(appRoot);
 if (fails.length) { console.error("check:native-link RED\n  " + fails.join("\n  ")); process.exit(1); }
-const used = Object.keys(REQUIRED).filter((n) => JSON.parse(readFileSync(join(appRoot, "package.json"), "utf8")).dependencies?.[n]); // a sister without purchases does not claim it
-console.log(`check:native-link GREEN — ${used.join(", ")} registered on Android; engine loads ONNX Runtime lazily`);
+console.log(`check:native-link GREEN — ${Object.keys(requiredOf(appRoot)).join(", ")} (venture.json nativeRequired) registered on Android; engine loads ONNX Runtime lazily`);

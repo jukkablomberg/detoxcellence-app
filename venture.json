@@ -21,6 +21,10 @@
       "evidence": "src/lib/history.ts"
     }
   ],
+  "nativeRequired": {
+    "onnxruntime-react-native": "OnnxruntimePackage"
+  },
+  "_nativeRequiredNote": "Native packages this app calls, each mapped to the class its Android package instance must construct. scripts/check-native-link.mjs (a byte copy across the health trio) reads this, so the canonical file names no package; a package listed here but absent from package.json dependencies, or not registered by autolinking, is RED by name. [HT-CAMERA-SYNC-REQUIRED] 2026-10-21.",
   "policyEdges": ["apple-1.4.1-health-methodology", "play-health-apps-declaration"],
   "_policyEdgesNote": "Health-adjacent information app (HEALTH-TRIO-DAY § 1 firewall): information, not medical advice; Apple regulated-medical-device declaration = No; no diagnosis or treatment claims; no detox-tea / supplement framing; no 'non-toxic' or equivalent wording on any surface (EU 2024/825; `check:listing` R16 guards it). Every Exposure Index rating is editorial and says so; sources and studies are shown per row as the site's /data/ door carries them.",
   "colors": {
