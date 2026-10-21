@@ -9,7 +9,7 @@ import { LENS, offer, roomCheck, type Candidate } from "../../../src/lib/lens";
 import { openAisle, openEntry } from "../../../src/lib/nav";
 import { readScans, recordScan, type ScanRecord } from "../../../src/lib/scan";
 import { DEMO_PHOTO, DEMO_RESULT } from "../../../src/lib/scan-demo";
-import { radius, space, type, useTheme } from "../../../src/lib/theme";
+import { radius, space, type, useTheme, FIXED } from "../../../src/lib/theme";
 import { BandPill, Body, Button, Display, Heading, Label, Screen, Tile } from "../../../src/ui/primitives";
 
 /**
@@ -148,10 +148,10 @@ export default function ScanScreen() {
   if (mode.k === "camera") {
     const purpose = mode.purpose;
     return (
-      <View style={{ flex: 1, backgroundColor: "#000" }}>
+      <View style={{ flex: 1, backgroundColor: FIXED.camera }}>
         <CameraView ref={cam} style={{ flex: 1 }} facing="back" onCameraReady={() => setReady(true)} />
         <View style={styles.camBar}>
-          <Text style={[type.body(14, "#FFFFFF"), { textAlign: "center" }]}>
+          <Text style={[type.body(14, FIXED.onDark), { textAlign: "center" }]}>
             {purpose === "room" ? "The whole shelf or corner in frame · good light." : "One product · fill the frame · good light."}
           </Text>
           <View style={{ flexDirection: "row", gap: space.m, marginTop: space.m }}>
@@ -300,14 +300,14 @@ export default function ScanScreen() {
  */
 function ScanTarget({ demo, onPress }: { demo: boolean; onPress: () => void }) {
   const t = useTheme();
-  const ink = demo ? "#FFFFFF" : t.ink;
+  const ink = demo ? FIXED.onDark : t.ink;
   return (
     <Pressable
       onPress={onPress}
       accessibilityRole="button"
       accessibilityLabel={demo ? "See the demo scan result" : "Open the camera and scan a product"}
       testID="scan-target"
-      style={({ pressed }) => [styles.target, { backgroundColor: t.panel, borderColor: demo ? "rgba(255,255,255,0.6)" : t.link, opacity: pressed ? 0.9 : 1 }]}
+      style={({ pressed }) => [styles.target, { backgroundColor: t.panel, borderColor: demo ? FIXED.photoLine : t.link, opacity: pressed ? 0.9 : 1 }]}
     >
       {demo ? (
         <>
@@ -315,12 +315,12 @@ function ScanTarget({ demo, onPress }: { demo: boolean; onPress: () => void }) {
           <View style={[StyleSheet.absoluteFill, { backgroundColor: "rgba(17,21,19,0.55)" }]} />
         </>
       ) : null}
-      <Text style={[type.label(demo ? "#FFFFFF" : t.link)]}>Exposure check</Text>
+      <Text style={[type.label(demo ? FIXED.onDark : t.link)]}>Exposure check</Text>
       <Display size={40} color={ink} style={{ textAlign: "left", marginTop: space.s }}>What's on your shelf?</Display>
-      <Text style={[type.body(15, demo ? "#FFFFFF" : t.muted), { marginTop: space.s }]}>{demo ? "Sample photo — tap to see what a scan returns" : "Pans · containers · candles · bottles"}</Text>
+      <Text style={[type.body(15, demo ? FIXED.onDark : t.muted), { marginTop: space.s }]}>{demo ? "Sample photo — tap to see what a scan returns" : "Pans · containers · candles · bottles"}</Text>
       <View style={{ flex: 1 }} />
-      <View style={[styles.targetCta, { backgroundColor: demo ? "#FFFFFF" : t.link }]}>
-        <Text style={type.strong(17, demo ? "#1C1C1C" : t.onLink)}>{demo ? "See a scan" : "Scan a product"}</Text>
+      <View style={[styles.targetCta, { backgroundColor: demo ? FIXED.onDark : t.link }]}>
+        <Text style={type.strong(17, demo ? FIXED.onLight : t.onLink)}>{demo ? "See a scan" : "Scan a product"}</Text>
       </View>
     </Pressable>
   );

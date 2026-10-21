@@ -89,3 +89,21 @@ export const type = {
     color,
   }),
 } as const;
+
+/**
+ * [DS-AUDIT 2026-10-21] Colours that do NOT follow the theme — the camera's black ground, text and buttons laid over
+ * a photo or a solid ink/accent fill, the photo scrim. One home for them, so no screen types a hex
+ * (/design:design-system audit, projects/app-stores/handoffs/DESIGN-SYSTEM-AUDIT-2026-10-21.md).
+ */
+export const FIXED = {
+  /** text / glyphs on a dark photo, on ink or on an accent fill */
+  onDark: "#FFFFFF",
+  /** text on a white button laid over a photo */
+  onLight: "#1C1C1C",
+  /** the camera preview's ground */
+  camera: "#000000",
+  /** the scrim over a demo photo */
+  scrim: "rgba(0,0,0,0.5)",
+  /** hairline over a photo */
+  photoLine: "rgba(255,255,255,0.6)",
+} as const;

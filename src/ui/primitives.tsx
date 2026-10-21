@@ -2,7 +2,7 @@ import type { PropsWithChildren, ReactNode } from "react";
 import { Pressable, ScrollView, Text, View, type StyleProp, type TextStyle, type ViewStyle } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import type { BandLabel } from "../lib/exposures";
-import { palettes, radius, space, type, useTheme } from "../lib/theme";
+import { palettes, radius, space, type, useTheme, FIXED } from "../lib/theme";
 
 /** A screen: white ground, safe-area bottom. */
 export function Screen({ children, testID }: PropsWithChildren<{ testID?: string }>) {
@@ -110,8 +110,8 @@ export function Chip({ title, on, onPress, testID }: { title: string; on: boolea
 export function BandPill({ band, score }: { band: BandLabel; score?: number }) {
   return (
     <View style={{ flexDirection: "row", alignItems: "center", gap: 6, alignSelf: "flex-start", backgroundColor: palettes.light.band[band], borderRadius: radius.pill, paddingHorizontal: 10, paddingVertical: 3 }}>
-      {score !== undefined ? <Text style={[type.strong(13, "#FFFFFF"), { fontVariant: ["tabular-nums"] }]}>{score}</Text> : null}
-      <Text style={type.strong(12, "#FFFFFF")}>{band}</Text>
+      {score !== undefined ? <Text style={[type.strong(13, FIXED.onDark), { fontVariant: ["tabular-nums"] }]}>{score}</Text> : null}
+      <Text style={type.strong(12, FIXED.onDark)}>{band}</Text>
     </View>
   );
 }

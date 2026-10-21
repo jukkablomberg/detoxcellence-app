@@ -5,7 +5,7 @@ import { Pressable, Text, View } from "react-native";
 import { appendHistory, clearHistory, newestFirst, readHistory, type HistoryEntry } from "../../../src/lib/history";
 import { categoriesFor, NEXT, PROFILES, QUESTIONS, scoreBand, scoreQuiz, type Result } from "../../../src/lib/quiz";
 import { refillReminder } from "../../../src/lib/reminders";
-import { palettes, radius, space, type, useTheme } from "../../../src/lib/theme";
+import { palettes, radius, space, type, useTheme, FIXED } from "../../../src/lib/theme";
 import { Body, Button, Display, Heading, Label, Screen, Tile } from "../../../src/ui/primitives";
 
 type Mode = { k: "home" } | { k: "quiz"; i: number; answers: number[] } | { k: "result"; r: Result };
@@ -113,7 +113,7 @@ function ResultCard({ r, fresh }: { r: Result; fresh: boolean }) {
       <Label>{fresh ? "Your Exposure Score" : "Your latest Exposure Score"}</Label>
       <View style={{ flexDirection: "row", alignItems: "center", gap: space.l }}>
         <View style={{ backgroundColor: palettes.light.band[band], borderRadius: radius.card, paddingHorizontal: space.l, paddingTop: 6 }}>
-          <Display size={64} color="#FFFFFF">{r.pct}</Display>
+          <Display size={64} color={FIXED.onDark}>{r.pct}</Display>
         </View>
         <Body muted size={13} style={{ flex: 1 }}>Out of 100. Lower avoidable exposure = higher.</Body>
       </View>

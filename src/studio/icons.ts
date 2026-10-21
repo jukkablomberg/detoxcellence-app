@@ -21,6 +21,8 @@ export const ICONS = {
   foods: { sf: "fork.knife", md: "restaurant" },
   score: { sf: "gauge.medium", md: "speed" },
   history: { sf: "clock.arrow.circlepath", md: "history" },
+  /** [APP-DETEMPLATE 2026-10-21] a record's check dates (Billasaari "Checked") */
+  checked: { sf: { default: "checkmark.seal", selected: "checkmark.seal.fill" }, md: "verified" },
   tips: { sf: { default: "lightbulb", selected: "lightbulb.fill" }, md: "lightbulb" },
   info: { sf: "info.circle", md: "info" },
   search: { sf: "magnifyingglass", md: "search" },
