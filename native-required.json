@@ -1,0 +1,6 @@
+{
+  "_note": "Native packages this app calls, each mapped to the class its Android package instance must construct; read by scripts/check-native-link.mjs ([HT-CAMERA-SYNC-REQUIRED]). Kept OUT of venture.json on purpose: app.config.ts imports venture.json, so any edit there moves the expo-fingerprint runtime and blocks OTA updates ([FT-UX-CLEANUP] 2026-10-21).",
+  "nativeRequired": {
+    "onnxruntime-react-native": "OnnxruntimePackage"
+  }
+}
