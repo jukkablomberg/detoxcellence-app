@@ -44,6 +44,8 @@ export default function SwapsScreen() {
 
   const upcoming = plan(list, driver, s);
   const hours = [7, 8, 9, 10, 12, 17, 18, 19, 20];
+  // [APP-DETEMPLATE 2026-10-21] the chip rows scroll edge to edge of the tile, so a chip is never cut by the tile's
+  // inner padding ("12:0C" in the design critique) — the row reads as scrollable, not broken.
 
   return (
     <Screen testID="swaps">
@@ -57,13 +59,13 @@ export default function SwapsScreen() {
         </View>
         {note ? <Body size={13}>{note}</Body> : null}
         <Label>Day</Label>
-        <ScrollView horizontal showsHorizontalScrollIndicator={false} contentContainerStyle={{ gap: space.s }}>
+        <ScrollView horizontal showsHorizontalScrollIndicator={false} style={{ marginHorizontal: -space.l }} contentContainerStyle={{ gap: space.s, paddingHorizontal: space.l }}>
           {WEEKDAYS.map((d, i) => (
             <Chip key={d} title={d.slice(0, 3)} on={s.weekday === i + 1} onPress={() => void apply({ ...s, weekday: i + 1 })} testID={`day-${i + 1}`} />
           ))}
         </ScrollView>
         <Label>Time</Label>
-        <ScrollView horizontal showsHorizontalScrollIndicator={false} contentContainerStyle={{ gap: space.s }}>
+        <ScrollView horizontal showsHorizontalScrollIndicator={false} style={{ marginHorizontal: -space.l }} contentContainerStyle={{ gap: space.s, paddingHorizontal: space.l }}>
           {hours.map((h) => (
             <Chip key={h} title={`${String(h).padStart(2, "0")}:00`} on={s.hour === h} onPress={() => void apply({ ...s, hour: h })} testID={`hour-${h}`} />
           ))}

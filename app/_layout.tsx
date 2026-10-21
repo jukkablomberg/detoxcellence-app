@@ -9,6 +9,11 @@ import { startIndex } from "../src/lib/exposures";
 import { installForegroundHandler, refillReminder } from "../src/lib/reminders";
 import { fonts, palettes } from "../src/lib/theme";
 import { BrandMoment, holdNativeSplash } from "../src/studio/BrandMoment";
+import { FirstUseIntro } from "../src/studio/FirstUseIntro";
+import type { IntroConfig } from "../src/studio/intro";
+import { useStudioTheme } from "../src/lib/chrome";
+import { INTRO_IMAGES } from "../src/lib/intro-images";
+import introJson from "./intro.json";
 
 // design/APP-STANDARD.md § 1: the native splash stays up until the brand moment draws the same picture.
 holdNativeSplash();
@@ -28,6 +33,7 @@ export default function RootLayout() {
     [fonts.body]: require("../assets/fonts/Inter-Regular.ttf"),
   });
   const [brandDone, setBrandDone] = useState(false);
+  const studioTheme = useStudioTheme();
 
   // The index: the cached copy if newer than the bundle, then one GET to detoxcellence.com. Then refill the
   // weekly swap plan so the reminders never run out while the app is in use.
@@ -82,6 +88,8 @@ export default function RootLayout() {
           onDone={() => setBrandDone(true)}
         />
       ) : null}
+      {/* First-use intro (PNF-8, [APP-DETEMPLATE] 2026-10-21): once per install, after the brand moment, ends on the first tab. */}
+      <FirstUseIntro config={introJson as IntroConfig} images={INTRO_IMAGES} theme={studioTheme} ready={brandDone} />
     </SafeAreaProvider>
   );
 }

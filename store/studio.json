@@ -46,18 +46,63 @@
       }
     },
     {
+      "slug": "snapstress",
+      "venture": "SnapStress",
+      "promo": null,
+      "cluster": "health",
+      "site": "https://snapstress.com",
+      "shortDescription": "The two-minute stress test, and how much caffeine is still in you at bedtime.",
+      "tierRank": 6,
+      "icon": "https://jukkablomberg.com/apps/icons/snapstress.png",
+      "ios": null,
+      "android": {
+        "url": "https://play.google.com/store/apps/details?id=com.snapstress.app",
+        "package": "com.snapstress.app"
+      }
+    },
+    {
       "slug": "boomcellar",
-      "venture": "BoomCellar",
+      "venture": "VINCAP",
       "promo": "Listed wine, one number",
       "cluster": "index",
-      "site": "https://boomcellar.com",
-      "shortDescription": "The wine stock index, its companies, the IPO calendar and alerts when it moves.",
+      "site": "https://vincap.co",
+      "shortDescription": "Wine shares in one index: listed wine companies, investor calendar and alerts.",
       "tierRank": 1,
       "icon": "https://jukkablomberg.com/apps/icons/boomcellar.png",
       "ios": null,
       "android": {
         "url": "https://play.google.com/store/apps/details?id=com.boomcellar.app",
         "package": "com.boomcellar.app"
+      }
+    },
+    {
+      "slug": "detoxcellence",
+      "venture": "Detoxcellence",
+      "promo": null,
+      "cluster": "health",
+      "site": "https://detoxcellence.com",
+      "shortDescription": "Point at a pan, a container or a candle: its exposure score, studies and a swap.",
+      "tierRank": 7,
+      "icon": "https://jukkablomberg.com/apps/icons/detoxcellence.png",
+      "ios": null,
+      "android": {
+        "url": "https://play.google.com/store/apps/details?id=com.detoxcellence.app",
+        "package": "com.detoxcellence.app"
+      }
+    },
+    {
+      "slug": "saunahash",
+      "venture": "SaunaHash",
+      "promo": "Helsinki-region sauna atlas",
+      "cluster": "atlas",
+      "site": "https://saunahash.com",
+      "shortDescription": "Helsinki sauna atlas: 104 records checked at source. Offline, nearby, starred.",
+      "tierRank": 3,
+      "icon": "https://jukkablomberg.com/apps/icons/saunahash.png",
+      "ios": null,
+      "android": {
+        "url": "https://play.google.com/store/apps/details?id=com.saunahash.app",
+        "package": "com.saunahash.app"
       }
     }
   ]

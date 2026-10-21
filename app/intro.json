@@ -1,0 +1,19 @@
+{
+  "_note": "First-use intro (PNF-8, [APP-DETEMPLATE] 2026-10-21 — the design critique's port to the health trio). Three cards = the app's answers to Apple's 4.2/4.3/4.2.6 rejection: (1) the one job, (2) the key feature, (3) what the phone does that the website cannot. Lines are true of the shipped app at HEAD.",
+  "cards": [
+    {
+      "image": "intro/01-scan.png",
+      "line": "Point at a pan, a container or a candle: its exposure score, studies and a swap."
+    },
+    {
+      "image": "intro/02-index.png",
+      "line": "189 everyday products and habits, each with a Detox Score from 1 to 100."
+    },
+    {
+      "image": "intro/03-swaps.png",
+      "line": "A weekly swap reminder, scheduled on your phone. Photos are never stored or sent."
+    }
+  ],
+  "core_action_route": "/",
+  "layout": "bleed"
+}

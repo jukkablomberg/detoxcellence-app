@@ -147,7 +147,7 @@ const BREACHES = [
   ["R14-eas-project-id", "venture.json carries a placeholder project id", (d) => editJson(d, "venture.json", (o) => { o.easProjectId = "TODO-paste-from-eas-init"; })],
   ["R15-play-target-api", "the Expo SDK is rolled back to 51", (d) => editJson(d, "package.json", (o) => { o.dependencies.expo = "51.0.28"; })],
   ["R15-play-target-api", "target API drops below the Play floor", (d) => editText(d, "app.config.ts", (s) => s.replace("targetSdkVersion: 36", "targetSdkVersion: 34"))],
-  ["R16-no-generic-claims", "app copy says non-toxic (the Scan front page)", (d) => editText(d, "app/(tabs)/(scan)/index.tsx", (s) => s.replace(">Point. Check.<", ">Point. Non-toxic?<"))],
+  ["R16-no-generic-claims", "app copy says non-toxic (the Scan front page)", (d) => editText(d, "app/(tabs)/(scan)/index.tsx", (s) => s.replace(">What's on your shelf?<", ">Is it non-toxic?<"))],
   ["R16-no-generic-claims", "the store listing says Toxin Free (spaced, capitalised)", (d) => editJson(d, "store/listing.json", (o) => { o.promotionalText = `${o.promotionalText ?? ""} Toxin Free swaps.`; })],
   ["R16-no-generic-claims", "a bundled data row says chemical‑free (non-breaking hyphen)", (d) => editText(d, "src/data/exposures.json", (s) => s.replace('"DIY cleaning basics: vinegar and baking soda"', '"DIY chemical\u2011free cleaning basics"'))],
 ];

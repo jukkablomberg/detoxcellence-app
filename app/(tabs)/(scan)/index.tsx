@@ -293,42 +293,36 @@ export default function ScanScreen() {
   );
 }
 
-/** Rule 1 — the front page's one job: a viewfinder-shaped target, the four corner marks of the camera's frame. */
+/**
+ * Rule 1 — the front page's one job. [APP-DETEMPLATE 2026-10-21] Detoxcellence's own entry, not the studio's camera
+ * hero: a shelf label — eyebrow, a left-aligned question, the aisles it reads, one "Scan a product" button. The
+ * corner-marked viewfinder stays FatTonic's (design critique 2026-10-21: three health apps opened on one screen).
+ */
 function ScanTarget({ demo, onPress }: { demo: boolean; onPress: () => void }) {
   const t = useTheme();
-  const ink = demo ? "#FFFFFF" : t.link;
+  const ink = demo ? "#FFFFFF" : t.ink;
   return (
     <Pressable
       onPress={onPress}
       accessibilityRole="button"
       accessibilityLabel={demo ? "See the demo scan result" : "Open the camera and scan a product"}
       testID="scan-target"
-      style={({ pressed }) => [styles.target, { backgroundColor: t.panel, opacity: pressed ? 0.9 : 1 }]}
+      style={({ pressed }) => [styles.target, { backgroundColor: t.panel, borderColor: demo ? "rgba(255,255,255,0.6)" : t.link, opacity: pressed ? 0.9 : 1 }]}
     >
       {demo ? (
         <>
           <Image source={DEMO_PHOTO} style={StyleSheet.absoluteFill} resizeMode="cover" accessibilityLabel="A plastic water bottle" />
-          <View style={[StyleSheet.absoluteFill, { backgroundColor: "rgba(17,21,19,0.45)" }]} />
+          <View style={[StyleSheet.absoluteFill, { backgroundColor: "rgba(17,21,19,0.55)" }]} />
         </>
       ) : null}
-      {(["tl", "tr", "bl", "br"] as const).map((c) => <Corner key={c} at={c} color={ink} />)}
-      <Display size={52} color={ink} style={{ textAlign: "center" }}>Point. Check.</Display>
+      <Text style={[type.label(demo ? "#FFFFFF" : t.link)]}>Exposure check</Text>
+      <Display size={40} color={ink} style={{ textAlign: "left", marginTop: space.s }}>What's on your shelf?</Display>
+      <Text style={[type.body(15, demo ? "#FFFFFF" : t.muted), { marginTop: space.s }]}>{demo ? "Sample photo — tap to see what a scan returns" : "Pans · containers · candles · bottles"}</Text>
+      <View style={{ flex: 1 }} />
       <View style={[styles.targetCta, { backgroundColor: demo ? "#FFFFFF" : t.link }]}>
-        <Text style={type.strong(17, demo ? "#1C1C1C" : t.onLink)}>{demo ? "See a scan" : "Tap to scan"}</Text>
+        <Text style={type.strong(17, demo ? "#1C1C1C" : t.onLink)}>{demo ? "See a scan" : "Scan a product"}</Text>
       </View>
-      <Text style={[type.label(ink), { marginTop: space.s }]}>{demo ? "Demo · a CC0 photo, the same engine" : "Pans · containers · candles · bottles"}</Text>
     </Pressable>
-  );
-}
-
-function Corner({ at, color }: { at: "tl" | "tr" | "bl" | "br"; color: string }) {
-  const L = 34, W = 5, I = 14;
-  const pos = { top: at[0] === "t" ? I : undefined, bottom: at[0] === "b" ? I : undefined, left: at[1] === "l" ? I : undefined, right: at[1] === "r" ? I : undefined };
-  return (
-    <View pointerEvents="none" style={[{ position: "absolute", width: L, height: L }, pos]}>
-      <View style={{ position: "absolute", [at[0] === "t" ? "top" : "bottom"]: 0, left: 0, right: 0, height: W, borderRadius: 3, backgroundColor: color }} />
-      <View style={{ position: "absolute", [at[1] === "l" ? "left" : "right"]: 0, top: 0, bottom: 0, width: W, borderRadius: 3, backgroundColor: color }} />
-    </View>
   );
 }
 
@@ -361,6 +355,6 @@ const styles = StyleSheet.create({
   chip: { flexDirection: "row", alignItems: "center", gap: 12, borderRadius: radius.card, padding: 8, paddingRight: 16, minHeight: 56 },
   chipImg: { width: 56, height: 56, borderRadius: 10 },
   row: { flexDirection: "row", alignItems: "center", gap: space.m, borderRadius: radius.card, padding: space.l, minHeight: 52 },
-  target: { aspectRatio: 1, width: "100%", maxHeight: 460, alignSelf: "center", alignItems: "center", justifyContent: "center", borderRadius: radius.card, overflow: "hidden" },
-  targetCta: { borderRadius: radius.pill, paddingVertical: 12, paddingHorizontal: 28, marginTop: space.m },
+  target: { width: "100%", minHeight: 300, alignItems: "flex-start", borderRadius: radius.card, borderWidth: 2, borderStyle: "dashed", padding: space.l, overflow: "hidden" },
+  targetCta: { borderRadius: radius.card, paddingVertical: 14, paddingHorizontal: 22, marginTop: space.m, alignSelf: "stretch", alignItems: "center" },
 });

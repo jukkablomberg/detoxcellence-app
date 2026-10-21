@@ -45,7 +45,9 @@ export type StudioAboutProps = {
   open: (url: string, placement: string) => unknown;
 };
 
-export const LEAD_LINE = "One founder. AI-native team. Multiple ventures.";
+/** [APP-DETEMPLATE 2026-10-21] Retired from the app (it told an App Store reviewer the apps are mass-produced); the
+ *  studio story stays on jukkablomberg.com behind "Meet the studio". Empty = not rendered. */
+export const LEAD_LINE = "";
 const m = { gutter: 20, name: 30, body: 16, bodyLh: 24, cat: 13, catLh: 19, eyebrow: 12, eyeAbove: 34, eyeBelow: 10, row: 56, icon: 44, iconR: 10, sub: 13, subMono: 12 } as const;
 
 export function StudioAbout(p: StudioAboutProps) {
@@ -115,7 +117,7 @@ export function StudioAbout(p: StudioAboutProps) {
         <View style={s.lock}>
           <Lockup color={t.muted} onPress={() => void openStudio(p.slug, "about-lockup")} />
         </View>
-        <Text style={s.lead}>{LEAD_LINE}</Text>
+        {LEAD_LINE ? <Text style={s.lead}>{LEAD_LINE}</Text> : null}
         <Pressable onPress={() => void openStudio(p.slug, "about-studio")} accessibilityRole="link" hitSlop={12}>
           <Text style={s.door}>Meet the studio ↗</Text>
         </Pressable>

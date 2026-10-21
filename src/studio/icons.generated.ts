@@ -2,5 +2,7 @@
 export const BUNDLED_ICONS: Record<string, number> = {
   "usephysics": require("./icons/usephysics.png"),
   "fattonic": require("./icons/fattonic.png"),
+  "snapstress": require("./icons/snapstress.png"),
   "boomcellar": require("./icons/boomcellar.png"),
+  "saunahash": require("./icons/saunahash.png"),
 };
