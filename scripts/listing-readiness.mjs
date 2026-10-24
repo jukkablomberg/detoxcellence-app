@@ -568,7 +568,7 @@ function pngDistinctColours(rel, sampleStep = 8) {
    Island (medium display)" slot, reused for every iPhone size), and each one's viewport × 3 (+ the caption band × 3)
    must BE its size — a geometry that only resamples into its size is the sips set this item replaced. */
 {
-  const STORE_SIZES = { android: [1080, 1920], ios: [1320, 2868], "ios-medium": [1206, 2622] };
+  const STORE_SIZES = { android: [1080, 2160], ios: [1320, 2868], "ios-medium": [1206, 2622] };
   if (!has("scripts/shot-frame.mjs")) fail("R16-shot-geometry", "scripts/shot-frame.mjs is missing — every screenshots.mjs frames its shots through it");
   else {
     const sf = await import(pathToFileURL(join(root, "scripts/shot-frame.mjs")).href);

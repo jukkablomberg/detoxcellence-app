@@ -3,7 +3,11 @@
  * projects/app-stores/repo-template/scripts/ and is copied VERBATIM into each repo-app
  * (never edited per venture; per-venture facts come from venture.json + store/listing.json).
  *
- *   android  360×640 CSS px @3x → 1080×1920 PNG, no band (the Play phone size; unchanged since 10-01)
+ *   android  360×600 CSS px @3x app shot (1080×1800) composed UNDER the same 120 CSS px caption band
+ *            → 360×720 @3x = 1080×2160 PNG (Play phone, 2:1 — Play's ceiling). Was 360×640 plain until
+ *            2026-10-24 ([BC-APP-PLAY-LISTING-1024], Jukka: "VinCap google play store screenshots … need an
+ *            update"): a Play strip of raw captures with no line on them sells nothing — the band now runs on
+ *            every store set, Play included.
  *   ios      440×836 CSS px @3x app shot (1320×2508) composed UNDER a 120 CSS px caption band
  *            → 440×956 @3x = 1320×2868 PNG, the iPhone 6.9" App Store size (APPLE-DAY-2026-10-06.md § 2 step 1)
  *   ios-medium  402×754 CSS px @3x app shot (1206×2262) composed UNDER the same 120 CSS px band
@@ -36,12 +40,14 @@ import { existsSync, mkdirSync, readFileSync, readdirSync, statSync, writeFileSy
 import { join, relative, resolve } from "node:path";
 
 export const GEOMETRY = {
-  android: { viewport: { width: 360, height: 640 }, band: 0, size: [1080, 1920] },
+  android: { viewport: { width: 360, height: 600 }, band: 120, size: [1080, 2160] },
   ios: { viewport: { width: 440, height: 836 }, band: 120, size: [1320, 2868] },
   "ios-medium": { viewport: { width: 402, height: 754 }, band: 120, size: [1206, 2622] },
 };
 /** The iOS sets (each composed under the caption band); every iOS shot is emitted at every one of them. */
-export const IOS_PLATFORMS = Object.keys(GEOMETRY).filter((p) => GEOMETRY[p].band > 0);
+export const IOS_PLATFORMS = Object.keys(GEOMETRY).filter((p) => p.startsWith("ios"));
+/** Every banded set (iOS + Play since 2026-10-24). */
+export const BANDED_PLATFORMS = Object.keys(GEOMETRY).filter((p) => GEOMETRY[p].band > 0);
 
 /** The geometry arithmetic, as named problems: viewport × 3 (+ band × 3) must BE the store size. [] = sound. */
 export function geometryProblems(geometry = GEOMETRY) {
@@ -127,7 +133,7 @@ function esc(s) { return s.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(
 /** Compose the band above an app screenshot; returns the PNG at the iOS geometry's size (1320×2868 or 1206×2622). */
 export async function frameIos(ctx, appPng, caption, spec, fontUrl, platform = "ios") {
   const geo = GEOMETRY[platform];
-  if (!geo || !geo.band) throw new Error(`shot-frame: ${platform} is not a banded iOS geometry (${IOS_PLATFORMS.join("|")})`);
+  if (!geo || !geo.band) throw new Error(`shot-frame: ${platform} is not a banded geometry (${BANDED_PLATFORMS.join("|")})`);
   const [w, h] = pngSize(appPng);
   const want = [geo.viewport.width * 3, geo.viewport.height * 3];
   if (w !== want[0] || h !== want[1]) throw new Error(`shot-frame: app shot is ${w}x${h}, expected ${want.join("x")} (viewport ${geo.viewport.width}×${geo.viewport.height} @3x)`);
@@ -178,17 +184,29 @@ export async function openShotContext(browser, { platform, root, exportDir, port
   if (!geo) throw new Error(`shot-frame: unknown platform "${platform}"`);
   const outDir = join(root, "assets/screenshots", platform);
   mkdirSync(outDir, { recursive: true });
-  const banded = IOS_PLATFORMS.includes(platform);
+  const banded = BANDED_PLATFORMS.includes(platform);
   const spec = banded ? loadBandSpec(root) : null;
   const fontUrl = banded ? bandFontUrl(spec, resolve(exportDir), port) : null;
   const ctx = await browser.newContext({ viewport: geo.viewport, deviceScaleFactor: 3, isMobile: true, hasTouch: true, colorScheme });
   const page = await ctx.newPage();
+  // 2026-10-24 (the 1.0.2 shell, [BR-APP-SHELL-V1]): a store shot is the app IN USE. (1) The first-use intro is marked
+  // seen (studio kit key; AsyncStorage is localStorage on web). (2) NativeTabs has no web tab bar — Expo draws a pill
+  // strip at the top that the phone never shows, over the screen title — so it is hidden, never faked. (3) shoot()
+  // waits out the launch brand moment (LAUNCH.maxMs 1000 + exit) before capturing.
+  await page.addInitScript(() => {
+    try { localStorage.setItem("studio:intro_seen", "1"); } catch {}
+  });
   const errors = [];
   page.on("pageerror", (e) => errors.push(String(e)));
   const shoot = async (name) => {
     await page.evaluate(() => document.fonts.ready);
-    await page.waitForTimeout(400);
+    await page.waitForTimeout(1800);
+    // Hidden only for the capture (a script may wait on a tab label as its must-contain text, so never at load).
+    const hide = await page.addStyleTag({ content: '[class*="nativeTabsContainer"] > [role="tablist"]{display:none!important}' });
+    await page.waitForTimeout(150);
     let buf = await page.screenshot({ type: "png", fullPage: false });
+    await hide.evaluate((el) => el.remove()); // a script may tap a tab next
+    await page.waitForTimeout(100);
     let note = "";
     if (banded) {
       const caption = captionFor(spec, name);
