@@ -4,9 +4,9 @@ import { useCallback, useEffect, useLayoutEffect, useRef, useState } from "react
 import { ActivityIndicator, BackHandler, Image, Platform, Pressable, StyleSheet, Text, TextInput, View } from "react-native";
 import { available, classify, discard, labelPhoto, prepare } from "../../../modules/health-camera";
 import type { Scored } from "../../../modules/health-camera/core";
-import { bySlug, CATEGORIES, search, useIndex, type Entry } from "../../../src/lib/exposures";
+import { bySlug, ROOMS, search, useIndex, type Entry } from "../../../src/lib/exposures";
 import { LENS, offer, roomCheck, type Candidate } from "../../../src/lib/lens";
-import { openAisle, openEntry } from "../../../src/lib/nav";
+import { openEntry, openRoom } from "../../../src/lib/nav";
 import { readScans, recordScan, type ScanRecord } from "../../../src/lib/scan";
 import { DEMO_PHOTO, DEMO_RESULT } from "../../../src/lib/scan-demo";
 import { radius, space, type, useTheme, FIXED } from "../../../src/lib/theme";
@@ -101,7 +101,7 @@ export default function ScanScreen() {
     setError(null);
     const p = perm?.granted ? perm : await requestPerm();
     if (!p.granted) {
-      setError("Camera access is off. You can still search the Index below, or allow the camera in Settings.");
+      setError("Camera is off in the phone's Settings.");
       return;
     }
     void prepare().catch(() => undefined);
@@ -126,7 +126,7 @@ export default function ScanScreen() {
       if (!uri) throw new Error("no photo");
       showResult(purpose, await classify(uri, 8));
     } catch (e) {
-      setError(`Could not read that photo (${e instanceof Error ? e.message : String(e)}). Try again or search.`);
+      setError("Could not read that photo.");
       setMode({ k: "home" });
     } finally {
       discard(uri);
@@ -152,7 +152,7 @@ export default function ScanScreen() {
         <CameraView ref={cam} style={{ flex: 1 }} facing="back" onCameraReady={() => setReady(true)} />
         <View style={styles.camBar}>
           <Text style={[type.body(14, FIXED.onDark), { textAlign: "center" }]}>
-            {purpose === "room" ? "The whole shelf or corner in frame · good light." : "One product · fill the frame · good light."}
+            {purpose === "room" ? "Whole shelf in frame" : "One product, fill the frame"}
           </Text>
           <View style={{ flexDirection: "row", gap: space.m, marginTop: space.m }}>
             <View style={{ flex: 1 }}><Button title="Cancel" kind="secondary" onPress={home} testID="camera-cancel" /></View>
@@ -170,19 +170,18 @@ export default function ScanScreen() {
       {mode.k === "working" ? (
         <Tile>
           <ActivityIndicator color={t.link} />
-          <Body muted>Recognising — on your phone, nothing is sent.</Body>
+          <Body muted>Reading…</Body>
         </Tile>
       ) : null}
 
       {mode.k === "pick" ? (
         <View style={{ gap: space.s }}>
-          {mode.offTopic ? <Body>This looks like {mode.offTopic.name.toLowerCase()} — not something Detoxcellence rates.</Body> : null}
+          {mode.offTopic ? <Body muted>Looks like {mode.offTopic.name.toLowerCase()}.</Body> : null}
           <Heading size={22}>{mode.offTopic ? "Or is it…" : "Is it…"}</Heading>
           {mode.picks.map((c) => (
             <Chip key={c.label} label={c.name} photo={labelPhoto(c.label)} note={c.rows.length > 1 ? "one question" : undefined} onPress={() => choose(c)} />
           ))}
-          {mode.picks.length === 0 ? <Body muted>Nothing in the Exposure Index looks like this. Try the search.</Body> : null}
-          <Body muted size={13}>None of these? Search below, or scan again closer.</Body>
+          {mode.picks.length === 0 ? <Body muted>No match. Search below.</Body> : null}
           <Button title="Scan again" kind="secondary" onPress={() => (available ? void openCamera("item") : home())} testID="scan-again" />
         </View>
       ) : null}
@@ -205,11 +204,10 @@ export default function ScanScreen() {
 
       {mode.k === "room" ? (
         <View style={{ gap: space.s }} testID="room-result">
-          <Heading size={22}>What the camera may have seen</Heading>
-          <Body muted size={13}>Highest burden first, by each entry's Detox Score. Tap one to check it is right.</Body>
+          <Heading size={22}>Seen in the room</Heading>
           {mode.top ? (
             <Tile style={{ backgroundColor: t.link }} testID="room-top-swap" onPress={() => openEntry(mode.top!.entry.slug)} label={`Top swap: ${mode.top.entry.swap}`}>
-              <Text style={type.label(t.onLink)}>Your top swap here · {mode.top.entry.name}</Text>
+              <Text style={type.label(t.onLink)}>Top swap · {mode.top.entry.name}</Text>
               <Text style={type.strong(17, t.onLink)}>{mode.top.entry.swap}</Text>
             </Tile>
           ) : null}
@@ -217,12 +215,12 @@ export default function ScanScreen() {
             <Pressable key={x.entry.slug} testID={`room-${x.entry.slug}`} onPress={() => openEntry(x.entry.slug)} accessibilityRole="button" style={({ pressed }) => [styles.row, { backgroundColor: t.panel, opacity: pressed ? 0.8 : 1 }]}>
               <View style={{ flex: 1, gap: 2 }}>
                 <Text style={type.strong(16, t.ink)}>{x.entry.name}</Text>
-                <Body muted size={12}>seen as: {x.name.toLowerCase()}</Body>
+                <Body muted size={12}>{x.name.toLowerCase()}</Body>
               </View>
               <BandPill band={x.entry.band} score={x.entry.score} />
             </Pressable>
           ))}
-          {mode.seen.length === 0 ? <Body muted>Nothing in the photo matched an Index entry. Try one product at a time with Scan.</Body> : null}
+          {mode.seen.length === 0 ? <Body muted>No match.</Body> : null}
           <Button title="Check another room" kind="secondary" onPress={() => (available ? void openCamera("room") : home())} />
         </View>
       ) : null}
@@ -230,20 +228,18 @@ export default function ScanScreen() {
       {mode.k === "home" ? (
         <View style={{ gap: space.m }}>
           <ScanTarget demo={!available} onPress={() => (available ? void openCamera("item") : showResult("item", DEMO_RESULT))} />
-          <Body muted size={14}>One product per photo, fill the frame, good light. Recognition runs on your phone; photos are not stored or sent.</Body>
           {error ? <Body>{error}</Body> : null}
-          <Button title="Room check: one photo of a shelf" kind="secondary" testID="room-check" onPress={() => (available ? void openCamera("room") : showResult("room", DEMO_RESULT))} />
+          <Button title="Room check" kind="secondary" testID="room-check" onPress={() => (available ? void openCamera("room") : showResult("room", DEMO_RESULT))} />
         </View>
       ) : null}
 
       {mode.k !== "working" ? (
         <View style={{ gap: space.s }}>
-          <Heading>Search the Index</Heading>
           <TextInput
             testID="scan-search"
             value={query}
             onChangeText={setQuery}
-            placeholder="Search a product or habit…"
+            placeholder="Search the Index…"
             placeholderTextColor={t.muted}
             style={[type.body(16, t.ink), { backgroundColor: t.panel, borderRadius: radius.pill, paddingHorizontal: space.l, minHeight: 48 }]}
             autoCorrect={false}
@@ -261,7 +257,7 @@ export default function ScanScreen() {
 
       {mode.k === "home" && scans.length ? (
         <View style={{ gap: space.s }}>
-          <Heading>Recent scans</Heading>
+          <Heading>Recent</Heading>
           {scans.slice(0, 5).map((s) => {
             const e = s.slug ? bySlug(s.slug) : undefined;
             return (
@@ -279,11 +275,11 @@ export default function ScanScreen() {
 
       {mode.k === "home" ? (
         <View style={{ gap: space.s }}>
-          <Heading>Browse the aisles</Heading>
-          {CATEGORIES.map((c) => (
-            <Pressable key={c} onPress={() => openAisle(c)} accessibilityRole="button" accessibilityLabel={`${c}, ${list.filter((e) => e.category === c).length} entries`} style={({ pressed }) => [styles.row, { backgroundColor: t.panel, opacity: pressed ? 0.8 : 1 }]}>
+          <Heading>Rooms</Heading>
+          {ROOMS.map((c) => (
+            <Pressable key={c} onPress={() => openRoom(c)} accessibilityRole="button" accessibilityLabel={`${c}, ${list.filter((e) => e.room === c).length} entries`} style={({ pressed }) => [styles.row, { backgroundColor: t.panel, opacity: pressed ? 0.8 : 1 }]}>
               <Text style={[type.strong(15, t.ink), { flex: 1 }]}>{c}</Text>
-              <Text style={[type.body(13, t.muted), { fontVariant: ["tabular-nums"] }]}>{list.filter((e) => e.category === c).length}</Text>
+              <Text style={[type.body(13, t.muted), { fontVariant: ["tabular-nums"] }]}>{list.filter((e) => e.room === c).length}</Text>
               <Text style={type.strong(18, t.muted)}>›</Text>
             </Pressable>
           ))}
@@ -315,9 +311,9 @@ function ScanTarget({ demo, onPress }: { demo: boolean; onPress: () => void }) {
           <View style={[StyleSheet.absoluteFill, { backgroundColor: "rgba(17,21,19,0.55)" }]} />
         </>
       ) : null}
-      <Text style={[type.label(demo ? FIXED.onDark : t.link)]}>Exposure check</Text>
-      <Display size={40} color={ink} style={{ textAlign: "left", marginTop: space.s }}>What's on your shelf?</Display>
-      <Text style={[type.body(15, demo ? FIXED.onDark : t.muted), { marginTop: space.s }]}>{demo ? "Sample photo — tap to see what a scan returns" : "Pans · containers · candles · bottles"}</Text>
+      <Text style={[type.label(demo ? FIXED.onDark : t.link)]}>Home check</Text>
+      <Display size={40} color={ink} style={{ textAlign: "left", marginTop: space.s }}>What's in your home?</Display>
+      <Text style={[type.body(15, demo ? FIXED.onDark : t.muted), { marginTop: space.s }]}>{demo ? "Sample photo" : "Pans · containers · candles · bottles"}</Text>
       <View style={{ flex: 1 }} />
       <View style={[styles.targetCta, { backgroundColor: demo ? FIXED.onDark : t.link }]}>
         <Text style={type.strong(17, demo ? FIXED.onLight : t.onLink)}>{demo ? "See a scan" : "Scan a product"}</Text>

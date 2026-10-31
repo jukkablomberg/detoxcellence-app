@@ -16,36 +16,26 @@ const web = (path: string) => `https://${venture.domain}${path}`;
 export default function About() {
   const v = getIndex().doc.version;
   const theme = useStudioTheme();
+  // The CC BY photos on the "Is it…" chips must be credited (scripts/check-label-photos.mjs) — one line each, nothing more.
   const credits = labelPhotoCredits.filter((c) => LENS[c.id]);
-  const p = { fontFamily: theme.fonts.body, fontSize: 15, lineHeight: 22, color: theme.ink } as const;
   const small = { fontFamily: theme.fonts.body, fontSize: 11, lineHeight: 16, color: theme.muted } as const;
   return (
     <StudioAbout
       theme={theme}
       details={
-        <AboutSection theme={theme} title="How Scan works">
-          <Text style={p}>
-            Scan uses an image model on your phone (Google SigLIP 2, Apache-2.0) to name the three things a photo looks most like;
-            you choose the right one, and it opens that Exposure Index entry. The room check lists what one photo may show,
-            highest burden first. The photo is deleted as soon as it is read: nothing is stored or sent. It is a recogniser,
-            not a judge — when it is unsure, search the Index.
-          </Text>
-          <Text style={p}>
-            The picture on each "Is it…" choice is an open-licence photo of that thing (public domain or CC0, unless credited
-            here): it shows what the camera means, it is not your photo.
-          </Text>
+        <AboutSection theme={theme} title="Photo credits">
           {credits.map((c) => (
-            <Text key={c.id} style={small}>{`${c.id.split(":")[1].replace(/-/g, " ")}: photo ${c.author}, ${c.licence}, ${c.url}`}</Text>
+            <Text key={c.id} style={small}>{`${c.id.split(":")[1].replace(/-/g, " ")}: ${c.author}, ${c.licence}, ${c.url}`}</Text>
           ))}
         </AboutSection>
       }
       slug={venture.slug}
       name="Detoxcellence"
-      description="Point the camera at a pan, a container, a candle or a bottle and see its Exposure Index entry — its Detox Score, the studies behind it and a cleaner swap. Plus the Exposure Score, on your phone."
-      category="Information, not medical advice. Ratings are editorial; every source is shown."
+      description="The home exposure record — every material, product and habit in a house scored for avoidable exposure, PFAS first, sourced row by row — with the Home Check and the camera, on your phone."
+      category="Information, not medical advice."
       record={[
-        { label: "Methodology", sub: `v${v} · how the Detox Score is built`, url: web("/methodology.html"), placement: "about-methodology" },
-        { label: "Open data", sub: "CC BY 4.0 · JSON + CSV", url: web("/data/export/exposures.json"), placement: "about-data" },
+        { label: "Methodology", sub: `v${v}`, url: web("/methodology.html"), placement: "about-methodology" },
+        { label: "Open data", sub: "CC BY 4.0", url: web("/data/export/exposures.json"), placement: "about-data" },
       ]}
       help={[
         { label: "Support", url: web("/app/support"), placement: "about-support" },

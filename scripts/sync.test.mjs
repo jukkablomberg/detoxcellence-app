@@ -37,12 +37,12 @@ test("a row's rating changes on the site → RED (index drift)", () => {
   assert.match(r.err, /exposures\.json differs/);
 });
 test("a quiz weight changes on the site → RED (quiz drift)", () => {
-  const r = run((d) => edit(d, "assets/quiz.js", (s) => s.replace('["A carbon pitcher/tap filter",8,null]', '["A carbon pitcher/tap filter",7,null]')));
+  const r = run((d) => edit(d, "assets/quiz.js", (s) => s.replace('["Ceramic-coated, intact",7,null]', '["Ceramic-coated, intact",6,null]')));
   assert.equal(r.code, 1);
   assert.match(r.err, /quiz\.json differs/);
 });
 test("a scoring rule changes on the site → RED (rule no longer present)", () => {
-  const r = run((d) => edit(d, "assets/quiz.js", (s) => s.replace("if(pct>=80)driver='balanced';", "if(pct>=85)driver='balanced';")));
+  const r = run((d) => edit(d, "assets/quiz.js", (s) => s.replace("var driver=worst&&worst.pct<70?worst.k:'balanced';", "var driver=worst&&worst.pct<75?worst.k:'balanced';")));
   assert.equal(r.code, 1);
-  assert.match(r.err, /pct ≥ 80 → balanced/);
+  assert.match(r.err, /worst room when it is below 70/);
 });

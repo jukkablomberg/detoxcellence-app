@@ -32,7 +32,7 @@ export default function TabsLayout() {
       </NativeTabs.Trigger>
       <NativeTabs.Trigger name="(score)">
         <NativeTabs.Trigger.Icon sf={ICONS.score.sf} md={ICONS.score.md} />
-        <NativeTabs.Trigger.Label>Score</NativeTabs.Trigger.Label>
+        <NativeTabs.Trigger.Label>Home Check</NativeTabs.Trigger.Label>
       </NativeTabs.Trigger>
       <NativeTabs.Trigger name="(swaps)">
         <NativeTabs.Trigger.Icon sf={ICONS.tips.sf} md={ICONS.tips.md} />

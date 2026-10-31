@@ -4,15 +4,15 @@ import { useCallback, useState } from "react";
 import { Platform, Pressable, ScrollView, Switch, Text, View } from "react-native";
 import { useIndex } from "../../../src/lib/exposures";
 import { latestDriver } from "../../../src/lib/history";
-import { PROFILES, type Driver } from "../../../src/lib/quiz";
+import { ROOMS, type Driver } from "../../../src/lib/quiz";
 import { DEFAULT_SETTINGS, plan, readSettings, requestPermission, saveSettings, scheduledCount, WEEKDAYS, type ReminderSettings } from "../../../src/lib/reminders";
 import { radius, space, type, useTheme } from "../../../src/lib/theme";
 import { BandPill, Body, Chip, Heading, Label, Screen, Tile } from "../../../src/ui/primitives";
 
 /**
  * Swaps — the weekly swap reminder (native value 2) and the swaps it will send, in order. The plan starts from the
- * area the latest Exposure Score points to; each row opens its entry page. Permission is asked only when the
- * reader switches the reminder on.
+ * room the latest Home Check points to; each row opens its entry page. Permission is asked only when the reader
+ * switches the reminder on. [BC-APP-LESS-TEXT] 10-31: the switch, day, time, the rows — no explainers.
  */
 export default function SwapsScreen() {
   const t = useTheme();
@@ -35,7 +35,7 @@ export default function SwapsScreen() {
   const apply = async (next: ReminderSettings) => {
     setNote(null);
     if (next.on && !s.on && Platform.OS !== "web" && !(await requestPermission())) {
-      setNote("Notifications are off for Detoxcellence. Allow them in your phone's Settings, then switch the reminder on again.");
+      setNote("Notifications are off in the phone's Settings.");
       next = { ...next, on: false };
     }
     setS(next);
@@ -52,8 +52,7 @@ export default function SwapsScreen() {
       <Tile>
         <View style={{ flexDirection: "row", alignItems: "center", justifyContent: "space-between", gap: space.m }}>
           <View style={{ flex: 1, gap: 2 }}>
-            <Heading>Weekly swap reminder</Heading>
-            <Body muted size={13}>One swap from the Index, once a week.</Body>
+            <Heading>Weekly swap</Heading>
           </View>
           <Switch testID="reminder-switch" value={s.on} onValueChange={(on) => void apply({ ...s, on })} trackColor={{ true: t.link, false: t.panel2 }} accessibilityLabel="Weekly swap reminder" />
         </View>
@@ -70,16 +69,12 @@ export default function SwapsScreen() {
             <Chip key={h} title={`${String(h).padStart(2, "0")}:00`} on={s.hour === h} onPress={() => void apply({ ...s, hour: h })} testID={`hour-${h}`} />
           ))}
         </ScrollView>
-        <Body muted size={13} style={{ fontVariant: ["tabular-nums"] }}>
-          {s.on ? `On — ${WEEKDAYS[s.weekday - 1]}s at ${String(s.hour).padStart(2, "0")}:00. ${Platform.OS === "web" ? "" : `${held} reminder${held === 1 ? "" : "s"} scheduled on this phone.`}` : "Off. Nothing is scheduled."}
-        </Body>
+        {s.on && Platform.OS !== "web" ? <Body muted size={13} style={{ fontVariant: ["tabular-nums"] }}>{held} scheduled</Body> : null}
       </Tile>
 
       <View style={{ gap: space.s }}>
-        <Heading>Your next swaps</Heading>
-        <Body muted size={13}>
-          {driver ? `Starting with ${PROFILES[driver].title.replace(/^The /, "the ")} (your latest Exposure Score), highest burden first.` : "Highest burden first. Take the Exposure Score and the list starts with your own area."}
-        </Body>
+        <Heading>Next swaps</Heading>
+        {driver && driver !== "balanced" ? <Body muted size={13}>{ROOMS[driver].label} first</Body> : null}
         {upcoming.map(({ date, entry }) => (
           <Pressable
             key={date.toISOString()}

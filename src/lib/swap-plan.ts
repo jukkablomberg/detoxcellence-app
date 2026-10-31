@@ -1,5 +1,5 @@
 import { burdenFirst, hasSwap } from "./score";
-import { categoriesFor, type Driver } from "./quiz";
+import { indexRoomFor, type Driver } from "./quiz";
 
 /**
  * The weekly swap plan, pure (no React Native) so scripts/reminders.test.mjs runs it under Node.
@@ -8,13 +8,14 @@ import { categoriesFor, type Driver } from "./quiz";
 export const WEEKS_AHEAD = 8;
 export type ReminderSettings = { on: boolean; weekday: number; hour: number }; // weekday 1 = Monday … 7 = Sunday
 export const WEEKDAYS = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"];
-type PlanEntry = { name: string; category: string; swap: string; score: number };
+type PlanEntry = { name: string; category: string; room?: string; older_home?: boolean; swap: string; score: number };
 
-/** The ordered swap list for a profile: its own categories worst-first, then everything else worst-first. */
+/** The ordered swap list for a Home Check result: its worst room's rows worst-first, then everything else worst-first. */
 export function swapQueue<E extends PlanEntry>(list: E[], driver: Driver | null): E[] {
   const swaps = list.filter(hasSwap).sort(burdenFirst);
-  const mine = new Set(driver ? categoriesFor(driver) : []);
-  return [...swaps.filter((e) => mine.has(e.category)), ...swaps.filter((e) => !mine.has(e.category))];
+  const where = driver ? indexRoomFor(driver) : { room: null, olderHome: false };
+  const mine = (e: E) => (where.olderHome ? e.older_home === true : where.room != null && e.room === where.room);
+  return [...swaps.filter(mine), ...swaps.filter((e) => !mine(e))];
 }
 
 const WEEK_MS = 7 * 24 * 3600 * 1000;

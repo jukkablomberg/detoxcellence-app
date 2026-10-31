@@ -73,7 +73,6 @@ export default function RootLayout() {
       <StatusBar style={scheme === "dark" ? "light" : "dark"} />
       <Stack screenOptions={header}>
         <Stack.Screen name="(tabs)" options={{ headerShown: false, title: "Detoxcellence" }} />
-        <Stack.Screen name="exposure/[slug]" options={{ title: "Entry" }} />
         <Stack.Screen name="about" options={{ title: "About" }} />
       </Stack>
       {/* Overlay, not a replacement: the navigator is mounted underneath, so a tapped reminder lands. */}

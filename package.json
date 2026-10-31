@@ -1,6 +1,6 @@
 {
   "name": "detoxcellence-app",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "private": true,
   "main": "expo-router/entry",
   "_versions": "PINNED AND DECLARED. Exact versions (no ^, no ~, no *); scripts/listing-readiness.mjs fails on any range operator. Expo SDK 57 / target API 36. The dependency set is projects/monitoringroom/repo-app's (EAS build FINISHED 10-06/07) minus expo-secure-store (no account) and expo-device (no push token): the weekly swap reminder is a LOCAL notification. No firebase / revenuecat (no Firebase project for Detoxcellence yet — HEALTH-TRIO-DAY § 2 'Not on the day'; no IAP — Paid Apps Agreement unsigned). C2 (2026-10-09) added the camera-engine set at FatTonic's exact pins (expo-asset, expo-camera, expo-file-system, expo-image-manipulator, jpeg-js, onnxruntime-react-native 1.24.3 + scripts/patch-ort-native.mjs on postinstall) — the engine is a byte copy (scripts/sync-camera-engine.mjs --check).",

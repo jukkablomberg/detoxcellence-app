@@ -27,6 +27,10 @@ export type Row = {
   studies?: Study[];
   sources?: Source[];
   unsourced?: { input: string; searched: string; reason: string }[];
+  /** [HOME-REFOCUS] 2026-10-31: the room the row lives in (export 1.7.0+); the /older-homes flag; a step list. */
+  room: string;
+  older_home?: boolean;
+  guidance?: { title: string; steps: string[] };
 };
 export type IndexDoc = { dataset: string; version: string; released: string; licence: { name: string; url: string }; citation: string; methodology: string; rows: Row[] };
 
@@ -48,8 +52,14 @@ export const EXPORT_URL = `${SITE}/data/export/exposures.json`;
 export const entryUrl = (slug: string) => `${SITE}/exposure/${slug}.html`;
 export const studyUrl = (s: Study) => (s.doi ? `https://doi.org/${s.doi}` : s.pmid ? `https://pubmed.ncbi.nlm.nih.gov/${s.pmid}/` : null);
 
-/** The Index categories, water and air first (the quiz calls them the fastest upgrades). */
+/** The Index categories (kept for the lens aisles; the Index itself browses by room since 10-31). */
 export const CATEGORIES = ["Water", "Air", "Kitchen", "Plastics", "Food", "Personal Care", "Home", "Environment"] as const;
+/** [HOME-REFOCUS] the site's rooms, in its order — Water first, food last (Food supply is frozen). */
+export const ROOMS = ["Water", "Kitchen", "Living & bedrooms", "Attic, structure & air", "Bathroom & personal care", "Laundry & cleaning", "Outdoors & garden", "Food & drink"] as const;
+/** The site's /pfas-at-home rule (build.js PFAS_N): the name or the note names PFAS. */
+export const isPFAS = (r: { name: string; note?: string }) => /PFAS/.test(`${r.name} ${r.note ?? ""}`);
+/** The site's /older-homes hub: rows flagged by the record. */
+export const isOlderHome = (r: { older_home?: boolean }) => r.older_home === true;
 
 /* ---------------- the live copy: bundled, then the last good refresh ---------------- */
 const CACHE_KEY = "detoxcellence.index.v1";

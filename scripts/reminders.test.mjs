@@ -32,12 +32,15 @@ test("plan: WEEKS_AHEAD distinct swaps, never a '—' entry", () => {
   assert.ok(p.every((x) => x.entry.swap !== "—"));
 });
 
-test("queue: the profile's own area first, worst first", () => {
+test("queue: the Home Check's worst room first, worst first ([HOME-REFOCUS] rooms, not categories)", () => {
   const q = swapQueue(rows, "water");
-  const firstNonWater = q.findIndex((e) => e.category !== "Water");
+  const firstNonWater = q.findIndex((e) => e.room !== "Water");
   assert.ok(firstNonWater > 0);
-  assert.ok(q.slice(0, firstNonWater).every((e) => e.category === "Water"));
+  assert.ok(q.slice(0, firstNonWater).every((e) => e.room === "Water"));
   for (let i = 1; i < firstNonWater; i++) assert.ok(q[i - 1].score <= q[i].score);
-  const plastic = swapQueue(rows, "plastic");
-  assert.equal(plastic[0].category, "Plastics");
+  const kitchen = swapQueue(rows, "kitchen");
+  assert.equal(kitchen[0].room, "Kitchen");
+  const older = swapQueue(rows, "older");
+  assert.equal(older[0].older_home, true);
+  assert.deepEqual(swapQueue(rows, "balanced").map((e) => e.slug), swapQueue(rows, null).map((e) => e.slug));
 });

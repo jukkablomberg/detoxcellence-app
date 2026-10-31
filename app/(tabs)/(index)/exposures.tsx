@@ -3,40 +3,52 @@ import { openEntry } from "../../../src/lib/nav";
 import { useEffect, useMemo, useState } from "react";
 import { FlatList, Pressable, ScrollView, Text, TextInput, View } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
-import { burdenFirst, CATEGORIES, search, useIndex, type Entry } from "../../../src/lib/exposures";
+import { burdenFirst, CATEGORIES, isOlderHome, isPFAS, ROOMS, search, useIndex, type Entry } from "../../../src/lib/exposures";
 import { radius, space, type, useTheme } from "../../../src/lib/theme";
-import { BandPill, Body, Chip, Disclosure, Label } from "../../../src/ui/primitives";
+import { BandPill, Body, Chip } from "../../../src/ui/primitives";
 
 type Sort = "burden" | "cleanest";
+type Pick = { kind: "all" } | { kind: "room"; room: string } | { kind: "pfas" } | { kind: "older" } | { kind: "cat"; cat: string };
 
 /**
- * The Exposure Index, offline: search, one category at a time, highest burden first (the site's sort=burden) or
- * cleanest first. Every row opens the one entry page (/exposure/<slug>), the same page from every surface.
- * `?cat=` arrives from Scan's aisles and the Score tab's next step ("See the highest-burden water entries").
+ * The Exposure Index, offline, browsed the way the site browses it since [HOME-REFOCUS] 2026-10-31: by ROOM (the
+ * export's `room` field), with the two doors as chips — PFAS at home (the site's /pfas-at-home rule) and Older homes
+ * (/older-homes, rows flagged `older_home`). Highest burden first or cleanest first. Every row opens /exposure/<slug>.
+ * `?room=` / `?older=1` arrive from the Home Check's room rows; `?cat=` from the lens aisles.
+ * [BC-APP-LESS-TEXT] 10-31: the box, the chips, the rows — no count line, no disclosure, no "try a simpler word".
  */
 export default function IndexScreen() {
   const t = useTheme();
   const insets = useSafeAreaInsets();
-  const { list, doc, from } = useIndex();
-  const params = useLocalSearchParams<{ cat?: string; t?: string }>();
+  const { list } = useIndex();
+  const params = useLocalSearchParams<{ cat?: string; room?: string; older?: string; t?: string }>();
   const [q, setQ] = useState("");
-  const [cat, setCat] = useState<string | null>(null);
+  const [pick, setPick] = useState<Pick>({ kind: "all" });
   const [sort, setSort] = useState<Sort>("burden");
 
-  // An aisle from Scan or the Score's next step (src/lib/nav.ts openAisle): that category, highest burden first,
-  // any old search cleared. `t` makes every arrival a new event.
   useEffect(() => {
-    if (params.cat === undefined) return;
-    setCat(params.cat && (CATEGORIES as readonly string[]).includes(params.cat) ? params.cat : null);
+    if (params.t === undefined) return;
+    if (params.older === "1") setPick({ kind: "older" });
+    else if (params.room && (ROOMS as readonly string[]).includes(params.room)) setPick({ kind: "room", room: params.room });
+    else if (params.cat && (CATEGORIES as readonly string[]).includes(params.cat)) setPick({ kind: "cat", cat: params.cat });
+    else setPick({ kind: "all" });
     setSort("burden");
     setQ("");
-  }, [params.cat, params.t]);
+  }, [params.cat, params.room, params.older, params.t]);
 
   const rows = useMemo(() => {
-    const base = cat ? list.filter((e) => e.category === cat) : list;
+    const base =
+      pick.kind === "room" ? list.filter((e) => e.room === pick.room)
+      : pick.kind === "pfas" ? list.filter(isPFAS)
+      : pick.kind === "older" ? list.filter(isOlderHome)
+      : pick.kind === "cat" ? list.filter((e) => e.category === pick.cat)
+      : list;
     const found = search(base, q);
     return [...found].sort(sort === "burden" ? burdenFirst : (a, b) => b.score - a.score || a.name.localeCompare(b.name));
-  }, [list, q, cat, sort]);
+  }, [list, q, pick, sort]);
+
+  const is = (p: Pick) => JSON.stringify(p) === JSON.stringify(pick);
+  const toggle = (p: Pick) => setPick(is(p) ? { kind: "all" } : p);
 
   const header = (
     <View style={{ gap: space.m, paddingBottom: space.m }}>
@@ -44,7 +56,7 @@ export default function IndexScreen() {
         testID="index-search"
         value={q}
         onChangeText={setQ}
-        placeholder={`Search ${list.length} entries — a pan, a candle, tap water…`}
+        placeholder="Search — a pan, tap water, a candle…"
         placeholderTextColor={t.muted}
         accessibilityLabel="Search the Exposure Index"
         clearButtonMode="while-editing"
@@ -52,20 +64,21 @@ export default function IndexScreen() {
         style={[type.body(16, t.ink), { backgroundColor: t.panel, borderRadius: radius.pill, paddingHorizontal: space.l, minHeight: 48 }]}
       />
       <ScrollView horizontal showsHorizontalScrollIndicator={false} contentContainerStyle={{ gap: space.s }}>
-        <Chip title="All" on={!cat} onPress={() => setCat(null)} testID="cat-all" />
-        {CATEGORIES.map((c) => (
-          <Chip key={c} title={c} on={cat === c} onPress={() => setCat(cat === c ? null : c)} testID={`cat-${c}`} />
+        <Chip title="PFAS at home" on={is({ kind: "pfas" })} onPress={() => toggle({ kind: "pfas" })} testID="door-pfas" />
+        <Chip title="Older homes" on={is({ kind: "older" })} onPress={() => toggle({ kind: "older" })} testID="door-older" />
+      </ScrollView>
+      <ScrollView horizontal showsHorizontalScrollIndicator={false} contentContainerStyle={{ gap: space.s }}>
+        <Chip title="All rooms" on={pick.kind === "all"} onPress={() => setPick({ kind: "all" })} testID="room-all" />
+        {ROOMS.map((r) => (
+          <Chip key={r} title={r} on={is({ kind: "room", room: r })} onPress={() => toggle({ kind: "room", room: r })} testID={`room-${r}`} />
         ))}
+        {pick.kind === "cat" ? <Chip title={pick.cat} on onPress={() => setPick({ kind: "all" })} testID={`cat-${pick.cat}`} /> : null}
       </ScrollView>
       <View style={{ flexDirection: "row", gap: space.s, alignItems: "center" }}>
-        <Label>Order</Label>
-        <Chip title="Highest burden" on={sort === "burden"} onPress={() => setSort("burden")} testID="sort-burden" />
+        <Chip title="Worst first" on={sort === "burden"} onPress={() => setSort("burden")} testID="sort-burden" />
         <Chip title="Cleanest" on={sort === "cleanest"} onPress={() => setSort("cleanest")} testID="sort-cleanest" />
+        <Text style={[type.body(13, t.muted), { marginLeft: "auto", fontVariant: ["tabular-nums"] }]}>{rows.length}</Text>
       </View>
-      <Body muted size={13} style={{ fontVariant: ["tabular-nums"] }}>
-        {rows.length} of {list.length} · Exposure Index {doc.version} ({from === "live" ? "updated from detoxcellence.com" : from === "cached" ? "last update saved on this phone" : "bundled with the app"})
-      </Body>
-      <Disclosure />
     </View>
   );
 
@@ -79,7 +92,7 @@ export default function IndexScreen() {
       data={rows}
       keyExtractor={(e) => e.slug}
       ListHeaderComponent={header}
-      ListEmptyComponent={<Body muted>No entry matches “{q}”. Try a simpler word — “pan”, “water”, “plastic”.</Body>}
+      ListEmptyComponent={<Body muted>—</Body>}
       renderItem={({ item }) => <Row e={item} />}
     />
   );
@@ -99,7 +112,7 @@ function Row({ e }: { e: Entry }) {
         <Text style={[type.strong(16, t.ink), { flex: 1 }]}>{e.name}</Text>
         <BandPill band={e.band} score={e.score} />
       </View>
-      <Body muted size={13} lines={1}>{e.category} · {e.context}</Body>
+      <Body muted size={13} lines={1}>{e.room}</Body>
     </Pressable>
   );
 }
