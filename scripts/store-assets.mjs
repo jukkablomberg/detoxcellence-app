@@ -26,6 +26,26 @@ import { launchChromium } from "./browser.mjs";
 
 const here = dirname(fileURLToPath(import.meta.url));
 const root = resolve(here, "..");
+
+/* [BR-APP-ICON-FAMILY] 2026-11-01 (Jukka `icons: A` 2026-10-30, built by CoS): the launcher icon, the adaptive layers,
+ * the splash mark, the notification icon and store/play-store-icon-512.png now come from the STUDIO ICON FAMILY masters
+ * in assets/icon-family/*.svg (design/tools/app-icons/export.py + render.mjs, grid APP-ICON-GRID.md). This script keeps
+ * generating them from the old mark above, so the family files are restored over its output at the end — the feature
+ * graphic and anything else it draws stay the script's. Set ICONS_FROM_SCRIPT=1 to keep the script's icons instead. */
+process.on("exit", () => {
+  if (process.env.ICONS_FROM_SCRIPT) return;
+  const fs = globalThis.process.getBuiltinModule("node:fs"); const path = globalThis.process.getBuiltinModule("node:path");
+  const fam = path.join(root, "assets", "icon-family");
+  if (!fs.existsSync(path.join(fam, "icon.svg"))) return;
+  const keep = path.join(root, "assets", "icon-family", ".png");
+  if (!fs.existsSync(keep)) return;
+  for (const f of fs.readdirSync(keep)) {
+    const dst = f === "play-store-icon-512.png" ? path.join(root, "store", f) : path.join(root, "assets", f);
+    fs.copyFileSync(path.join(keep, f), dst);
+  }
+  console.log("store-assets: icon family restored over the script's icons (assets/icon-family/.png)");
+});
+
 const OUT = join(root, "assets");
 mkdirSync(OUT, { recursive: true });
 
