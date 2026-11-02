@@ -25,7 +25,7 @@ export type StudioAboutProps = {
   name: string;
   /** the venture's display treatment for its name (e.g. uppercase tracked) — its type, not the kit's */
   nameStyle?: TextStyle;
-  /** ≤ 30 words, present tense */
+  /** ≤ 30 words, present tense — or "" for none ([BC-APP-LESS-TEXT] 2026-11-02: VINCAP prints no prose on About) */
   description: string;
   /** one muted line, only what the category requires — a store- or regulator-required text goes in `details` verbatim */
   category?: string;
@@ -43,6 +43,9 @@ export type StudioAboutProps = {
   liveRegistry?: boolean;
   /** the app's outbound opener (src/lib/outbound.ts openOutbound — APP-UTM on own domains) */
   open: (url: string, placement: string) => unknown;
+  /** block 5 ("More from JukkaBlomberg.com") — default true; false drops it for an app whose review answer must not
+   *  read as a suite (VINCAP 2.0, 2026-10-27: Apple 4.3 / Q5 / Q7). The sign-off and its one door stay. */
+  crossPromo?: boolean;
 };
 
 /** [APP-DETEMPLATE 2026-10-21] Retired from the app (it told an App Store reviewer the apps are mass-produced); the
@@ -71,7 +74,7 @@ export function StudioAbout(p: StudioAboutProps) {
   };
   const label = buildLabel(version, tester);
   const s = makeStyles(t);
-  const shown = apps.slice(0, 3);
+  const shown = p.crossPromo === true ? apps.slice(0, 3) : []; // off by default since close: drop (Jukka 2026-11-02)
   return (
     <ScrollView
       style={{ flex: 1, backgroundColor: t.ground }}
@@ -81,7 +84,7 @@ export function StudioAbout(p: StudioAboutProps) {
       <Text style={[s.name, p.nameStyle]} accessibilityRole="header">
         {p.name}
       </Text>
-      <Text style={s.desc}>{p.description}</Text>
+      {p.description ? <Text style={s.desc}>{p.description}</Text> : null}
       {p.category ? <Text style={s.cat}>{p.category}</Text> : null}
       {p.details ?? null}
 
