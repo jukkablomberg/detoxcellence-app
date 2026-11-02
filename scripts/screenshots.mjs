@@ -61,7 +61,7 @@ try {
     await page.goto(`${base}/`, { waitUntil: "load" });
     await tid("index-search").waitFor({ timeout: 30000 });
     await settle();
-    await tid("cat-all").click();
+    // 2026-11-02: no "all" chip since the 10-31 home refocus — the index opens on all
     await page.waitForTimeout(500);
     await shoot("04-index");
 
@@ -70,7 +70,7 @@ try {
     await settle();
     await tid("start-quiz").click();
     for (let i = 0; i < quiz.questions.length; i++) {
-      await vis(`Question ${i + 1} of ${quiz.questions.length}`).waitFor({ timeout: 5000 });
+      await page.getByText(`${i + 1} / ${quiz.questions.length}`, { exact: false }).filter({ visible: true }).first().waitFor({ timeout: 5000 }); // label is "n / 12 · room" since the 10-31 refocus
       await tid(`answer-${i % 2 === 0 ? 1 : 2}`).click();
     }
     await tid("result").waitFor({ timeout: 10000 });
@@ -78,7 +78,7 @@ try {
     await shoot("05-score");
 
     await page.goto(`${base}/about`, { waitUntil: "load" });
-    await vis("How Scan works").waitFor({ timeout: 30000 });
+    await vis("Detoxcellence").waitFor({ timeout: 30000 }); // About has no "How Scan works" since the trim
     await settle();
     await shoot("06-about");
 
