@@ -4,16 +4,17 @@ import { useCallback, useEffect, useLayoutEffect, useRef, useState } from "react
 import { ActivityIndicator, BackHandler, Image, Platform, Pressable, StyleSheet, Text, TextInput, View } from "react-native";
 import { available, classify, discard, labelPhoto, prepare } from "../../../modules/health-camera";
 import type { Scored } from "../../../modules/health-camera/core";
-import { bySlug, ROOMS, search, useIndex, type Entry } from "../../../src/lib/exposures";
+import { bySlug, search, useIndex, type Entry } from "../../../src/lib/exposures";
 import { LENS, offer, roomCheck, type Candidate } from "../../../src/lib/lens";
-import { openEntry, openRoom } from "../../../src/lib/nav";
+import { openEntry } from "../../../src/lib/nav";
 import { readScans, recordScan, type ScanRecord } from "../../../src/lib/scan";
 import { DEMO_PHOTO, DEMO_RESULT } from "../../../src/lib/scan-demo";
 import { radius, space, type, useTheme, FIXED } from "../../../src/lib/theme";
 import { BandPill, Body, Button, Display, Heading, Label, Screen, Tile } from "../../../src/ui/primitives";
 
 /**
- * SCAN — the front page (docs/scan-flow.md, copied from FatTonic with the engine). Point the phone at a pan, a food
+ * SCAN — [DX-APP-READER] 2026-11-02: third tab, route /scan (the Index is the front page); the Rooms list left (it is the
+ * Index tab's chips). Was: the front page (docs/scan-flow.md, copied from FatTonic with the engine). Point the phone at a pan, a food
  * container, a candle, a shampoo → the engine (modules/health-camera, FatTonic's, byte-identical) ranks its labels on
  * the phone → this app's lens offers up to three "Is it…" chips → a tap opens that Exposure Index entry
  * (/exposure/<slug>). Where the row depends on it (coating, use, contents, organic or conventional) one follow-up tap.
@@ -273,18 +274,6 @@ export default function ScanScreen() {
         </View>
       ) : null}
 
-      {mode.k === "home" ? (
-        <View style={{ gap: space.s }}>
-          <Heading>Rooms</Heading>
-          {ROOMS.map((c) => (
-            <Pressable key={c} onPress={() => openRoom(c)} accessibilityRole="button" accessibilityLabel={`${c}, ${list.filter((e) => e.room === c).length} entries`} style={({ pressed }) => [styles.row, { backgroundColor: t.panel, opacity: pressed ? 0.8 : 1 }]}>
-              <Text style={[type.strong(15, t.ink), { flex: 1 }]}>{c}</Text>
-              <Text style={[type.body(13, t.muted), { fontVariant: ["tabular-nums"] }]}>{list.filter((e) => e.room === c).length}</Text>
-              <Text style={type.strong(18, t.muted)}>›</Text>
-            </Pressable>
-          ))}
-        </View>
-      ) : null}
     </Screen>
   );
 }

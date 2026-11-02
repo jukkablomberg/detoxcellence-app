@@ -9,11 +9,7 @@ import { startIndex } from "../src/lib/exposures";
 import { installForegroundHandler, refillReminder } from "../src/lib/reminders";
 import { fonts, palettes } from "../src/lib/theme";
 import { BrandMoment, holdNativeSplash } from "../src/studio/BrandMoment";
-import { FirstUseIntro } from "../src/studio/FirstUseIntro";
-import type { IntroConfig } from "../src/studio/intro";
 import { useStudioTheme } from "../src/lib/chrome";
-import { INTRO_IMAGES } from "../src/lib/intro-images";
-import introJson from "./intro.json";
 
 // design/APP-STANDARD.md § 1: the native splash stays up until the brand moment draws the same picture.
 holdNativeSplash();
@@ -87,8 +83,8 @@ export default function RootLayout() {
           onDone={() => setBrandDone(true)}
         />
       ) : null}
-      {/* First-use intro (PNF-8, [APP-DETEMPLATE] 2026-10-21): once per install, after the brand moment, ends on the first tab. */}
-      <FirstUseIntro config={introJson as IntroConfig} images={INTRO_IMAGES} theme={studioTheme} ready={brandDone} />
+      {/* First-use intro (PNF-8) — OFF since [APP-INTRO-OFF] 2026-11-02 (Jukka: the intro screenshots are stale; the app
+          opens on the Index instead). Re-mount <FirstUseIntro …/> once assets/intro is re-shot from this UI. */}
     </SafeAreaProvider>
   );
 }

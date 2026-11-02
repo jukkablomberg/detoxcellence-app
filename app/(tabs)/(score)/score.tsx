@@ -76,7 +76,7 @@ export default function ScoreScreen() {
       ) : (
         <Tile>
           <Heading size={22}>Home Check</Heading>
-          <Body muted size={13}>{QUESTIONS.length} questions about the house. Stays on this phone.</Body>
+          <Body muted size={13}>{QUESTIONS.length} questions</Body>
         </Tile>
       )}
       <Button testID="start-quiz" title={latest ? "Check again" : "Start"} onPress={() => setMode({ k: "quiz", i: 0, answers: [] })} kind={latest ? "secondary" : "primary"} />

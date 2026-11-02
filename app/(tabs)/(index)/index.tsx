@@ -11,7 +11,7 @@ type Sort = "burden" | "cleanest";
 type Pick = { kind: "all" } | { kind: "room"; room: string } | { kind: "pfas" } | { kind: "older" } | { kind: "cat"; cat: string };
 
 /**
- * The Exposure Index, offline, browsed the way the site browses it since [HOME-REFOCUS] 2026-10-31: by ROOM (the
+ * The Exposure Index — the front page, route "/" ([DX-APP-READER] 2026-11-02) — offline, browsed the way the site browses it since [HOME-REFOCUS] 2026-10-31: by ROOM (the
  * export's `room` field), with the two doors as chips — PFAS at home (the site's /pfas-at-home rule) and Older homes
  * (/older-homes, rows flagged `older_home`). Highest burden first or cleanest first. Every row opens /exposure/<slug>.
  * `?room=` / `?older=1` arrive from the Home Check's room rows; `?cat=` from the lens aisles.

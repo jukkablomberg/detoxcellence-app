@@ -63,7 +63,7 @@ const step = async (name, fn) => { try { checks[name] = !!(await fn()); } catch 
 const H = 844;
 const target = () => tid("scan-target");
 const atHome = async () => (await target().count()) === 1 && (await vis("Is it…").count()) === 0;
-await page.goto(BASE + "/", { waitUntil: "networkidle" });
+await page.goto(BASE + "/scan", { waitUntil: "networkidle" });
 await target().waitFor({ timeout: 20000 });
 await page.getByLabel("Detoxcellence, built by JukkaBlomberg.com").waitFor({ state: "detached", timeout: 5000 }).catch(() => {});
 await page.screenshot({ path: `${out}/0-scan-home.png` });
@@ -94,7 +94,7 @@ await step("r3OneEntryPage", async () => (await tid("entry-score").count()) === 
 await step("r4EntryEndsScanAnother", async () => (await tid("scan-another").count()) === 1);
 await backCtl().first().click();
 await vis("Bought bottled water, or a bottle you refill?").first().waitFor({ timeout: 10000 }).catch(() => {});
-await step("r3BackReturnsToQuestion", async () => pathname() === "/" && (await vis("Bought bottled water, or a bottle you refill?").count()) >= 1);
+await step("r3BackReturnsToQuestion", async () => pathname() === "/scan" && (await vis("Bought bottled water, or a bottle you refill?").count()) >= 1);
 await tid("scan-back").click();
 await step("r4HeaderBackHome", atHome);
 await target().click();
@@ -113,7 +113,7 @@ await page.getByRole("button", { name: "Shampoo bottle" }).filter({ visible: tru
 await page.waitForURL(/\/exposure\/conventional-shampoo$/, { timeout: 10000 });
 await tid("scan-another").click();
 await page.waitForTimeout(500);
-await step("r4ScanAnotherHome", async () => pathname() === "/" && (await atHome()));
+await step("r4ScanAnotherHome", async () => pathname() === "/scan" && (await atHome()));
 
 // every Detox evaluation class → its row, through the chips
 const DETOX = ["object:nonstick-pan", "object:cast-iron-pan", "object:stainless-steel-pan", "object:plastic-food-container", "object:glass-food-container", "object:takeout-container", "object:scented-candle", "object:shampoo-bottle", "object:plastic-cutting-board", "object:plastic-water-bottle", "object:canned-food", "food:strawberries"];
@@ -134,7 +134,7 @@ for (const label of DETOX) {
 await step("c2TwelveDetoxClassesResolve", () => DETOX.every((l) => facts.classes[l] === rowsFor(l)[0]));
 
 // the room check (web: the demo photo's real ranking)
-await page.goto(BASE + "/", { waitUntil: "networkidle" });
+await page.goto(BASE + "/scan", { waitUntil: "networkidle" });
 await tid("room-check").click();
 await tid("room-result").waitFor({ timeout: 10000 });
 await page.screenshot({ path: `${out}/0d-room.png`, fullPage: true });
@@ -149,7 +149,7 @@ await step("aisleOpensIndexCategory", async () => (await vis(`${rows.filter((r) 
 // On the web the native tab bar is drawn as a floating pill over the header (web-only); press the brand directly.
 await page.getByRole("button", { name: "Index — go to Scan" }).filter({ visible: true }).first().dispatchEvent("click");
 await page.waitForTimeout(500);
-await step("r4BrandHome", async () => pathname() === "/" && (await atHome()));
+await step("r4BrandHome", async () => pathname() === "/scan" && (await atHome()));
 
 /* ---------------- C1: Index, entry, quiz, swaps, About ---------------- */
 await tab("Index").click();
@@ -178,7 +178,7 @@ facts.headerControls = await page.evaluate(() => [...document.querySelectorAll("
 await step("entryHasPlatformBack", async () => (await backCtl().count()) >= 1);
 await backCtl().first().click();
 await tid("index-search").waitFor({ timeout: 10000 });
-await step("backReturnsToIndex", () => pathname() === "/exposures");
+await step("backReturnsToIndex", () => pathname() === "/");
 
 // the quiz: all-worst answers, compared with scoreQuiz()
 await tab("Score").click();

@@ -36,7 +36,7 @@ try {
     const tid = (id) => page.locator(`[data-testid="${id}"]:visible`).first();
     const settle = async () => page.waitForTimeout(1400); // the brand moment (≤ 1 s) has gone
 
-    await page.goto(`${base}/`, { waitUntil: "load" });
+    await page.goto(`${base}/scan`, { waitUntil: "load" });
     await tid("scan-target").waitFor({ timeout: 30000 });
     await settle();
     await tid("scan-target").click();
@@ -50,7 +50,7 @@ try {
     await page.waitForTimeout(500);
     await shoot("02-entry");
 
-    await page.goto(`${base}/`, { waitUntil: "load" });
+    await page.goto(`${base}/scan`, { waitUntil: "load" });
     await tid("room-check").waitFor({ timeout: 30000 });
     await settle();
     await tid("room-check").click();
@@ -58,7 +58,7 @@ try {
     await page.waitForTimeout(500);
     await shoot("03-room");
 
-    await page.goto(`${base}/exposures`, { waitUntil: "load" });
+    await page.goto(`${base}/`, { waitUntil: "load" });
     await tid("index-search").waitFor({ timeout: 30000 });
     await settle();
     await tid("cat-all").click();
