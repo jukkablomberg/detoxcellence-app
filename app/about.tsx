@@ -21,6 +21,7 @@ export default function About() {
   const small = { fontFamily: theme.fonts.body, fontSize: 11, lineHeight: 16, color: theme.muted } as const;
   return (
     <StudioAbout
+      crossPromo={false}
       theme={theme}
       details={
         <AboutSection theme={theme} title="Photo credits">
