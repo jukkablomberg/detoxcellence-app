@@ -1,9 +1,10 @@
+import { createContext, useContext } from "react";
 import { useColorScheme, type TextStyle } from "react-native";
 
 /**
  * Integrity — tokens from projects/detoxcellence/repo/DESIGN.md § App and the two token blocks of the site's
- * assets/style.css, nothing invented. Role names, never colour names. The app follows the phone's scheme
- * (DESIGN.md § App: the website's toggle has no app equivalent).
+ * assets/style.css, nothing invented. Role names, never colour names. The app follows the phone's scheme by default;
+ * [DX-APP-SCHEME-1104] Settings can pin Dark or Light (APP-STANDARD § 8.5 — the site's toggle now has its app equivalent).
  */
 const light = {
   ground: "#FFFFFF",
@@ -36,8 +37,26 @@ const dark: typeof light = {
 export type Palette = typeof light;
 export const palettes = { light, dark };
 
+/** [DX-APP-SCHEME-1104] The reader's choice: System (default — today's behaviour) · Dark · Light. */
+export type SchemePref = "system" | "dark" | "light";
+export type Resolved = "dark" | "light";
+/** Provided by the root layout: the pinned scheme, or null = follow the phone. */
+export const SchemeContext = createContext<Resolved | null>(null);
+
+export function resolveScheme(pref: SchemePref, system: string | null | undefined): Resolved {
+  if (pref === "dark" || pref === "light") return pref;
+  return system === "dark" ? "dark" : "light";
+}
+
+/** The effective scheme: the Settings pin when set, else the phone's own. */
+export function useScheme(): Resolved {
+  const system = useColorScheme();
+  const pinned = useContext(SchemeContext);
+  return pinned ?? (system === "dark" ? "dark" : "light");
+}
+
 export function useTheme(): Palette {
-  return useColorScheme() === "dark" ? dark : light;
+  return useScheme() === "dark" ? dark : light;
 }
 
 export const space = { xs: 4, s: 8, m: 12, l: 16, xl: 24, xxl: 32, xxxl: 48 } as const;

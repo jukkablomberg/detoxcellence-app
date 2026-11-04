@@ -98,7 +98,7 @@ export function StudioAbout(p: StudioAboutProps) {
 
       <Group title="Help & legal" s={s}>
         {p.help.map((r, i) => (
-          <Row key={r.label} first={i === 0} s={s} label={r.label} sub={r.sub} onPress={() => p.open(r.url, r.placement ?? `about-${r.label}`)} />
+          <Row key={r.label} first={i === 0} s={s} label={r.label} sub={r.sub} inApp={r.url.startsWith("/")} onPress={() => p.open(r.url, r.placement ?? `about-${r.label}`)} />
         ))}
       </Group>
 
@@ -155,15 +155,16 @@ function Group({ title, s, children }: { title: string; s: S; children: ReactNod
   );
 }
 
-function Row(r: { s: S; first: boolean; label: string; sub?: string; mono?: boolean; accent?: boolean; onPress: () => void }) {
+function Row(r: { s: S; first: boolean; label: string; sub?: string; mono?: boolean; accent?: boolean; inApp?: boolean; onPress: () => void }) {
   return (
-    <Pressable onPress={r.onPress} accessibilityRole="link" style={({ pressed }) => [r.s.row, pressed && r.s.pressed]}>
+    <Pressable onPress={r.onPress} accessibilityRole={r.inApp ? "button" : "link"} style={({ pressed }) => [r.s.row, pressed && r.s.pressed]}>
       {!r.first ? <View style={r.s.sep} /> : null}
       <View style={r.s.txt}>
         <Text style={[r.s.lab, r.accent && r.s.acc]}>{r.label}</Text>
         {r.sub ? <Text style={r.mono ? r.s.subMono : r.s.sub}>{r.sub}</Text> : null}
       </View>
-      <Text style={r.s.go}>↗</Text>
+      {/* [STUDIO-ABOUT-INAPP 2026-11-04] an in-app row (Settings, a pushed screen) carries ›, never the leaves-the-app ↗ */}
+      <Text style={r.s.go}>{r.inApp ? "›" : "↗"}</Text>
     </Pressable>
   );
 }

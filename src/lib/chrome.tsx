@@ -1,13 +1,13 @@
-import { Pressable, Text, useColorScheme } from "react-native";
+import { Pressable, Text } from "react-native";
 import type { StudioTheme } from "../studio/theme";
-import { fonts, palettes } from "./theme";
+import { fonts, useTheme } from "./theme";
 
 /**
  * Integrity as the studio kit's skin — projects/detoxcellence/repo/DESIGN.md § App (2026-10-07).
  * The only place this app's look enters the studio chrome (design/APP-STANDARD.md § 6).
  */
 export function useStudioTheme(): StudioTheme {
-  const t = useColorScheme() === "dark" ? palettes.dark : palettes.light;
+  const t = useTheme(); // [DX-APP-SCHEME-1104] honours the Settings pin
   return {
     ground: t.ground,
     panel: t.panel,
