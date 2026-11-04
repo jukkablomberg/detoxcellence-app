@@ -1,6 +1,7 @@
 import { NativeTabs } from "expo-router/unstable-native-tabs";
 import { Platform } from "react-native";
 import { useStudioTheme } from "../../src/lib/chrome";
+import { useScheme, useTheme } from "../../src/lib/theme";
 import { ICONS } from "../../src/studio/icons";
 import { alpha } from "../../src/studio/theme";
 
@@ -17,12 +18,20 @@ import { alpha } from "../../src/studio/theme";
 export default function TabsLayout() {
   const t = useStudioTheme();
   const android = Platform.OS === "android";
+  // [DX-APP-SCHEME-1104] The web export draws expo-router's own tab pill (#272727 by default, whatever the scheme) —
+  // give it the scheme's tokens there (critic 11-04). Phones keep the platform's own bar, tinted as before.
+  const web = Platform.OS === "web";
+  const p = useTheme();
+  const dark = useScheme() === "dark";
+  const webBg = dark ? p.panel : p.panel2;
+  const webChip = dark ? p.panel2 : p.ground;
   return (
     <NativeTabs
       tintColor={t.link}
       labelVisibilityMode="labeled"
-      backgroundColor={android ? t.panel : undefined}
-      indicatorColor={android ? alpha(t.link, 0.15) : undefined}
+      labelStyle={web ? { default: { color: dark ? p.muted : p.ink }, selected: { color: dark ? "#B5D4CA" : p.link } } : undefined}
+      backgroundColor={android ? t.panel : web ? webBg : undefined}
+      indicatorColor={android ? alpha(t.link, 0.15) : web ? webChip : undefined}
       iconColor={android ? { default: t.muted, selected: t.link } : undefined}
     >
       <NativeTabs.Trigger name="(index)">

@@ -54,7 +54,7 @@ export default function SwapsScreen() {
           <View style={{ flex: 1, gap: 2 }}>
             <Heading>Weekly swap</Heading>
           </View>
-          <Switch testID="reminder-switch" value={s.on} onValueChange={(on) => void apply({ ...s, on })} trackColor={{ true: t.link, false: t.panel2 }} accessibilityLabel="Weekly swap reminder" />
+          <Switch testID="reminder-switch" value={s.on} onValueChange={(on) => void apply({ ...s, on })} trackColor={{ true: t.link, false: t.track }} accessibilityLabel="Weekly swap reminder" />
         </View>
         {note ? <Body size={13}>{note}</Body> : null}
         <Label>Day</Label>

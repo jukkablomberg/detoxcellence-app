@@ -26,12 +26,14 @@ export default function Settings() {
   return (
     <Screen testID="settings">
       <Label>Scheme</Label>
-      <View style={{ flexDirection: "row", flexWrap: "wrap", gap: space.s }} accessibilityRole="radiogroup" accessibilityLabel="Scheme">
-        {SCHEMES.map((s) => (
-          <Chip key={s.id} title={s.label} on={prefs.scheme === s.id} onPress={() => { if (prefs.scheme !== s.id) setScheme(s.id); }} testID={`scheme-${s.id}`} />
-        ))}
-      </View>
-      <Label>Reminder</Label>
+      <Tile>
+        <View style={{ flexDirection: "row", flexWrap: "wrap", gap: space.s }} accessibilityRole="radiogroup" accessibilityLabel="Scheme">
+          {SCHEMES.map((s) => (
+            <Chip key={s.id} title={s.label} on={prefs.scheme === s.id} onPress={() => { if (prefs.scheme !== s.id) setScheme(s.id); }} testID={`scheme-${s.id}`} />
+          ))}
+        </View>
+      </Tile>
+      <Label style={{ marginTop: space.s }}>Reminder</Label>
       <Tile onPress={() => router.navigate("/swaps" as never)} label="Weekly swap reminder" testID="settings-reminder">
         <View style={{ flexDirection: "row", alignItems: "center", justifyContent: "space-between", gap: space.m }}>
           <View style={{ flex: 1, gap: 2 }}>

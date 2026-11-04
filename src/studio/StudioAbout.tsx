@@ -196,7 +196,7 @@ function makeStyles(t: StudioTheme) {
     name: { fontFamily: t.fonts.display, fontSize: m.name, lineHeight: Math.round(m.name * 1.15), color: t.ink, marginTop: 14 },
     desc: { fontFamily: t.fonts.body, fontSize: m.body, lineHeight: m.bodyLh, color: t.ink, marginTop: 12 },
     cat: { fontFamily: t.fonts.body, fontSize: m.cat, lineHeight: m.catLh, color: t.muted, marginTop: 12 },
-    eyebrow: { fontFamily: t.fonts.eyebrow, fontSize: m.eyebrow, letterSpacing: m.eyebrow * 0.14, textTransform: "uppercase", color: t.muted, marginTop: m.eyeAbove, marginBottom: m.eyeBelow, marginLeft: 4 },
+    eyebrow: { fontFamily: t.fonts.eyebrow, fontSize: m.eyebrow, letterSpacing: m.eyebrow * 0.14, textTransform: "uppercase", color: t.muted, marginTop: m.eyeAbove, marginBottom: m.eyeBelow },
     group: { backgroundColor: t.panel, borderRadius: t.radius, overflow: "hidden", ...(t.groupBorder ? { borderWidth: 1, borderColor: t.groupBorder } : null) },
     row: { minHeight: m.row, flexDirection: "row", alignItems: "center", paddingVertical: 10, paddingHorizontal: 16 },
     pressed: { opacity: 0.6 },

@@ -17,6 +17,8 @@ const light = {
   sage: "#5C7B74",
   link: "#46615B",
   onLink: "#FFFFFF",
+  /** [DX-APP-SCHEME-1104] a Switch's off track (critic 11-04: ≥3:1 on the ground in dark) */
+  track: "#E6E6E4",
   band: { Minimal: "#46615B", Low: "#627A3B", Moderate: "#9A7428", High: "#B25A36", Severe: "#943327" },
 };
 
@@ -31,6 +33,7 @@ const dark: typeof light = {
   sage: "#93B5AB",
   link: "#93B5AB",
   onLink: "#0F1412",
+  track: "#5F6B67",
   band: { Minimal: "#7FC2A8", Low: "#A9C07A", Moderate: "#D9B062", High: "#E08A62", Severe: "#E7766A" },
 };
 
