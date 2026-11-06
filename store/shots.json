@@ -1,22 +1,91 @@
 {
-  "_note": "Play phone set per design/APP-STORE-SHOTS-STANDARD.md (v1 2026-11-06), composed by projects/app-stores/studio-kit/shots/compose.mjs via scripts/store-shots.mjs. `raw` = a shot name in scripts/screenshots.mjs (captured at 360×720 @3x, no band); callout.rect = CSS px of that raw capture — re-check it on the contact sheet whenever the screen's layout changes. Order (§ 2.1): 1 promise (her home's report) · 2 proof (the Index) · 3 phone-only (the camera) · 4–6 depth. Captions from projects/detoxcellence/research/APP-READER-FIRST-2026-11-06.md (Jen: what in my home is worth worrying about), held to what the current UI shows. Canvas = venture sage token (#46615B), never the app's #FFFFFF ground.",
-  "canvas": "#46615B",
+  "_note": "Play phone set per design/APP-STORE-SHOTS-STANDARD.md (v1 2026-11-06), composed by projects/app-stores/studio-kit/shots/compose.mjs via scripts/store-shots.mjs. `raw` = a shot name in scripts/screenshots.mjs (captured at 360×720 @3x, no band); callout.rect = CSS px of that raw capture — re-check it on the contact sheet whenever the screen's layout changes. Order (§ 2.1): 1 promise (her home's report) · 2 proof (the Index) · 3 phone-only (the camera) · 4–6 depth. Captions from projects/detoxcellence/research/APP-READER-FIRST-2026-11-06.md (Jen: what in my home is worth worrying about), held to what the current UI shows. Canvas = the app's own Minimal band token, dark scheme (#7FC2A8, src/lib/theme.ts — rev 2026-11-06b: the critic asked for a more saturated ground than sage #46615B, still from the app's tokens), never the app's #FFFFFF ground. Rev 2026-11-06b (critic SHIP-WITH-FIXES): canvas #7FC2A8; shot 2 \"See what to fix first\"; shot 3 \"Scan any product at home\"; feature graphic has its own headline.",
+  "canvas": "#7FC2A8",
   "displayFontFile": "LeagueGothic-Regular",
   "shots": [
-    { "name": "01-home-check", "raw": "05-score", "headline": "Find your home's worst room",
-      "callout": { "rect": [28, 84, 290, 100], "zoom": 1.3, "side": "left" },
-      "alt": "Home Check result: your home's score, the room to start with, what to do first, then each room as fine, worth a look or worry." },
-    { "name": "02-index", "raw": "04-index", "headline": "See what's worth worrying about",
-      "alt": "The Index: household items ranked worst first, each with its score and room, searchable — PFAS at home, older homes, every room." },
-    { "name": "03-scan", "raw": "01-scan", "headline": "Point your camera at it",
-      "alt": "Scan: point the phone at a bottle, pan or container; the camera suggests what it is and opens its entry. Photos stay on the phone." },
-    { "name": "04-swaps", "raw": "07-swaps", "headline": "Swap one thing a week",
-      "alt": "Swap plan from your Home Check: one safer swap a week, worst room first, tick it off, with a weekly reminder on the phone." },
-    { "name": "05-studies", "raw": "02-entry", "headline": "See the studies behind it",
-      "callout": { "rect": [24, 150, 190, 110], "zoom": 1.3, "side": "left" },
-      "alt": "Bottled water (plastic): its score and evidence strength, the safer swap, the hazard, exposure and persistence scores, and the studies." },
-    { "name": "06-room", "raw": "03-room", "headline": "Check a whole shelf",
-      "alt": "Room check: every item seen in one photo, ranked by score, with the top swap first." }
+    {
+      "name": "01-home-check",
+      "raw": "05-score",
+      "headline": "Find your home's worst room",
+      "callout": {
+        "rect": [
+          28,
+          92,
+          290,
+          78
+        ],
+        "zoom": 1.3,
+        "side": "left",
+        "top": 232,
+        "keepClear": [
+          [
+            40,
+            186,
+            200,
+            18
+          ]
+        ]
+      },
+      "alt": "Home Check result: your home's score, the room to start with, what to do first, then each room as fine, worth a look or worry."
+    },
+    {
+      "name": "02-index",
+      "raw": "04-index",
+      "headline": "See what to fix first",
+      "alt": "The Index: household items ranked worst first, each with its score and room, searchable — PFAS at home, older homes, every room."
+    },
+    {
+      "name": "03-scan",
+      "raw": "01-scan",
+      "headline": "Scan any product at home",
+      "alt": "Scan: point the phone at a bottle, pan or container; the camera suggests what it is and opens its entry. Photos stay on the phone."
+    },
+    {
+      "name": "04-swaps",
+      "raw": "07-swaps",
+      "headline": "Swap one thing a week",
+      "alt": "Swap plan from your Home Check: one safer swap a week, worst room first, tick it off, with a weekly reminder on the phone."
+    },
+    {
+      "name": "05-studies",
+      "raw": "02-entry",
+      "headline": "See the studies behind it",
+      "callout": {
+        "rect": [
+          28,
+          165,
+          160,
+          90
+        ],
+        "zoom": 1.3,
+        "side": "left",
+        "keepClear": [
+          [
+            12,
+            94,
+            300,
+            42
+          ]
+        ]
+      },
+      "alt": "Bottled water (plastic): its score and evidence strength, the safer swap, the hazard, exposure and persistence scores, and the studies."
+    },
+    {
+      "name": "06-room",
+      "raw": "03-room",
+      "headline": "Check a whole shelf",
+      "alt": "Room check: every item seen in one photo, ranked by score, with the top swap first."
+    }
   ],
-  "featureGraphic": { "raw": "05-score", "rect": [28, 84, 290, 100] }
+  "featureGraphic": {
+    "raw": "05-score",
+    "rect": [
+      28,
+      92,
+      290,
+      78
+    ],
+    "headline": "Your home, worst room first"
+  },
+  "headlineSize": 42
 }

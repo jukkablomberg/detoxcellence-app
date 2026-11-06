@@ -45,7 +45,7 @@
     "displayFontFile": "LeagueGothic-Regular",
     "captions": {
       "01-scan": [
-        "Point your camera at it",
+        "Scan any product at home",
         "Recognised on your phone, photo never sent"
       ],
       "02-entry": [
@@ -57,8 +57,8 @@
         "Every item in the photo, ranked by burden"
       ],
       "04-index": [
-        "See what's worth worrying about",
-        "189 household items, bundled with the app"
+        "See what to fix first",
+        "189 household items, worst first, bundled with the app"
       ],
       "05-score": [
         "Find your home's worst room",
@@ -73,7 +73,7 @@
         "One safer swap a week, with a reminder on your phone"
       ]
     },
-    "canvas": "#46615B",
+    "canvas": "#7FC2A8",
     "order": [
       "01-home-check",
       "02-index",
