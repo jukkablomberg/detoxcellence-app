@@ -3,8 +3,9 @@
  * [APP-INTRO-ON-1106] The first-use intro, re-mounted (design/APP-INTRO-STANDARD.md; Jukka 2026-11-06: "The apps don't
  * have intro screens currently. They need to have them and the screens need to be super simple highlighting the key
  * things where the apps/ventures add value."). Checks the REAL app/intro.json, the REAL images and the REAL layout.
- * Rule source: src/studio/intro.ts (studio kit, byte copy). Each refusal asserts its own message; the shipped config is
- * the positive control. Run: node --test scripts/intro.test.mjs (node ≥ 22.18 strips the .ts types).
+ * Rule source: src/studio/intro.ts (studio kit, byte copy of the c8be30b3+ master: 8-word/48-char cap, enabled,
+ * prior_use_keys, imageAspect, Skip ≥ 44 pt, Android Back, replayIntro). Each refusal asserts its own message; the shipped
+ * config is the positive control. Run: node --test scripts/intro.test.mjs (node ≥ 22.18 strips the .ts types).
  */
 import assert from "node:assert/strict";
 import { readFileSync, readdirSync, existsSync, statSync } from "node:fs";
@@ -22,17 +23,12 @@ walk("app");
 const routes = files.map(intro.routeOf).filter((r) => r !== null);
 const bundled = (img) => existsSync(join(root, "assets", img));
 const clone = (o) => JSON.parse(JSON.stringify(o));
-const problems = (c) => intro.introProblems(c, routes, bundled);
-const words = (s) => s.trim().split(/\s+/).filter(Boolean).length;
-// APP-INTRO-STANDARD § 1 rules 3, 5, 7: ≤ 8 words, ≤ 48 chars, value only — no welcome, sign-in, permission or disclaimer
-// card; FatTonic's retired framing (research/APP-READER-FIRST-2026-11-06.md) never comes back through the intro.
-const MAX_WORDS = 8, MAX_CHARS = 48;
+const problems = (c, f) => intro.introProblems(c, routes, bundled, f);
+// APP-INTRO-STANDARD § 1 rules 3, 5, 7: ≤ 8 words and ≤ 48 chars (the kit's introProblems), value only — no welcome,
+// sign-in, permission or disclaimer card; FatTonic's retired framing (research/APP-READER-FIRST-2026-11-06.md) never comes
+// back through the intro (this app's own word list, on top of the kit).
 const BANNED = /welcome|sign.?in|log.?in|account|permission|allow|notification|not medical advice|fat.?burn|insulin/i;
-const lineProblems = (c) => c.cards.flatMap((card, i) => [
-  ...(words(card.line) > MAX_WORDS ? [`card ${i + 1} line is ${words(card.line)} words — at most ${MAX_WORDS}`] : []),
-  ...(card.line.length > MAX_CHARS ? [`card ${i + 1} line is ${card.line.length} chars — at most ${MAX_CHARS}`] : []),
-  ...(BANNED.test(card.line) ? [`card ${i + 1} line carries a banned word: ${card.line}`] : []),
-]);
+const lineProblems = (c) => c.cards.flatMap((card, i) => (BANNED.test(card.line) ? [`card ${i + 1} line carries a banned word: ${card.line}`] : []));
 
 test("positive control: the shipped intro.json is GREEN, 3 cards, enabled, ends on a real tab", () => {
   assert.deepEqual(problems(cfg), []);
@@ -53,14 +49,28 @@ test("a 4th card, a missing line, a missing or unbundled image are RED", () => {
 });
 
 test("a line over 8 words, over 48 chars or with a banned word is RED", () => {
+  assert.equal(intro.INTRO_MAX_WORDS, 8);
+  assert.equal(intro.INTRO_MAX_CHARS, 48);
   const c = clone(cfg);
   c.cards[0].line = "one two three four five six seven eight nine";
-  c.cards[1].line = "Supercalifragilisticexpialidocious-and-then-some text";
+  c.cards[1].line = "Supercalifragilisticexpialidocious and more words";
   c.cards[2].line = "Get its fat-burning score";
-  const p = lineProblems(c).join("; ");
+  const p = problems(c).join("; ");
   assert.match(p, /card 1 line is 9 words — at most 8/);
-  assert.match(p, /card 2 line is \d+ chars — at most 48/);
-  assert.match(p, /card 3 line carries a banned word/);
+  assert.match(p, /card 2 line is 49 chars — at most 48/);
+  assert.match(lineProblems(c).join("; "), /card 3 line carries a banned word/);
+});
+
+test("kill switch, prior-use keys and image shape are typed (kit API)", () => {
+  assert.match(problems({ ...clone(cfg), enabled: "no" }).join(), /enabled must be true or false/);
+  assert.match(problems({ ...clone(cfg), prior_use_keys: [""] }).join(), /prior_use_keys must be a list of storage keys/);
+  assert.match(problems({ ...clone(cfg), imageAspect: 9 }).join(), /imageAspect must be/);
+});
+
+test("an image older than the store screenshots is RED (stale cards switched the intro off on 11-02)", () => {
+  const stale = { imageMtime: () => 1, shotsMtime: 2 };
+  assert.match(problems(cfg, stale).join(), /card 1 image .* is older than the store screenshots — re-shoot it/);
+  assert.deepEqual(problems(cfg, { imageMtime: () => 3, shotsMtime: 2 }), [], "a fresh image passes");
 });
 
 test("the intro never ends on an account wall or a route that does not exist", () => {
@@ -72,9 +82,14 @@ test("the intro never ends on an account wall or a route that does not exist", (
 test("shown once: never when the flag is set; the key carries no version (OTA-proof)", () => {
   assert.equal(intro.shouldShowIntro(null), true);
   assert.equal(intro.shouldShowIntro(intro.INTRO_SEEN), false, "intro shown when the flag is set");
+  assert.equal(intro.shouldShowIntro(null, true), false, "intro shown to a reader with prior use");
   assert.doesNotMatch(intro.INTRO_FLAG_KEY, /\d|version|update|build/i);
   const ui = read("src/studio/FirstUseIntro.tsx");
-  assert.match(ui, /shouldShowIntro\(v\)/, "the component gates on the flag through the tested function");
+  assert.match(ui, /shouldShowIntro\(v, prior\)/, "the component gates on the flag and prior use through the tested function");
+  assert.match(ui, /config\.enabled !== false/, "the kit honours the kill switch too");
+  assert.match(ui, /skip: \{ minHeight: 44, minWidth: 44/, "Skip hit area ≥ 44 pt");
+  assert.match(ui, /BackHandler\.addEventListener\("hardwareBackPress"/, "Android Back = previous card / Skip");
+  assert.match(ui, /export async function replayIntro\(/, "the intro can be replayed (rule 10)");
   assert.match(ui, /setItem\(INTRO_FLAG_KEY, INTRO_SEEN\)/, "Done/Skip write the flag");
   assert.match(ui, /router\.replace\(config\.core_action_route/, "Done/Skip land on the core action");
   assert.match(ui, /onPress=\{finish\}[^]*\{word\("Skip"\)\}/, "Skip is on the cards and finishes the intro");
