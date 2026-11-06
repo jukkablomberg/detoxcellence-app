@@ -35,7 +35,7 @@ export default function Settings() {
         </View>
       </Tile>
       <Label style={{ marginTop: space.s }}>Reminder</Label>
-      <Tile onPress={() => router.navigate("/swaps" as never)} label="Weekly swap reminder" testID="settings-reminder">
+      <Tile onPress={() => router.navigate("/" as never)} label="Weekly swap reminder" testID="settings-reminder">
         <View style={{ flexDirection: "row", alignItems: "center", justifyContent: "space-between", gap: space.m }}>
           <View style={{ flex: 1, gap: 2 }}>
             <Text style={type.strong(16, t.ink)}>Weekly swap reminder</Text>

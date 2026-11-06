@@ -7,6 +7,10 @@ import { indexRoomFor, QUESTIONS, ROOMS, scoreBand, scoreQuiz, type Result, type
 import { refillReminder } from "../../../src/lib/reminders";
 import { palettes, radius, space, type, useTheme, FIXED } from "../../../src/lib/theme";
 import { Body, Button, Display, Heading, Label, Screen, Tile } from "../../../src/ui/primitives";
+import { PlanSection } from "../(swaps)/swaps";
+
+/** [DX-MY-HOME] re-check cadence: the loop asks again four weeks after the latest check. */
+const RECHECK_DAYS = 28;
 
 type Mode = { k: "home" } | { k: "quiz"; i: number; answers: number[] } | { k: "result"; r: Result };
 
@@ -75,11 +79,17 @@ export default function ScoreScreen() {
         <ResultCard r={latest} />
       ) : (
         <Tile>
-          <Heading size={22}>Home Check</Heading>
-          <Body muted size={13}>{QUESTIONS.length} questions</Body>
+          <Heading size={22}>Your home's score</Heading>
+          <Body muted size={13}>{QUESTIONS.length} questions · room by room · stays on this phone</Body>
         </Tile>
       )}
-      <Button testID="start-quiz" title={latest ? "Check again" : "Start"} onPress={() => setMode({ k: "quiz", i: 0, answers: [] })} kind={latest ? "secondary" : "primary"} />
+      {latest && history[0] ? (
+        <Body muted size={13}>{`Re-check due ${new Date(history[0].at + RECHECK_DAYS * 864e5).toLocaleDateString(undefined, { day: "numeric", month: "short" })}`}</Body>
+      ) : null}
+      <Button testID="start-quiz" title={latest ? "Check again" : "Check your home · 3 min"} onPress={() => setMode({ k: "quiz", i: 0, answers: [] })} kind={latest ? "secondary" : "primary"} />
+
+      {/* [DX-MY-HOME] the Plan lives here once the home has a score: this week's swap first, Done ticks, the reminder. */}
+      {latest ? <PlanSection embedded /> : null}
 
       {history.length > 1 ? (
         <View style={{ gap: space.s }} testID="score-history">

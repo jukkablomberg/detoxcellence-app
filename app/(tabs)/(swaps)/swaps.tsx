@@ -24,6 +24,16 @@ import { BandPill, Body, Chip, Label, Screen, Tile } from "../../../src/ui/primi
  * under the opener, day/time chips only while it is on.
  */
 export default function SwapsScreen() {
+  return (
+    <Screen testID="swaps">
+      <PlanSection />
+    </Screen>
+  );
+}
+
+/** [DX-MY-HOME] 2026-11-06: the Plan body, also drawn inside My home (`embedded`: no opener line — My home's result card
+ *  above it is the source — and a "This week's swap" heading). */
+export function PlanSection({ embedded = false }: { embedded?: boolean }) {
   const t = useTheme();
   const { list } = useIndex();
   const [s, setS] = useState<ReminderSettings>(DEFAULT_SETTINGS);
@@ -64,13 +74,14 @@ export default function SwapsScreen() {
   const fromCheck = driver !== null;
 
   return (
-    <Screen testID="swaps">
-      <View style={{ gap: space.xs }}>
+    <>
+      {embedded ? <Text style={type.strong(18, t.ink)} accessibilityRole="header">This week's swap</Text> : null}
+      {embedded ? null : <View style={{ gap: space.xs }}>
         <Body size={15}>Your highest-exposure items — one safer swap a week. Do it by Sunday, then tick it off.</Body>
         <Pressable testID="plan-source" onPress={() => router.navigate("/score" as never)} accessibilityRole="button" style={{ minHeight: 32, justifyContent: "center" }}>
           <Text style={type.body(13, t.link)}>{fromCheck ? "Built from your Home Check · Redo ›" : "Starter plan — take the Home Check to put your worst rooms first ›"}</Text>
         </Pressable>
-      </View>
+      </View>}
 
       <Tile>
         <View style={{ flexDirection: "row", alignItems: "center", justifyContent: "space-between", gap: space.m }}>
@@ -106,7 +117,7 @@ export default function SwapsScreen() {
           <SwapCard key={`done-${entry.slug}`} entry={entry} kicker="Done · Swap" done onTick={() => void tick(entry.slug)} />
         ))}
       </View>
-    </Screen>
+    </>
   );
 }
 

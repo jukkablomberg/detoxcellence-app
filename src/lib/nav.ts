@@ -19,9 +19,9 @@ export function scanHome(camera = false): void {
 
 /** The Index tab on one room (the site's `?room=`), or the older-homes rows, any old search cleared. [HOME-REFOCUS] 10-31. */
 export function openRoom(room: string | null, olderHome = false): void {
-  router.navigate({ pathname: "/", params: { room: room ?? "", older: olderHome ? "1" : "", t: String(Date.now()) } } as never);
+  router.navigate({ pathname: "/the-index", params: { room: room ?? "", older: olderHome ? "1" : "", t: String(Date.now()) } } as never);
 }
 /** Kept for the lens aisles: a category still opens the Index on it. */
 export function openAisle(cat: string | null): void {
-  router.navigate({ pathname: "/", params: { cat: cat ?? "", t: String(Date.now()) } } as never);
+  router.navigate({ pathname: "/the-index", params: { cat: cat ?? "", t: String(Date.now()) } } as never);
 }

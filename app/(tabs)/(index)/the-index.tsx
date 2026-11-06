@@ -11,7 +11,9 @@ type Sort = "burden" | "cleanest";
 type Pick = { kind: "all" } | { kind: "room"; room: string } | { kind: "pfas" } | { kind: "older" } | { kind: "cat"; cat: string };
 
 /**
- * The Exposure Index — the front page, route "/" ([DX-APP-READER] 2026-11-02) — offline, browsed the way the site browses it since [HOME-REFOCUS] 2026-10-31: by ROOM (the
+ * [DX-MY-HOME] 2026-11-06: no longer the landing route — "/the-index"; Food & drink rows are quiet in the default view
+ * (all rooms, no search): reachable from search and the Food & drink room chip, one line points to FatTonic.
+ * The Exposure Index — was the front page, route "/" ([DX-APP-READER] 2026-11-02) — offline, browsed the way the site browses it since [HOME-REFOCUS] 2026-10-31: by ROOM (the
  * export's `room` field), with the two doors as chips — PFAS at home (the site's /pfas-at-home rule) and Older homes
  * (/older-homes, rows flagged `older_home`). Highest burden first or cleanest first. Every row opens /exposure/<slug>.
  * `?room=` / `?older=1` arrive from the Home Check's room rows; `?cat=` from the lens aisles.
@@ -42,7 +44,7 @@ export default function IndexScreen() {
       : pick.kind === "pfas" ? list.filter(isPFAS)
       : pick.kind === "older" ? list.filter(isOlderHome)
       : pick.kind === "cat" ? list.filter((e) => e.category === pick.cat)
-      : list;
+      : list.filter((e) => e.category !== "Food" || q.trim() !== "");
     const found = search(base, q);
     return [...found].sort(sort === "burden" ? burdenFirst : (a, b) => b.score - a.score || a.name.localeCompare(b.name));
   }, [list, q, pick, sort]);
@@ -93,6 +95,7 @@ export default function IndexScreen() {
       keyExtractor={(e) => e.slug}
       ListHeaderComponent={header}
       ListEmptyComponent={<Body muted>—</Body>}
+      ListFooterComponent={pick.kind === "all" && !q.trim() ? <Body muted size={13} style={{ marginTop: space.m }}>Food and drink: search above, or see FatTonic.</Body> : null}
       renderItem={({ item }) => <Row e={item} />}
     />
   );
