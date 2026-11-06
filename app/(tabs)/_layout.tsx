@@ -48,7 +48,7 @@ export default function TabsLayout() {
       </NativeTabs.Trigger>
       <NativeTabs.Trigger name="(swaps)">
         <NativeTabs.Trigger.Icon sf={ICONS.tips.sf} md={ICONS.tips.md} />
-        <NativeTabs.Trigger.Label>Swaps</NativeTabs.Trigger.Label>
+        <NativeTabs.Trigger.Label>Plan</NativeTabs.Trigger.Label>
       </NativeTabs.Trigger>
     </NativeTabs>
   );

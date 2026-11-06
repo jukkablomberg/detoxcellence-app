@@ -157,7 +157,7 @@ await tid("index-search").waitFor({ timeout: 20000 });
 await tid("cat-all").click();
 await page.screenshot({ path: `${out}/1-index.png` });
 
-await step("tabsFourLabelled", async () => (await Promise.all(["Scan", "Index", "Score", "Swaps"].map(async (n) => (await tab(n).count()) >= 1))).every(Boolean));
+await step("tabsFourLabelled", async () => (await Promise.all(["Scan", "Index", "Score", "Plan"].map(async (n) => (await tab(n).count()) >= 1))).every(Boolean));
 await step("indexListsAllOffline", async () => (await vis(`${rows.length} of ${rows.length}`).count()) >= 1 && (await vis("bundled with the app").count()) >= 1);
 await step("disclosureOnFirstScreen", async () => (await vis("Information, not medical advice").count()) >= 1);
 
@@ -208,7 +208,7 @@ await step("resultNextFiltersIndex", async () => {
   return (await vis(`${n} of ${rows.length}`).count()) >= 1;
 });
 
-await tab("Swaps").click();
+await tab("Plan").click();
 await tid("reminder-switch").waitFor({ timeout: 10000 });
 await page.screenshot({ path: `${out}/6-swaps.png`, fullPage: true });
 await step("swapsListsEight", async () => (await page.locator('[data-testid^="swap-"]:visible').count()) === 8);

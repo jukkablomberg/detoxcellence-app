@@ -1,7 +1,6 @@
 import { Stack, useLocalSearchParams } from "expo-router";
 import { Pressable, Text, View } from "react-native";
-import { bySlug, entryUrl, EVIDENCE, hasSwap, INPUTS, studyUrl, useIndex, type Entry } from "../../../../src/lib/exposures";
-import { openOutbound } from "../../../../src/lib/outbound";
+import { bySlug, EVIDENCE, hasSwap, INPUTS, useIndex, type Entry } from "../../../../src/lib/exposures";
 import { sisterLine } from "../../../../modules/health-camera/sister-lines";
 import { space, type, useTheme } from "../../../../src/lib/theme";
 import { scanHome } from "../../../../src/lib/nav";
@@ -14,6 +13,9 @@ import { BandPill, Body, Button, Display, Heading, Label, Screen, Tile } from ".
  * stack and the tab bar stays; it ends with Scan another (rule 4).
  * [BC-APP-LESS-TEXT] 10-31: score, band, swap, the guidance steps when the record has them, the note, the studies
  * (one line each) and the sources — no arithmetic table, no "how the score is built" prose, no disclaimer line.
+ * [DX-APP-INAPP-1106] § 8.7 (Jukka 11-06: "we don't want the user to go to external website"): studies, sources and
+ * the sister line print as plain text (DOI/PMID selectable); the detoxcellence.com ↗ line left — the site is in
+ * Settings › Credits & data.
  */
 export default function ExposureScreen() {
   useIndex();
@@ -53,9 +55,7 @@ function EntryPage({ e }: { e: Entry }) {
       </Tile>
 
       {sister ? (
-        <Pressable testID="sister-line" onPress={() => openOutbound(sister.url, "entry-sister")} accessibilityRole="link" style={{ minHeight: 44, justifyContent: "center" }}>
-          <Text style={type.body(15, t.link)}>{sister.text} ↗</Text>
-        </Pressable>
+        <View testID="sister-line"><Body muted size={14}>{sister.text}</Body></View>
       ) : null}
 
       {hasSwap(e) ? (
@@ -89,12 +89,11 @@ function EntryPage({ e }: { e: Entry }) {
         <View style={{ gap: space.s }}>
           <Heading>Studies</Heading>
           {(e.studies ?? []).map((s, i) => {
-            const url = studyUrl(s);
             return (
-              <Pressable key={i} disabled={!url} onPress={() => url && openOutbound(url, "entry-study")} accessibilityRole="link">
+              <View key={i}>
                 <Body size={14}>{s.claim}</Body>
-                <Text style={type.body(12, t.link)}>{s.doi ? `doi:${s.doi}` : `PMID ${s.pmid}`} ↗</Text>
-              </Pressable>
+                <Text style={type.body(12, t.muted)} selectable>{s.doi ? `doi:${s.doi}` : `PMID ${s.pmid}`}</Text>
+              </View>
             );
           })}
         </View>
@@ -104,16 +103,11 @@ function EntryPage({ e }: { e: Entry }) {
         <View style={{ gap: space.s }}>
           <Heading>Sources</Heading>
           {e.sources.map((s, i) => (
-            <Pressable key={i} onPress={() => openOutbound(s.url, "entry-source")} accessibilityRole="link">
-              <Text style={type.body(14, t.link)}>{s.name} ↗</Text>
-            </Pressable>
+            <Text key={i} style={type.body(14, t.muted)}>{s.name}</Text>
           ))}
         </View>
       ) : null}
 
-      <Pressable onPress={() => openOutbound(entryUrl(e.slug), "entry-site")} accessibilityRole="link" style={{ minHeight: 44, justifyContent: "center" }}>
-        <Text style={type.strong(15, t.link)}>detoxcellence.com ↗</Text>
-      </Pressable>
       <Button title="Scan another" onPress={() => scanHome(true)} testID="scan-another" />
     </Screen>
   );

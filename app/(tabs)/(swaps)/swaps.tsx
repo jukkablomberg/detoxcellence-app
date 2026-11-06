@@ -6,6 +6,7 @@ import { useIndex } from "../../../src/lib/exposures";
 import { latestDriver } from "../../../src/lib/history";
 import { ROOMS, type Driver } from "../../../src/lib/quiz";
 import { DEFAULT_SETTINGS, plan, readSettings, requestPermission, saveSettings, scheduledCount, WEEKDAYS, type ReminderSettings } from "../../../src/lib/reminders";
+import { hourLabel } from "../../../src/lib/locale";
 import { radius, space, type, useTheme } from "../../../src/lib/theme";
 import { BandPill, Body, Chip, Heading, Label, Screen, Tile } from "../../../src/ui/primitives";
 
@@ -13,6 +14,9 @@ import { BandPill, Body, Chip, Heading, Label, Screen, Tile } from "../../../src
  * Swaps — the weekly swap reminder (native value 2) and the swaps it will send, in order. The plan starts from the
  * room the latest Home Check points to; each row opens its entry page. Permission is asked only when the reader
  * switches the reminder on. [BC-APP-LESS-TEXT] 10-31: the switch, day, time, the rows — no explainers.
+ * [DX-APP-PLAN-1106] Jukka 11-06: "I don't understand what the 'Swaps' tab is supposed to be." Reshaped, nothing removed:
+ * the tab is "Plan", one line says what it gives ("One safer swap a week, your worst room first."), the swaps come
+ * first and the reminder (the phone-only part) sits under them. Times follow the phone's 12/24 h clock (§ 8.6).
  */
 export default function SwapsScreen() {
   const t = useTheme();
@@ -49,31 +53,8 @@ export default function SwapsScreen() {
 
   return (
     <Screen testID="swaps">
-      <Tile>
-        <View style={{ flexDirection: "row", alignItems: "center", justifyContent: "space-between", gap: space.m }}>
-          <View style={{ flex: 1, gap: 2 }}>
-            <Heading>Weekly swap</Heading>
-          </View>
-          <Switch testID="reminder-switch" value={s.on} onValueChange={(on) => void apply({ ...s, on })} trackColor={{ true: t.link, false: t.track }} accessibilityLabel="Weekly swap reminder" />
-        </View>
-        {note ? <Body size={13}>{note}</Body> : null}
-        <Label>Day</Label>
-        <ScrollView horizontal showsHorizontalScrollIndicator={false} style={{ marginHorizontal: -space.l }} contentContainerStyle={{ gap: space.s, paddingHorizontal: space.l }}>
-          {WEEKDAYS.map((d, i) => (
-            <Chip key={d} title={d.slice(0, 3)} on={s.weekday === i + 1} onPress={() => void apply({ ...s, weekday: i + 1 })} testID={`day-${i + 1}`} />
-          ))}
-        </ScrollView>
-        <Label>Time</Label>
-        <ScrollView horizontal showsHorizontalScrollIndicator={false} style={{ marginHorizontal: -space.l }} contentContainerStyle={{ gap: space.s, paddingHorizontal: space.l }}>
-          {hours.map((h) => (
-            <Chip key={h} title={`${String(h).padStart(2, "0")}:00`} on={s.hour === h} onPress={() => void apply({ ...s, hour: h })} testID={`hour-${h}`} />
-          ))}
-        </ScrollView>
-        {s.on && Platform.OS !== "web" ? <Body muted size={13} style={{ fontVariant: ["tabular-nums"] }}>{held} scheduled</Body> : null}
-      </Tile>
-
       <View style={{ gap: space.s }}>
-        <Heading>Next swaps</Heading>
+        <Body size={15}>One safer swap a week, your worst room first.</Body>
         {driver && driver !== "balanced" ? <Body muted size={13}>{ROOMS[driver].label} first</Body> : null}
         {upcoming.map(({ date, entry }) => (
           <Pressable
@@ -92,6 +73,29 @@ export default function SwapsScreen() {
           </Pressable>
         ))}
       </View>
+
+      <Tile>
+        <View style={{ flexDirection: "row", alignItems: "center", justifyContent: "space-between", gap: space.m }}>
+          <View style={{ flex: 1, gap: 2 }}>
+            <Heading>Remind me weekly</Heading>
+          </View>
+          <Switch testID="reminder-switch" value={s.on} onValueChange={(on) => void apply({ ...s, on })} trackColor={{ true: t.link, false: t.track }} accessibilityLabel="Weekly swap reminder" />
+        </View>
+        {note ? <Body size={13}>{note}</Body> : null}
+        <Label>Day</Label>
+        <ScrollView horizontal showsHorizontalScrollIndicator={false} style={{ marginHorizontal: -space.l }} contentContainerStyle={{ gap: space.s, paddingHorizontal: space.l }}>
+          {WEEKDAYS.map((d, i) => (
+            <Chip key={d} title={d.slice(0, 3)} on={s.weekday === i + 1} onPress={() => void apply({ ...s, weekday: i + 1 })} testID={`day-${i + 1}`} />
+          ))}
+        </ScrollView>
+        <Label>Time</Label>
+        <ScrollView horizontal showsHorizontalScrollIndicator={false} style={{ marginHorizontal: -space.l }} contentContainerStyle={{ gap: space.s, paddingHorizontal: space.l }}>
+          {hours.map((h) => (
+            <Chip key={h} title={hourLabel(h)} on={s.hour === h} onPress={() => void apply({ ...s, hour: h })} testID={`hour-${h}`} />
+          ))}
+        </ScrollView>
+        {s.on && Platform.OS !== "web" ? <Body muted size={13} style={{ fontVariant: ["tabular-nums"] }}>{held} scheduled</Body> : null}
+      </Tile>
     </Screen>
   );
 }

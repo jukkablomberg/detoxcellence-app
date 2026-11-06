@@ -5,7 +5,8 @@
  *   every label in labels.json has an entry in label-photos.json — a photo or an explicit null
  *   licence ∈ CC0 / Public domain / PD mark / CC BY <version> (BY-SA, NC, ND and anything else RED); source page always, author for CC BY
  *   each file exists, its sha256 matches, label-photos.ts requires exactly the photos the manifest lists
- *   all photos together ≤ 2.5 MB; any CC BY photo is credited in About (app/about.tsx renders labelPhotoCredits)
+ *   all photos together ≤ 2.5 MB; any CC BY photo is credited in the app — app/credits.tsx (Settings › Credits & data,
+ *   APP-STANDARD § 8.7, 2026-11-06) or, before it existed, app/about.tsx — renders labelPhotoCredits
  *   node scripts/check-label-photos.mjs [--root <app>]   ·   --redproof  plants 6 defects in a scratch copy, each RED by name
  */
 import { createHash } from "node:crypto";
@@ -44,8 +45,9 @@ export function check(root) {
   }
   for (const id of Object.keys(photos)) if (!labels.includes(id)) f.push(`UNKNOWN LABEL: ${id} is in label-photos.json but not labels.json`);
   if (bytes > BUDGET) f.push(`OVER BUDGET: ${bytes} bytes > ${BUDGET}`);
-  const about = join(root, "app/about.tsx");
-  if (credited && existsSync(about) && !readFileSync(about, "utf8").includes("labelPhotoCredits")) f.push(`ABOUT CREDIT: ${credited} CC BY photo(s) but app/about.tsx does not render labelPhotoCredits`);
+  // [CREDITS-SCREEN-1106] the credits moved off About to Settings › Credits & data (§ 8.7) — whichever screen carries them
+  const screens = ["app/credits.tsx", "app/about.tsx"].map((r) => join(root, r)).filter((x) => existsSync(x));
+  if (credited && screens.length && !screens.some((x) => readFileSync(x, "utf8").includes("labelPhotoCredits"))) f.push(`ABOUT CREDIT: ${credited} CC BY photo(s) but neither app/credits.tsx nor app/about.tsx renders labelPhotoCredits`);
   return { fails: f, bytes, count: Object.values(photos).filter(Boolean).length, nulls: Object.values(photos).filter((p) => p === null).length };
 }
 const fails = (r) => (Array.isArray(r) ? r : r.fails);
@@ -58,7 +60,7 @@ if (process.argv.includes("--redproof")) {
   const plant = (name, expect, mutate) => {
     const d = join(tmp, name);
     cpSync(join(appRoot, MOD), join(d, MOD), { recursive: true, filter: (s) => !s.includes("/model") });
-    if (existsSync(join(appRoot, "app/about.tsx"))) cpSync(join(appRoot, "app/about.tsx"), join(d, "app/about.tsx"));
+    for (const r of ["app/about.tsx", "app/credits.tsx"]) if (existsSync(join(appRoot, r))) cpSync(join(appRoot, r), join(d, r));
     const mp = join(d, MOD, "label-photos.json"); const m = JSON.parse(readFileSync(mp, "utf8"));
     mutate(m, d); writeFileSync(mp, JSON.stringify(m));
     const got = fails(check(d)); const ok = got.some((g) => g.startsWith(expect));
@@ -71,7 +73,7 @@ if (process.argv.includes("--redproof")) {
     plant("missing-file", "MISSING FILE", (m, d) => { m.photos[first].file = "label-photos/nope.jpg"; }),
     plant("no-entry", "NO ENTRY", (m) => { delete m.photos[first]; }),
     plant("over-budget", "OVER BUDGET", (m, d) => { const p = join(d, MOD, m.photos[first].file); const big = Buffer.alloc(BUDGET + 1, 7); writeFileSync(p, big); m.photos[first].sha256 = createHash("sha256").update(big).digest("hex"); }),
-    plant("about-credit", "ABOUT CREDIT", (m, d) => { const a = join(d, "app/about.tsx"); if (existsSync(a)) writeFileSync(a, readFileSync(a, "utf8").replaceAll("labelPhotoCredits", "x")); }),
+    plant("about-credit", "ABOUT CREDIT", (m, d) => { for (const r of ["app/about.tsx", "app/credits.tsx"]) { const a = join(d, r); if (existsSync(a)) writeFileSync(a, readFileSync(a, "utf8").replaceAll("labelPhotoCredits", "x")); } }),
   ];
   rmSync(tmp, { recursive: true, force: true });
   const n = res.filter(Boolean).length;

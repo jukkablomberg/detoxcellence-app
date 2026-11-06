@@ -3,12 +3,12 @@ import { DisplayTitle, useStudioTheme, VENTURE_NAME } from "../../../src/lib/chr
 import { tabRootOptions } from "../../../src/studio/headers";
 import { scanHome } from "../../../src/lib/nav";
 
-/** Tab root "Swaps" — a native Stack header with the "i" (design/APP-STANDARD.md § 2). */
+/** Tab root "Plan" (route stays (swaps); [DX-APP-PLAN-1106]) — a native Stack header with the "i" (design/APP-STANDARD.md § 2). */
 export default function Layout() {
   const t = useStudioTheme();
   return (
     <Stack screenOptions={tabRootOptions(t, VENTURE_NAME, { renderTitle: (title) => <DisplayTitle title={title} color={t.ink} onPress={() => scanHome()} /> })}>
-      <Stack.Screen name="swaps" options={{ title: "Swaps" }} />
+      <Stack.Screen name="swaps" options={{ title: "Swap plan" }} />
     </Stack>
   );
 }

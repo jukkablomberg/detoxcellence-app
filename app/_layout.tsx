@@ -86,6 +86,7 @@ export default function RootLayout() {
         <Stack.Screen name="(tabs)" options={{ headerShown: false, title: "Detoxcellence" }} />
         <Stack.Screen name="about" options={{ title: "About" }} />
         <Stack.Screen name="settings" options={{ title: "Settings" }} />
+        <Stack.Screen name="credits" options={{ title: "Credits & data" }} />
       </Stack>
       {/* Overlay, not a replacement: the navigator is mounted underneath, so a tapped reminder lands. */}
       {!brandDone ? (

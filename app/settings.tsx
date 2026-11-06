@@ -1,6 +1,7 @@
 import { router, useFocusEffect } from "expo-router";
 import { useCallback, useState } from "react";
 import { Pressable, Text, View } from "react-native";
+import { hourLabel } from "../src/lib/locale";
 import { usePrefs } from "../src/lib/prefs";
 import { DEFAULT_SETTINGS, readSettings, WEEKDAYS, type ReminderSettings } from "../src/lib/reminders";
 import { space, type, useTheme, type SchemePref } from "../src/lib/theme";
@@ -22,7 +23,7 @@ export default function Settings() {
   const { prefs, setScheme } = usePrefs();
   const [r, setR] = useState<ReminderSettings>(DEFAULT_SETTINGS);
   useFocusEffect(useCallback(() => { void readSettings().then(setR); }, []));
-  const when = `${WEEKDAYS[r.weekday - 1]?.slice(0, 3) ?? ""} ${String(r.hour).padStart(2, "0")}:00`;
+  const when = `${WEEKDAYS[r.weekday - 1]?.slice(0, 3) ?? ""} ${hourLabel(r.hour)}`;
   return (
     <Screen testID="settings">
       <Label>Scheme</Label>
@@ -40,6 +41,13 @@ export default function Settings() {
             <Text style={type.strong(16, t.ink)}>Weekly swap</Text>
             <Text style={type.body(13, t.muted)}>{r.on ? `On · ${when}` : "Off"}</Text>
           </View>
+          <Text style={type.strong(18, t.muted)} accessibilityElementsHidden>›</Text>
+        </View>
+      </Tile>
+      {/* [DX-APP-CREDITS-1106] § 8.7: the record and the photo credits live one screen down, the last row here. */}
+      <Tile onPress={() => router.push("/credits" as never)} label="Credits and data" testID="settings-credits" style={{ marginTop: space.s }}>
+        <View style={{ flexDirection: "row", alignItems: "center", justifyContent: "space-between", gap: space.m }}>
+          <Text style={type.strong(16, t.ink)}>Credits & data</Text>
           <Text style={type.strong(18, t.muted)} accessibilityElementsHidden>›</Text>
         </View>
       </Tile>
