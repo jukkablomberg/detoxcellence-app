@@ -1,19 +1,31 @@
 {
-  "_note": "First-use intro (PNF-8, [APP-DETEMPLATE] 2026-10-21 — the design critique's port to the health trio). Three cards = the app's answers to Apple's 4.2/4.3/4.2.6 rejection: (1) the one job, (2) the key feature, (3) what the phone does that the website cannot. Lines are true of the shipped app at HEAD.",
+  "_note": "[APP-INTRO-ON-1106] Re-mounted per design/APP-INTRO-STANDARD.md (Jukka 2026-11-06: \"super simple highlighting the key things where the apps/ventures add value\"). 3 cards, one value line each (≤ 8 words, ≤ 48 chars — scripts/intro.test.mjs). Images = crops of TODAY's screens from the web export (assets/intro light, assets/intro/dark dark; src/lib/intro-images.ts picks by the app's scheme). Lines say what the CURRENT app does (research/APP-READER-FIRST-2026-11-06.md § Intro cards were proposals; features not built yet are not advertised). enabled:false = OTA kill switch; prior_use_keys = this app's own storage keys — a reader who has any of them is marked seen without the intro (rule 11, src/lib/intro-gate.ts). Store listing lines are not changed here (store surface = Jukka's click).",
+  "_sources": {
+    "1": "/ — the Index, worst first",
+    "2": "/swaps — the Plan",
+    "3": "/exposure/nonstick-ptfe-cookware — where a scan lands"
+  },
+  "enabled": true,
   "cards": [
     {
-      "image": "intro/01-scan.png",
-      "line": "Point at a pan, a container or a candle: its exposure score, studies and a swap."
+      "image": "intro/01-index.png",
+      "line": "What in your home is worth worrying about?"
     },
     {
-      "image": "intro/02-index.png",
-      "line": "189 everyday products and habits, each with a Detox Score from 1 to 100."
+      "image": "intro/02-plan.png",
+      "line": "One safer swap a week, worst first"
     },
     {
-      "image": "intro/03-swaps.png",
-      "line": "A weekly swap reminder, scheduled on your phone. Photos are never stored or sent."
+      "image": "intro/03-pan.png",
+      "line": "Point at a pan: its score and swap"
     }
   ],
   "core_action_route": "/",
-  "layout": "bleed"
+  "layout": "bleed",
+  "prior_use_keys": [
+    "detoxcellence.index.v1",
+    "detoxcellence.score.history.v1",
+    "detoxcellence.swapsdone.v1",
+    "detoxcellence.prefs.v1"
+  ]
 }

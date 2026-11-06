@@ -11,6 +11,11 @@ import { fonts, palettes, resolveScheme, SchemeContext, type SchemePref } from "
 import { pinNativeScheme, PrefsContext, readPrefs, writePrefs, type Prefs } from "../src/lib/prefs";
 import { BrandMoment, holdNativeSplash } from "../src/studio/BrandMoment";
 import { useStudioTheme } from "../src/lib/chrome";
+import { introImages } from "../src/lib/intro-images";
+import { introMayShow } from "../src/lib/intro-gate";
+import { FirstUseIntro } from "../src/studio/FirstUseIntro";
+import type { IntroConfig } from "../src/studio/intro";
+import introJson from "./intro.json";
 
 // design/APP-STANDARD.md § 1: the native splash stays up until the brand moment draws the same picture.
 holdNativeSplash();
@@ -43,6 +48,14 @@ export default function RootLayout() {
   });
   const [brandDone, setBrandDone] = useState(false);
   const studioTheme = useStudioTheme();
+  // [APP-INTRO-ON-1106] first-use intro: fresh installs only (intro.json prior_use_keys), enabled = the OTA kill switch.
+  // Runs before startIndex() below so the index cache it writes is never mistaken for prior use.
+  const [introOk, setIntroOk] = useState(false);
+  useEffect(() => {
+    void introMayShow(introJson.enabled, introJson.prior_use_keys).then(setIntroOk);
+  }, []);
+  // The kit skin in the scheme the reader sees (RootLayout sits above SchemeContext, so take the resolved palette here).
+  const introTheme = { ...studioTheme, ground: t.ground, panel: t.panel, ink: t.ink, muted: t.muted, hairline: t.border, link: t.link };
 
   // The index: the cached copy if newer than the bundle, then one GET to detoxcellence.com. Then refill the
   // weekly swap plan so the reminders never run out while the app is in use.
@@ -100,8 +113,11 @@ export default function RootLayout() {
           onDone={() => setBrandDone(true)}
         />
       ) : null}
-      {/* First-use intro (PNF-8) — OFF since [APP-INTRO-OFF] 2026-11-02 (Jukka: the intro screenshots are stale; the app
-          opens on the Index instead). Re-mount <FirstUseIntro …/> once assets/intro is re-shot from this UI. */}
+      {/* [APP-INTRO-ON-1106] First-use intro (design/APP-INTRO-STANDARD.md): 3 cards once per fresh install, after the brand
+          moment, Skip from card 1, ends on the first tab; images cut from today's screens in this scheme. */}
+      {introOk ? (
+        <FirstUseIntro config={introJson as IntroConfig} images={introImages(scheme)} theme={introTheme} ready={brandDone} />
+      ) : null}
       </PrefsContext.Provider>
       </SchemeContext.Provider>
     </SafeAreaProvider>
