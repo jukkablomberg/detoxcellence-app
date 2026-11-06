@@ -77,6 +77,15 @@ try {
     await page.waitForTimeout(500);
     await shoot("05-score");
 
+    // [STORE-SHOTS-1106] the phone-only reason (APP-STORE-SHOTS-STANDARD rule 12): the weekly swap reminder, switched on,
+    // over the plan the Home Check just made (local notifications, scheduled on the phone).
+    await page.evaluate(() => localStorage.setItem("detoxcellence.reminder.v1", JSON.stringify({ on: true, weekday: 7, hour: 10 })));
+    await page.goto(`${base}/swaps`, { waitUntil: "load" });
+    await tid("swaps").waitFor({ timeout: 30000 });
+    await vis("Remind me weekly").waitFor({ timeout: 10000 });
+    await settle();
+    await shoot("07-swaps");
+
     await page.goto(`${base}/about`, { waitUntil: "load" });
     await vis("Detoxcellence").waitFor({ timeout: 30000 }); // About has no "How Scan works" since the trim
     await settle();

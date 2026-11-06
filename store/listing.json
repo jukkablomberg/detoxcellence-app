@@ -41,33 +41,54 @@
   "categoryPlay": "Health & Fitness",
   "categoryApple": "Health & Fitness",
   "screenshots": {
-    "_note": "iOS caption band per shot (scripts/shot-frame.mjs): [headline ≤5 words, subline ≤60 chars] — one feature per shot; first two frames sell (NEW-APP-CHECKLIST 10-08). Filled at C3 with the camera lens first.",
+    "_note": "Play phone set (assets/screenshots/android, 1080×2160) = store/shots.json composed by projects/app-stores/studio-kit/shots/compose.mjs per design/APP-STORE-SHOTS-STANDARD.md (2026-11-06): `order` is the Play upload order, `alt` the per-shot alt text (≤140), `canvas` the brand canvas. `captions` stays keyed by the screenshots.mjs shot name for the iOS caption band (headline = the Play headline, subline ≤60); 06-about is iOS-only and always \"Built by JukkaBlomberg.com\". displayFontFile = a .ttf the app bundles.",
     "displayFontFile": "LeagueGothic-Regular",
     "captions": {
       "01-scan": [
-        "Point at a bottle",
+        "Point your camera at it",
         "Recognised on your phone, photo never sent"
       ],
       "02-entry": [
-        "Its exposure score, explained",
+        "See the studies behind it",
         "The evidence behind each rating, plus a swap"
       ],
       "03-room": [
-        "Room check: one shelf",
+        "Check a whole shelf",
         "Every item in the photo, ranked by burden"
       ],
       "04-index": [
-        "The Exposure Index, offline",
+        "See what's worth worrying about",
         "189 household items, bundled with the app"
       ],
       "05-score": [
-        "Your Exposure Score",
+        "Find your home's worst room",
         "12 questions, results kept on your phone"
       ],
       "06-about": [
         "Built by JukkaBlomberg.com",
         "No account, no ads, photos never sent"
+      ],
+      "07-swaps": [
+        "Swap one thing a week",
+        "One safer swap a week, with a reminder on your phone"
       ]
+    },
+    "canvas": "#46615B",
+    "order": [
+      "01-home-check",
+      "02-index",
+      "03-scan",
+      "04-swaps",
+      "05-studies",
+      "06-room"
+    ],
+    "alt": {
+      "01-home-check": "Home Check result: your home's score, the room to start with, what to do first, then each room as fine, worth a look or worry.",
+      "02-index": "The Index: household items ranked worst first, each with its score and room, searchable — PFAS at home, older homes, every room.",
+      "03-scan": "Scan: point the phone at a bottle, pan or container; the camera suggests what it is and opens its entry. Photos stay on the phone.",
+      "04-swaps": "Swap plan from your Home Check: one safer swap a week, worst room first, tick it off, with a weekly reminder on the phone.",
+      "05-studies": "Bottled water (plastic): its score and evidence strength, the safer swap, the hazard, exposure and persistence scores, and the studies.",
+      "06-room": "Room check: every item seen in one photo, ranked by score, with the top swap first."
     }
   },
   "_name_rule": "2026-10-16 design/STORE-BADGES-STANDARD.md § 1 (Jukka app-naming: yes); previous name: Detoxcellence. Console titles are pasted by Jukka; this file is what the next train submits."
