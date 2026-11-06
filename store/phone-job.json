@@ -1,4 +1,4 @@
 {
   "_note": "The app's binding phone-job line (design/APP-STANDARD.md § 8.1). SOURCE = the **Phone job** line in projects/<venture>/README.md CHARTER block; this mirror is checked by projects/app-stores/scripts/phone-job-check.py. Lives in store/ on purpose: venture.json is imported by app.config.ts, so a field there changes the Expo fingerprint and blocks $0 OTAs (FatTonic fork, 2026-11-02).",
-  "phoneJob": "On the phone, Detoxcellence is for: scoring the product in your hand for avoidable exposure. Home = scan/search + your home's score; the Index as the reference tab. Phone-only edge: the scan — FREEZE CANDIDATE (CoS): weakest phone case after the 10-31 home refocus."
+  "phoneJob": "On the phone, Detoxcellence is for: scoring the product in your hand for avoidable exposure. Home = scan/search + your home's score; the Index as the reference tab. Phone-only edge: the scan — weakest phone case after the 10-31 home refocus — never frozen (APP-STANDARD § 8.8, Jukka 11-06); the reader-first doc (research/APP-READER-FIRST-2026-11-06.md) proposes the fix."
 }
