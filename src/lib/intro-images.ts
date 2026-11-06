@@ -7,12 +7,12 @@ import type { ImageSourcePropType } from "react-native";
 const LIGHT: Record<string, ImageSourcePropType> = {
   "intro/01-index.png": require("../../assets/intro/01-index.png"),
   "intro/02-plan.png": require("../../assets/intro/02-plan.png"),
-  "intro/03-pan.png": require("../../assets/intro/03-pan.png"),
+  "intro/03-scan.png": require("../../assets/intro/03-scan.png"),
 };
 const DARK: Record<string, ImageSourcePropType> = {
   "intro/01-index.png": require("../../assets/intro/dark/01-index.png"),
   "intro/02-plan.png": require("../../assets/intro/dark/02-plan.png"),
-  "intro/03-pan.png": require("../../assets/intro/dark/03-pan.png"),
+  "intro/03-scan.png": require("../../assets/intro/dark/03-scan.png"),
 };
 
 /** The intro's images for the scheme the app is showing (the reader's Settings choice). */

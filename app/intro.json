@@ -1,23 +1,23 @@
 {
   "_note": "[APP-INTRO-ON-1106] Re-mounted per design/APP-INTRO-STANDARD.md (Jukka 2026-11-06: \"super simple highlighting the key things where the apps/ventures add value\"). 3 cards, one value line each (≤ 8 words, ≤ 48 chars — scripts/intro.test.mjs). Images = crops of TODAY's screens from the web export (assets/intro light, assets/intro/dark dark; src/lib/intro-images.ts picks by the app's scheme). Lines say what the CURRENT app does (research/APP-READER-FIRST-2026-11-06.md § Intro cards were proposals; features not built yet are not advertised). enabled:false = OTA kill switch; prior_use_keys = this app's own storage keys — a reader who has any of them is marked seen without the intro (rule 11, src/lib/intro-gate.ts). Store listing lines are not changed here (store surface = Jukka's click).",
   "_sources": {
-    "1": "/ — the Index, worst first",
-    "2": "/swaps — the Plan",
-    "3": "/exposure/nonstick-ptfe-cookware — where a scan lands"
+    "1": "/ — the Index, worst first (below the tab switch, ends on a row)",
+    "2": "/swaps — the Plan, three swap cards from their heading",
+    "3": "/scan — the scan result of the app's own sample photo (Plastic water bottle: 42 / 59 Moderate)"
   },
   "enabled": true,
   "cards": [
     {
       "image": "intro/01-index.png",
-      "line": "What in your home is worth worrying about?"
+      "line": "See what in your home matters most"
     },
     {
       "image": "intro/02-plan.png",
       "line": "One safer swap a week, worst first"
     },
     {
-      "image": "intro/03-pan.png",
-      "line": "Point at a pan: its score and swap"
+      "image": "intro/03-scan.png",
+      "line": "Scan a product, see its score"
     }
   ],
   "core_action_route": "/",
