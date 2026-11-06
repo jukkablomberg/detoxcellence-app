@@ -37,10 +37,14 @@ export function nextDates(from: Date, s: ReminderSettings, n: number): Date[] {
   return out;
 }
 
-/** What the plan would schedule — the Swaps tab shows it, and the unit test checks it. */
-export function plan<E extends PlanEntry>(list: E[], driver: Driver | null, s: ReminderSettings, from = new Date()) {
-  const q = swapQueue(list, driver);
+/** What the plan would schedule — the Plan tab shows it, and the unit test checks it.
+ * [DX-APP-PLAN-1106] critic: truly worst-first — week 1 = the highest-exposure swap still open, week 2 the next…
+ * (no more week-number rotation). Swaps the reader ticked off (`done`, slugs) leave the schedule. */
+export function plan<E extends PlanEntry & { slug?: string }>(list: E[], driver: Driver | null, s: ReminderSettings, from = new Date(), done: string[] = []) {
+  const all = swapQueue(list, driver);
+  const open = all.filter((e) => !done.includes(e.slug ?? ""));
+  const q = open.length ? open : all;
   if (!q.length) return [];
-  return nextDates(from, s, WEEKS_AHEAD).map((date) => ({ date, entry: q[weekNumber(date) % q.length] }));
+  return nextDates(from, s, WEEKS_AHEAD).map((date, i) => ({ date, entry: q[i % q.length] }));
 }
 

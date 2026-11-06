@@ -23,7 +23,7 @@ export default function Settings() {
   const { prefs, setScheme } = usePrefs();
   const [r, setR] = useState<ReminderSettings>(DEFAULT_SETTINGS);
   useFocusEffect(useCallback(() => { void readSettings().then(setR); }, []));
-  const when = `${WEEKDAYS[r.weekday - 1]?.slice(0, 3) ?? ""} ${hourLabel(r.hour)}`;
+  const when = `${WEEKDAYS[r.weekday - 1] ?? ""} · ${hourLabel(r.hour)}`; // critic 11-06: day + time when on
   return (
     <Screen testID="settings">
       <Label>Scheme</Label>
@@ -38,7 +38,7 @@ export default function Settings() {
       <Tile onPress={() => router.navigate("/swaps" as never)} label="Weekly swap reminder" testID="settings-reminder">
         <View style={{ flexDirection: "row", alignItems: "center", justifyContent: "space-between", gap: space.m }}>
           <View style={{ flex: 1, gap: 2 }}>
-            <Text style={type.strong(16, t.ink)}>Weekly swap</Text>
+            <Text style={type.strong(16, t.ink)}>Weekly swap reminder</Text>
             <Text style={type.body(13, t.muted)}>{r.on ? `On · ${when}` : "Off"}</Text>
           </View>
           <Text style={type.strong(18, t.muted)} accessibilityElementsHidden>›</Text>

@@ -3,6 +3,7 @@ import * as Notifications from "expo-notifications";
 import { Platform } from "react-native";
 import { getIndex } from "./exposures";
 import { latestDriver } from "./history";
+import { readDone } from "./swaps-done";
 import { plan, weekNumber, type ReminderSettings } from "./swap-plan";
 export { plan, WEEKDAYS, WEEKS_AHEAD, type ReminderSettings } from "./swap-plan";
 
@@ -77,7 +78,7 @@ export async function applyReminder(s: ReminderSettings): Promise<number> {
   await cancelAll();
   if (!s.on || !(await hasPermission())) return 0;
   await ensureChannel();
-  const items = plan(getIndex().list, await latestDriver(), s);
+  const items = plan(getIndex().list, await latestDriver(), s, new Date(), await readDone()); // ticked-off swaps leave the schedule
   for (const { date, entry } of items) {
     await Notifications.scheduleNotificationAsync({
       identifier: `${ID_PREFIX}${weekNumber(date)}`,
