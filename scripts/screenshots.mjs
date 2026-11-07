@@ -58,14 +58,15 @@ try {
     await page.waitForTimeout(500);
     await shoot("03-room");
 
-    await page.goto(`${base}/`, { waitUntil: "load" });
+    // [DX-MY-HOME 2026-11-06] "/" is My home now; the index moved to /the-index.
+    await page.goto(`${base}/the-index`, { waitUntil: "load" });
     await tid("index-search").waitFor({ timeout: 30000 });
     await settle();
     // 2026-11-02: no "all" chip since the 10-31 home refocus — the index opens on all
     await page.waitForTimeout(500);
     await shoot("04-index");
 
-    await page.goto(`${base}/score`, { waitUntil: "load" });
+    await page.goto(`${base}/`, { waitUntil: "load" });
     await tid("start-quiz").waitFor({ timeout: 30000 });
     await settle();
     await tid("start-quiz").click();
@@ -80,11 +81,20 @@ try {
     // [STORE-SHOTS-1106] the phone-only reason (APP-STORE-SHOTS-STANDARD rule 12): the weekly swap reminder, switched on,
     // over the plan the Home Check just made (local notifications, scheduled on the phone).
     await page.evaluate(() => localStorage.setItem("detoxcellence.reminder.v1", JSON.stringify({ on: true, weekday: 7, hour: 10 })));
-    await page.goto(`${base}/swaps`, { waitUntil: "load" });
-    await tid("swaps").waitFor({ timeout: 30000 });
+    // [DX-MY-HOME 2026-11-07] the Plan tab is hidden (/swaps no longer renders on its own): the Plan is shot inside My home.
+
+    // [DX-MY-HOME 2026-11-07] My home once the home has a score: the result, "Re-check due", then This week's swap
+    // (the Plan, embedded) with the weekly reminder switched on above — the screen the app now opens on.
+    await page.goto(`${base}/`, { waitUntil: "load" });
+    await tid("score-home").waitFor({ timeout: 30000 });
+    await vis("This week's swap").waitFor({ timeout: 10000 });
+    await vis("Re-check due").waitFor({ timeout: 10000 });
     await vis("Remind me weekly").waitFor({ timeout: 10000 });
     await settle();
-    await shoot("07-swaps");
+    // scroll My home so the Plan ("This week's swap") opens the frame — shot 1 already shows the top of My home
+    await vis("This week's swap").evaluate((el) => el.scrollIntoView({ block: "start" }));
+    await page.waitForTimeout(600);
+    await shoot("08-myhome");
 
     await page.goto(`${base}/about`, { waitUntil: "load" });
     await vis("Detoxcellence").waitFor({ timeout: 30000 }); // About has no "How Scan works" since the trim
