@@ -21,7 +21,7 @@
       "promo": "30 calculators, fully offline",
       "cluster": "solo",
       "site": "https://usephysics.com",
-      "shortDescription": "30 physics calculators that work offline and show the formula behind each.",
+      "shortDescription": "Physics homework, solved: find any quantity, in any units, with the working.",
       "tierRank": 9,
       "icon": "https://jukkablomberg.com/apps/icons/usephysics.png",
       "ios": null,
@@ -36,7 +36,7 @@
       "promo": "Foods scored 0–100, offline",
       "cluster": "health",
       "site": "https://fattonic.com",
-      "shortDescription": "200 foods scored 0–100 for fat-burning, offline. Metabolic Score and nudges.",
+      "shortDescription": "The GI and GL of the food in front of you: search, your last 5, or scan it.",
       "tierRank": 5,
       "icon": "https://jukkablomberg.com/apps/icons/fattonic.png",
       "ios": null,
@@ -51,7 +51,7 @@
       "promo": null,
       "cluster": "health",
       "site": "https://snapstress.com",
-      "shortDescription": "The two-minute stress test, and how much caffeine is still in you at bedtime.",
+      "shortDescription": "A two-minute stress check, one thing to change this week, and your trend.",
       "tierRank": 6,
       "icon": "https://jukkablomberg.com/apps/icons/snapstress.png",
       "ios": null,
@@ -61,12 +61,27 @@
       }
     },
     {
+      "slug": "coinbucha",
+      "venture": "CoinBucha",
+      "promo": "Sovereign reserves & alerts",
+      "cluster": "index",
+      "site": "https://coinbucha.com",
+      "shortDescription": "Bitcoin stocks today, their report dates, and the bitcoin your portfolio holds.",
+      "tierRank": 2,
+      "icon": "https://jukkablomberg.com/apps/icons/coinbucha.png",
+      "ios": null,
+      "android": {
+        "url": "https://play.google.com/store/apps/details?id=com.coinbucha.app",
+        "package": "com.coinbucha.app"
+      }
+    },
+    {
       "slug": "boomcellar",
       "venture": "VINCAP",
       "promo": "Listed wine, one number",
       "cluster": "index",
       "site": "https://vincap.co",
-      "shortDescription": "Wine shares in one index: listed wine companies, investor calendar and alerts.",
+      "shortDescription": "Wine shares in one index: listed wine companies, calendar, who owns which wine.",
       "tierRank": 1,
       "icon": "https://jukkablomberg.com/apps/icons/boomcellar.png",
       "ios": null,
@@ -81,7 +96,7 @@
       "promo": null,
       "cluster": "health",
       "site": "https://detoxcellence.com",
-      "shortDescription": "Point at a pan, a container or a candle: its exposure score, studies and a swap.",
+      "shortDescription": "PFAS in pans or water? Vermiculite in the attic? Your home's exposures, scored.",
       "tierRank": 7,
       "icon": "https://jukkablomberg.com/apps/icons/detoxcellence.png",
       "ios": null,
@@ -91,18 +106,48 @@
       }
     },
     {
+      "slug": "monitoringroom",
+      "venture": "MonitoringRoom",
+      "promo": "Live situations & forecasts",
+      "cluster": "index",
+      "site": "https://monitoringroom.com",
+      "shortDescription": "The biggest thing happening right now, by Level, and your call on what's next.",
+      "tierRank": 8,
+      "icon": "https://jukkablomberg.com/apps/icons/monitoringroom.png",
+      "ios": null,
+      "android": {
+        "url": "https://play.google.com/store/apps/details?id=com.monitoringroom.app",
+        "package": "com.monitoringroom.app"
+      }
+    },
+    {
       "slug": "saunahash",
       "venture": "SaunaHash",
       "promo": "Helsinki-region sauna atlas",
       "cluster": "atlas",
       "site": "https://saunahash.com",
-      "shortDescription": "Helsinki sauna atlas: 104 records checked at source. Offline, nearby, starred.",
+      "shortDescription": "Helsinki saunas on a map: the nearest one open now, with hours and directions.",
       "tierRank": 3,
       "icon": "https://jukkablomberg.com/apps/icons/saunahash.png",
       "ios": null,
       "android": {
         "url": "https://play.google.com/store/apps/details?id=com.saunahash.app",
         "package": "com.saunahash.app"
+      }
+    },
+    {
+      "slug": "billasaari",
+      "venture": "Billasaari",
+      "promo": "Which Bitcoin places are alive",
+      "cluster": "atlas",
+      "site": "https://billasaari.com",
+      "shortDescription": "99 Bitcoin places on a map: which are alive, near me, with directions.",
+      "tierRank": 4,
+      "icon": "https://jukkablomberg.com/apps/icons/billasaari.png",
+      "ios": null,
+      "android": {
+        "url": "https://play.google.com/store/apps/details?id=com.billasaari.app",
+        "package": "com.billasaari.app"
       }
     }
   ]

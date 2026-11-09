@@ -3,7 +3,7 @@
   "version": "1.1.1",
   "private": true,
   "main": "expo-router/entry",
-  "_versions": "PINNED AND DECLARED. Exact versions (no ^, no ~, no *); scripts/listing-readiness.mjs fails on any range operator. Expo SDK 57 / target API 36. The dependency set is projects/monitoringroom/repo-app's (EAS build FINISHED 10-06/07) minus expo-secure-store (no account) and expo-device (no push token): the weekly swap reminder is a LOCAL notification. No firebase / revenuecat (no Firebase project for Detoxcellence yet — HEALTH-TRIO-DAY § 2 'Not on the day'; no IAP — Paid Apps Agreement unsigned). C2 (2026-10-09) added the camera-engine set at FatTonic's exact pins (expo-asset, expo-camera, expo-file-system, expo-image-manipulator, jpeg-js, onnxruntime-react-native 1.24.3 + scripts/patch-ort-native.mjs on postinstall) — the engine is a byte copy (scripts/sync-camera-engine.mjs --check).",
+  "_versions": "PINNED AND DECLARED. Exact versions (no ^, no ~, no *); scripts/listing-readiness.mjs fails on any range operator. Expo SDK 57 / target API 36. The dependency set is projects/monitoringroom/repo-app's (EAS build FINISHED 10-06/07) minus expo-secure-store (no account) and expo-device (no push token): the weekly swap reminder is a LOCAL notification. No firebase / revenuecat (no Firebase project for Detoxcellence yet — HEALTH-TRIO-DAY § 2 'Not on the day'; no IAP — Paid Apps Agreement unsigned). C2 (2026-10-09) added the camera-engine set at FatTonic's exact pins (expo-asset, expo-camera, expo-file-system, expo-image-manipulator, jpeg-js, onnxruntime-react-native 1.24.3 + scripts/patch-ort-native.mjs on postinstall) — the engine is a byte copy (scripts/sync-camera-engine.mjs --check). [NATIVE-1109] 2026-11-09: + expo-localization, react-native-view-shot + expo-sharing (expo install, pinned).",
   "scripts": {
     "start": "expo start",
     "web": "expo start --web",
@@ -42,8 +42,10 @@
     "expo-font": "57.0.4",
     "expo-image-manipulator": "57.0.21",
     "expo-linking": "57.0.9",
+    "expo-localization": "57.0.2",
     "expo-notifications": "57.0.17",
     "expo-router": "57.0.20",
+    "expo-sharing": "57.0.25",
     "expo-splash-screen": "57.0.8",
     "expo-status-bar": "57.0.1",
     "expo-symbols": "57.0.3",
@@ -57,6 +59,7 @@
     "react-native-safe-area-context": "5.7.0",
     "react-native-screens": "4.26.2",
     "react-native-svg": "15.15.4",
+    "react-native-view-shot": "5.1.0",
     "react-native-web": "0.21.2"
   },
   "devDependencies": {

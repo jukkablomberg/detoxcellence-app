@@ -34,12 +34,12 @@ const DARK_GROUND = "#111513";
 const config: ExpoConfig = {
   name: venture.venture,
   slug: venture.slug,
-  version: "1.1.1",
+  version: "1.2.0",
   // EAS Update — projects/app-stores/RELEASE-PIPELINE.md. JS/asset changes ship over the air to the build already on the
   // phone; a new store build is needed only when this fingerprint (the native layer) changes. Channels live in eas.json.
   runtimeVersion: { policy: "fingerprint" },
   ...(easProjectId
-    ? { updates: { url: `https://u.expo.dev/${easProjectId}`, checkAutomatically: "ON_LOAD" as const, fallbackToCacheTimeout: 0 } }
+    ? { updates: { url: `https://u.expo.dev/${easProjectId}`, checkAutomatically: "ON_LOAD" as const, fallbackToCacheTimeout: 4000 } }
     : {}),
   orientation: "portrait",
   scheme: venture.slug,

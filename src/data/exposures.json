@@ -7,7 +7,7 @@
     "name": "CC BY 4.0",
     "url": "https://creativecommons.org/licenses/by/4.0/"
   },
-  "citation": "Detoxcellence (2026). Detoxcellence Exposure Index (version 1.7.0) [Data set]. https://detoxcellence.com/methodology.html. Licensed CC BY 4.0.",
+  "citation": "Detoxcellence (2026). Detoxcellence Exposure Index (version 1.7.0) [Data set]. Zenodo. https://doi.org/10.5281/zenodo.23175030. https://detoxcellence.com/methodology.html. Licensed CC BY 4.0.",
   "methodology": "https://detoxcellence.com/methodology.html",
   "provenance": {
     "statement_date": "2026-10-02",

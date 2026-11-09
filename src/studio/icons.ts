@@ -25,6 +25,8 @@ export const ICONS = {
   checked: { sf: { default: "checkmark.seal", selected: "checkmark.seal.fill" }, md: "verified" },
   tips: { sf: { default: "lightbulb", selected: "lightbulb.fill" }, md: "lightbulb" },
   info: { sf: "info.circle", md: "info" },
+  /** [BC-APP-V2 2026-10-27] the reader's settings sheet (scheme, currency, alerts) — header button beside the "i" */
+  settings: { sf: { default: "gearshape", selected: "gearshape.fill" }, md: "settings" },
   search: { sf: "magnifyingglass", md: "search" },
   share: { sf: "square.and.arrow.up", md: "share" },
   save: { sf: { default: "star", selected: "star.fill" }, md: "star" },
