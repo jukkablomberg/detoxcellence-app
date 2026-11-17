@@ -71,30 +71,34 @@ try {
     await settle();
     await tid("start-quiz").click();
     for (let i = 0; i < quiz.questions.length; i++) {
-      await page.getByText(`${i + 1} / ${quiz.questions.length}`, { exact: false }).filter({ visible: true }).first().waitFor({ timeout: 5000 }); // label is "n / 12 · room" since the 10-31 refocus
+      await page.getByText(`${i + 1} of ${quiz.questions.length}`, { exact: false }).filter({ visible: true }).first().waitFor({ timeout: 5000 }); // [DX-ROUND-1117] "n of 12 · room"; answers move on by themselves
       await tid(`answer-${i % 2 === 0 ? 1 : 2}`).click();
     }
     await tid("result").waitFor({ timeout: 10000 });
     await page.waitForTimeout(500);
     await shoot("05-score");
 
-    // [STORE-SHOTS-1106] the phone-only reason (APP-STORE-SHOTS-STANDARD rule 12): the weekly swap reminder, switched on,
-    // over the plan the Home Check just made (local notifications, scheduled on the phone).
+    // [DX-ROUND2-1117] My Progress (the tab is back): the plan with the weekly reminder switched on (local notifications).
     await page.evaluate(() => localStorage.setItem("detoxcellence.reminder.v1", JSON.stringify({ on: true, weekday: 7, hour: 10 })));
-    // [DX-MY-HOME 2026-11-07] the Plan tab is hidden (/swaps no longer renders on its own): the Plan is shot inside My home.
-
-    // [DX-MY-HOME 2026-11-07] My home once the home has a score: the result, "Re-check due", then This week's swap
-    // (the Plan, embedded) with the weekly reminder switched on above — the screen the app now opens on.
-    await page.goto(`${base}/`, { waitUntil: "load" });
-    await tid("score-home").waitFor({ timeout: 30000 });
-    await vis("This week's swap").waitFor({ timeout: 10000 });
-    await vis("Re-check due").waitFor({ timeout: 10000 });
-    await vis("Remind me weekly").waitFor({ timeout: 10000 });
+    await page.goto(`${base}/swaps`, { waitUntil: "load" });
+    await tid("progress").waitFor({ timeout: 30000 });
+    await vis("Your plan").waitFor({ timeout: 10000 });
     await settle();
-    // scroll My home so the Plan ("This week's swap") opens the frame — shot 1 already shows the top of My home
-    await vis("This week's swap").evaluate((el) => el.scrollIntoView({ block: "start" }));
+    await shoot("08-progress");
+
+    // [DX-ROUND2-1117] the two reader tools: Is this vermiculite? (EPA photos) and Is my filter certified? (a filter picked)
+    await page.goto(`${base}/vermiculite`, { waitUntil: "load" });
+    await tid("vermiculite-hero").waitFor({ timeout: 30000 });
+    await settle();
+    await shoot("09-vermiculite");
+    await page.goto(`${base}/water-filter`, { waitUntil: "load" });
+    await tid("filter-carbon").waitFor({ timeout: 30000 });
+    await settle();
+    await tid("filter-carbon").click();
+    await tid("filter-row").waitFor({ timeout: 10000 });
+    await tid("filter-row").evaluate((el) => el.scrollIntoView({ block: "center" }));
     await page.waitForTimeout(600);
-    await shoot("08-myhome");
+    await shoot("10-filter");
 
     await page.goto(`${base}/about`, { waitUntil: "load" });
     await vis("Detoxcellence").waitFor({ timeout: 30000 }); // About has no "How Scan works" since the trim

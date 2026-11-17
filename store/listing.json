@@ -1,5 +1,5 @@
 {
-  "_note": "Store listing fields for Detoxcellence (HEALTH-TRIO-DAY C1 draft; C2 adds the camera lens and C3 finishes them with screenshots). Every sentence is a fact about the app as built (repo-app) and the Index on detoxcellence.com. `npm run check:listing` R16 forbids generic-claim wording on every field; `check:listing:launch` enforces the limits.",
+  "_note": "Store listing fields for Detoxcellence (HEALTH-TRIO-DAY C1 draft; C2 adds the camera lens and C3 finishes them with screenshots). Every sentence is a fact about the app as built (repo-app) and the Index on detoxcellence.com. `npm run check:listing` R16 forbids generic-claim wording on every field; `check:listing:launch` enforces the limits. Rev 2026-11-17 [DX-ROUND2-1117]: fullDescription sections My Exposure · Is this vermiculite? · Is my filter certified? · My Progress (the 15-question Exposure Score text was stale since 10-31); screenshot order/alt/captions = the round set.",
   "_constraints": {
     "name": {
       "max": 30
@@ -33,7 +33,7 @@
   "nameApple": "Detoxcellence: Exposure Index",
   "subtitle": "Your home's exposures, scored",
   "shortDescription": "PFAS in pans or water? Vermiculite in the attic? Your home's exposures, scored.",
-  "fullDescription": "What in your home is worth worrying about, and what isn't? Detoxcellence rates 189 everyday products and habits, from PFAS in nonstick pans and tap water to vermiculite insulation in an older home's attic, by the avoidable exposure they add, and names a cleaner swap for each.\n\nPOINT AND CHECK\nPoint the camera at a frying pan, a food container, a candle, a shampoo, a water bottle or a can: the app names the three things it looks most like, you tap the right one, and its Exposure Index entry opens. Where it matters it asks one question — which coating, what is in the can, organic or conventional. A room check reads one photo of a shelf and lists what it may show, highest burden first, with the top swap. Recognition runs on your phone; photos are never stored or sent.\n\nTHE EXPOSURE INDEX\n189 entries across water, air, kitchen, plastics, food, personal care, home and environment: nonstick pans, plastic food containers, scented candles, tap water, canned food and more. Each has a Detox Score from 1 to 100 (higher means lower avoidable burden), built openly from three ratings — chemical hazard, everyday exposure and persistence — with the arithmetic shown. Each rating lists the peer-reviewed or agency studies behind it, or says plainly that it is unsourced.\n\nWORKS OFFLINE\nThe whole Index is on your phone, so it works in a shop or on a plane. When you are online it updates from detoxcellence.com's open data.\n\nYOUR EXPOSURE SCORE\nFifteen quick questions about water, air, cooking, personal care, cleaning and food give you a score out of 100 and the one change that cuts yours most. Every result is kept on your phone, so you can watch your score move as you make swaps.\n\nA WEEKLY SWAP\nSwitch on the weekly reminder and pick a day and time: one swap from the Index each week, starting with the area your score points to.\n\nPRIVATE BY DESIGN\nNo account, no ads, no tracking. Your photos, answers, scores and settings stay on your phone.\n\nInformation, not medical advice. The ratings are editorial; every study and source is shown and the data is open (CC BY 4.0).\n\nBuilt by JukkaBlomberg.com.",
+  "fullDescription": "What in your home is worth worrying about, and what isn't? Detoxcellence rates 189 everyday products and habits, from PFAS in nonstick pans and tap water to vermiculite insulation in an older home's attic, by the avoidable exposure they add, and names a cleaner swap for each.\n\nPOINT AND CHECK\nPoint the camera at a frying pan, a food container, a candle, a shampoo, a water bottle or a can: the app names the three things it looks most like, you tap the right one, and its Exposure Index entry opens. Where it matters it asks one question — which coating, what is in the can, organic or conventional. A room check reads one photo of a shelf and lists what it may show, highest burden first, with the top swap. Recognition runs on your phone; photos are never stored or sent.\n\nTHE EXPOSURE INDEX\n189 entries across water, air, kitchen, plastics, food, personal care, home and environment: nonstick pans, plastic food containers, scented candles, tap water, canned food and more. Each has a Detox Score from 1 to 100 (higher means lower avoidable burden), built openly from three ratings — chemical hazard, everyday exposure and persistence — with the arithmetic shown. Each rating lists the peer-reviewed or agency studies behind it, or says plainly that it is unsourced.\n\nWORKS OFFLINE\nThe whole Index is on your phone, so it works in a shop or on a plane. When you are online it updates from detoxcellence.com's open data.\n\nMY EXPOSURE\nTwelve quick questions about your house give it a score out of 100, the room to start with and what to do first. The PFAS items your own answers point to are listed, with what to check next.\n\nIS THIS VERMICULITE?\nCompare your attic with US EPA's five photographs of vermiculite insulation, side by side with a photo you take, and see what to do without touching it.\n\nIS MY FILTER CERTIFIED FOR PFAS?\nPick your filter type: its score in the Index, the NSF/ANSI standard to look for and three checks, from US EPA and NSF guidance.\n\nMY PROGRESS\nOne safer swap a week, worst room first, with a weekly reminder if you want one. Tick swaps off and watch each room and your score move from check to check.\n\nPRIVATE BY DESIGN\nNo account, no ads, no tracking. Your photos, answers, scores and settings stay on your phone.\n\nInformation, not medical advice. The ratings are editorial; every study and source is shown and the data is open (CC BY 4.0).\n\nBuilt by JukkaBlomberg.com.",
   "promotionalText": "Nonstick pans, tap water, filters, vermiculite insulation, candles: point the camera or search, and see each one's Detox Score, the studies behind it and a swap. Offline.",
   "keywords": "PFAS,vermiculite,asbestos,home,water filter,nonstick,indoor air,mould,household",
   "reviewNotes": "Native features: (1) exposure lookup offline — the whole Exposure Index (189 entries, each with its Detox Score, studies and swap) is bundled; try airplane mode, then the Index tab and any entry; (2) swap reminders — Plan tab → switch on Remind me weekly, pick a day and time; the app schedules local notifications on the device (no push server), each naming one swap and opening its entry when tapped; (3) score history — Score tab → Start the Exposure Score (12 questions); each result is saved on the device with its date and listed under Your history. Also: the Scan tab (first screen) recognises everyday products with an on-device image model — tap the target, allow the camera, photograph a frying pan, a plastic food container, a candle or a shampoo bottle, then tap the matching choice; the photo is classified on the device and deleted, nothing is uploaded. No account, no sign-in, no in-app purchase, no advertising, no analytics. Health information: educational ratings of avoidable everyday exposure with the studies shown; not a medical device; no diagnosis or treatment. Contact: Jukka Blomberg, hello@jukkablomberg.com.",
@@ -49,16 +49,12 @@
         "Recognised on your phone, photo never sent"
       ],
       "02-entry": [
-        "See the studies behind it",
-        "The evidence behind each rating, plus a swap"
-      ],
-      "03-room": [
-        "Check a whole shelf",
-        "Every item in the photo, ranked by burden"
+        "Every score, its evidence",
+        "Hazard, exposure, persistence and the studies"
       ],
       "04-index": [
         "See what to fix first",
-        "189 household items, worst first, bundled with the app"
+        "189 household items, by room, worst first"
       ],
       "05-score": [
         "Find your home's worst room",
@@ -68,27 +64,37 @@
         "Built by JukkaBlomberg.com",
         "No account, no ads, photos never sent"
       ],
-      "07-swaps": [
-        "Swap one thing a week",
-        "One safer swap a week, with a reminder on your phone"
+      "08-progress": [
+        "Track your progress",
+        "One safer swap a week, with a reminder"
+      ],
+      "09-vermiculite": [
+        "Is this vermiculite?",
+        "Your attic beside US EPA's photos"
+      ],
+      "10-filter": [
+        "Is your filter PFAS-certified?",
+        "The standard to look for, and three checks"
       ]
     },
     "canvas": "#7FC2A8",
     "order": [
       "01-home-check",
-      "02-index",
+      "02-vermiculite",
       "03-scan",
-      "04-swaps",
-      "05-studies",
-      "06-room"
+      "04-filter",
+      "05-index",
+      "06-studies",
+      "07-progress"
     ],
     "alt": {
-      "01-home-check": "Home Check result: your home's score, the room to start with, what to do first, then each room as fine, worth a look or worry.",
-      "02-index": "The Index: household items ranked worst first, each with its score and room, searchable — PFAS at home, older homes, every room.",
+      "01-home-check": "My Exposure: your home's score as a dial, the room to start with, what to do first, and the PFAS items your own answers point to.",
+      "02-vermiculite": "Is this vermiculite? US EPA's five photographs of vermiculite attic insulation, how to tell without touching it, and what to do.",
       "03-scan": "Scan: point the phone at a bottle, pan or container; the camera suggests what it is and opens its entry. Photos stay on the phone.",
-      "04-swaps": "Swap plan from your Home Check: one safer swap a week, worst room first, tick it off, with a weekly reminder on the phone.",
-      "05-studies": "Bottled water (plastic): its score and evidence strength, the safer swap, the hazard, exposure and persistence scores, and the studies.",
-      "06-room": "Room check: every item seen in one photo, ranked by score, with the top swap first."
+      "04-filter": "Is my filter certified for PFAS? Pick your filter type: its Exposure Index score, the NSF/ANSI standard to look for and three checks.",
+      "05-index": "The Exposure Index: PFAS at home, older homes and every room as photo tiles, then household items ranked worst first.",
+      "06-studies": "An entry: Detox Score and band, hazard, exposure and persistence out of 10, evidence strength and studies, and the safer swap.",
+      "07-progress": "My Progress: your score since the first check, swaps done, each room's number, and one safer swap a week with a reminder."
     }
   },
   "_name_rule": "2026-10-16 design/STORE-BADGES-STANDARD.md § 1 (Jukka app-naming: yes); previous name: Detoxcellence. Console titles are pasted by Jukka; this file is what the next train submits."
