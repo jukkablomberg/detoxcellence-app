@@ -1,13 +1,13 @@
 {
   "dataset": "Detoxcellence Exposure Index",
   "url": "https://detoxcellence.com/exposures",
-  "version": "1.7.0",
-  "released": "2026-10-26",
+  "version": "1.8.0",
+  "released": "2026-11-17",
   "licence": {
     "name": "CC BY 4.0",
     "url": "https://creativecommons.org/licenses/by/4.0/"
   },
-  "citation": "Detoxcellence (2026). Detoxcellence Exposure Index (version 1.7.0) [Data set]. Zenodo. https://doi.org/10.5281/zenodo.23175030. https://detoxcellence.com/methodology.html. Licensed CC BY 4.0.",
+  "citation": "Detoxcellence (2026). Detoxcellence Exposure Index (version 1.8.0) [Data set]. Zenodo. https://doi.org/10.5281/zenodo.23175030. https://detoxcellence.com/methodology.html. Licensed CC BY 4.0.",
   "methodology": "https://detoxcellence.com/methodology.html",
   "provenance": {
     "statement_date": "2026-10-02",

@@ -1,10 +1,14 @@
 import { Stack, useLocalSearchParams } from "expo-router";
-import { Pressable, Text, View } from "react-native";
+import { useEffect, useState } from "react";
+import { Image, Pressable, Text, View } from "react-native";
 import { bySlug, EVIDENCE, hasSwap, INPUTS, useIndex, type Entry } from "../../../../src/lib/exposures";
 import { sisterLine } from "../../../../modules/health-camera/sister-lines";
 import { space, type, useTheme } from "../../../../src/lib/theme";
 import { scanHome } from "../../../../src/lib/nav";
-import { BandPill, Body, Button, Display, Heading, Label, Screen, Tile } from "../../../../src/ui/primitives";
+import { Body, Button, Screen } from "../../../../src/ui/primitives";
+import { Card, Expander, ScoreFigure, StatTiles, VerdictPill, ZoneBar } from "../../../../src/ui/kit";
+import { rowPhoto } from "../../../../src/lib/photos";
+import { readDone, toggleDone } from "../../../../src/lib/swaps-done";
 
 /**
  * One entry page per Index row (docs/scan-flow.md rule 3 — reached the same way from everywhere: the Index, the
@@ -16,6 +20,10 @@ import { BandPill, Body, Button, Display, Heading, Label, Screen, Tile } from ".
  * [DX-APP-INAPP-1106] § 8.7 (Jukka 11-06: "we don't want the user to go to external website"): studies, sources and
  * the sister line print as plain text (DOI/PMID selectable); the detoxcellence.com ↗ line left — the site is in
  * Settings › Credits & data.
+ * [DX-ROUND-1117] verdict first (FatTonic's food page): the row's photo, its name, the band pill and the Detox Score; the
+ * zone bar 0–100 in the site's five bands; the three inputs as tiles; the evidence grade + study count (EWG teardown EH-1:
+ * exposure, not just hazard); the swap with a Done tick (Detox Me DM-1); the note, studies and sources folded under
+ * "Why this score" (closed by default).
  */
 export default function ExposureScreen() {
   useIndex();
@@ -35,91 +43,71 @@ export default function ExposureScreen() {
 function EntryPage({ e }: { e: Entry }) {
   const t = useTheme();
   const sister = sisterLine("detoxcellence", e.slug); // [HT-SISTER-LINES] the one sister app that reads the same thing
+  const photo = rowPhoto(e.slug);
+  const [done, setDone] = useState<string[]>([]);
+  useEffect(() => void readDone().then(setDone), []);
+  const isDone = done.includes(e.slug);
+  const n = (e.studies ?? []).length;
   return (
     <Screen testID={`entry-${e.slug}`}>
-      <Stack.Screen options={{ title: e.category }} />
-      <View style={{ gap: space.s }}>
-        <Label>{e.room}</Label>
-        <Heading size={26}>{e.name}</Heading>
-      </View>
+      <Stack.Screen options={{ title: e.room }} />
+      {photo != null ? <Image source={photo} style={{ width: "100%", height: 190, borderRadius: 20 }} resizeMode="cover" accessibilityIgnoresInvertColors testID="entry-photo" /> : null}
 
-      <Tile testID="entry-score">
-        <View style={{ flexDirection: "row", alignItems: "flex-end", gap: space.m }}>
-          <Display size={64} color={t.band[e.band]}>{e.score}</Display>
-          <View style={{ paddingBottom: 10, gap: 4 }}>
-            <Label>Detox Score</Label>
-            <BandPill band={e.band} />
+      <Card testID="entry-score" style={{ gap: space.m }}>
+        <View style={{ flexDirection: "row", gap: space.m, alignItems: "flex-start" }}>
+          <View style={{ flex: 1, gap: space.s }}>
+            <Text accessibilityRole="header" style={type.heading(22, t.ink)}>{e.name}</Text>
+            <VerdictPill band={e.band} />
           </View>
+          <ScoreFigure score={e.score} band={e.band} />
         </View>
-        <Body muted size={13}>Evidence {EVIDENCE[e.evidence]}</Body>
-      </Tile>
+        <ZoneBar score={e.score} band={e.band} />
+        <StatTiles items={INPUTS.map(([k, label]) => ({ label: { hazard: "Hazard", exposure: "Exposure", persistence: "Persistence" }[k], value: `${e[k]}/10` }))} />
+        <Text style={type.body(13, t.muted)}>{`${EVIDENCE[e.evidence][0].toUpperCase()}${EVIDENCE[e.evidence].slice(1)} evidence${n ? ` · ${n} ${n === 1 ? "study" : "studies"}` : ""}`}</Text>
+      </Card>
+
+      {hasSwap(e) ? (
+        <Card testID="entry-swap" style={{ backgroundColor: t.link }}>
+          <Text style={type.label(t.onLink)}>Swap to</Text>
+          <View style={{ flexDirection: "row", alignItems: "center", gap: space.m }}>
+            <Text style={[type.strong(17, t.onLink), { flex: 1 }]}>{e.swap}</Text>
+            <Pressable testID={`done-${e.slug}`} onPress={async () => setDone(await toggleDone(e.slug))} accessibilityRole="checkbox" accessibilityState={{ checked: isDone }} accessibilityLabel={`Done: ${e.swap}`} hitSlop={10} style={{ width: 32, height: 32, borderRadius: 16, borderWidth: 2, borderColor: t.onLink, backgroundColor: isDone ? t.onLink : "transparent", alignItems: "center", justifyContent: "center" }}>
+              {isDone ? <Text style={type.strong(15, t.link)}>✓</Text> : null}
+            </Pressable>
+          </View>
+        </Card>
+      ) : null}
+
+      {e.guidance?.steps?.length ? (
+        <Card testID="entry-guidance">
+          <Text style={type.label(t.muted)}>{e.guidance.title}</Text>
+          {e.guidance.steps.map((st, i) => (
+            <View key={i} style={{ flexDirection: "row", gap: space.s }}>
+              <Text style={[type.strong(14, t.link), { width: 18 }]}>{i + 1}</Text>
+              <Body size={14} style={{ flex: 1 }}>{st}</Body>
+            </View>
+          ))}
+        </Card>
+      ) : null}
 
       {sister ? (
         <View testID="sister-line"><Body muted size={14}>{sister.text}</Body></View>
       ) : null}
 
-      {hasSwap(e) ? (
-        <Tile testID="entry-swap" style={{ backgroundColor: t.link }}>
-          <Text style={type.label(t.onLink)}>Swap</Text>
-          <Text style={type.strong(17, t.onLink)}>{e.swap}</Text>
-        </Tile>
-      ) : null}
-
-      {e.guidance?.steps?.length ? (
-        <Tile testID="entry-guidance">
-          <Label>{e.guidance.title}</Label>
-          {e.guidance.steps.map((st, i) => (
-            <View key={i} style={{ flexDirection: "row", gap: space.s }}>
-              <Text style={[type.strong(14, t.muted), { width: 18 }]}>{i + 1}</Text>
-              <Body size={14} style={{ flex: 1 }}>{st}</Body>
-            </View>
-          ))}
-        </Tile>
-      ) : null}
-
-      <Body>{e.note}</Body>
-
-      <Tile>
-        {INPUTS.map(([k, label]) => (
-          <Line key={k} left={label} right={`${e[k]}/10`} />
+      <Expander title="Why this score" testID="entry-why">
+        <Body size={14}>{e.note}</Body>
+        {(e.studies ?? []).map((st, i) => (
+          <View key={i} style={{ gap: 2 }}>
+            <Body size={14}>{st.claim}</Body>
+            <Text style={type.body(12, t.muted)} selectable>{st.doi ? `doi:${st.doi}` : `PMID ${st.pmid}`}</Text>
+          </View>
         ))}
-      </Tile>
+        {(e.sources ?? []).map((so, i) => (
+          <Text key={`s${i}`} style={type.body(13, t.muted)}>{so.name}</Text>
+        ))}
+      </Expander>
 
-      {(e.studies ?? []).length ? (
-        <View style={{ gap: space.s }}>
-          <Heading>Studies</Heading>
-          {(e.studies ?? []).map((s, i) => {
-            return (
-              <View key={i}>
-                <Body size={14}>{s.claim}</Body>
-                <Text style={type.body(12, t.muted)} selectable>{s.doi ? `doi:${s.doi}` : `PMID ${s.pmid}`}</Text>
-              </View>
-            );
-          })}
-        </View>
-      ) : null}
-
-      {e.sources?.length ? (
-        <View style={{ gap: space.s }}>
-          <Heading>Sources</Heading>
-          {e.sources.map((s, i) => (
-            <Text key={i} style={type.body(14, t.muted)}>{s.name}</Text>
-          ))}
-        </View>
-      ) : null}
-
-      <Button title="Scan another" onPress={() => scanHome(true)} testID="scan-another" />
+      <Button title="Scan another" kind="secondary" onPress={() => scanHome(true)} testID="scan-another" />
     </Screen>
-  );
-}
-
-function Line({ left, right, strong }: { left: string; right: string; strong?: boolean }) {
-  const t = useTheme();
-  const st = strong ? type.strong(15, t.ink) : type.body(15, t.ink);
-  return (
-    <View style={{ flexDirection: "row", justifyContent: "space-between", gap: space.m }}>
-      <Text style={[st, { flex: 1 }]}>{left}</Text>
-      <Text style={[st, { fontVariant: ["tabular-nums"] }]}>{right}</Text>
-    </View>
   );
 }

@@ -10,7 +10,10 @@ import { openEntry } from "../../../src/lib/nav";
 import { readScans, recordScan, type ScanRecord } from "../../../src/lib/scan";
 import { DEMO_PHOTO, DEMO_RESULT } from "../../../src/lib/scan-demo";
 import { radius, space, type, useTheme, FIXED } from "../../../src/lib/theme";
-import { BandPill, Body, Button, Display, Heading, Label, Screen, Tile } from "../../../src/ui/primitives";
+import { BandPill, Body, Button, Heading, Label, Screen, Tile } from "../../../src/ui/primitives";
+import { SectionTitle, Thumb, VerdictPill, useSurface } from "../../../src/ui/kit";
+import { rowPhoto } from "../../../src/lib/photos";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 /**
  * SCAN — [DX-APP-READER] 2026-11-02: third tab, route /scan (the Index is the front page); the Rooms list left (it is the
@@ -33,6 +36,8 @@ type Mode =
 
 export default function ScanScreen() {
   const t = useTheme();
+  const surf = useSurface();
+  const insets = useSafeAreaInsets();
   const { list } = useIndex();
   const navigation = useNavigation();
   const params = useLocalSearchParams<{ go?: string; t?: string; demo?: string }>();
@@ -151,7 +156,7 @@ export default function ScanScreen() {
     return (
       <View style={{ flex: 1, backgroundColor: FIXED.camera }}>
         <CameraView ref={cam} style={{ flex: 1 }} facing="back" onCameraReady={() => setReady(true)} />
-        <View style={styles.camBar}>
+        <View style={[styles.camBar, { paddingBottom: insets.bottom + 20 + (Platform.OS === "ios" ? 60 : 0) }]}>
           <Text style={[type.body(14, FIXED.onDark), { textAlign: "center" }]}>
             {purpose === "room" ? "Whole shelf in frame" : "One product, fill the frame"}
           </Text>
@@ -194,7 +199,7 @@ export default function ScanScreen() {
           {mode.c.rows.map((slug) => {
             const e = bySlug(slug);
             return e ? (
-              <Pressable key={slug} testID={`ask-${slug}`} onPress={() => void open(mode.c, slug)} accessibilityRole="button" style={({ pressed }) => [styles.row, { backgroundColor: t.panel, opacity: pressed ? 0.8 : 1 }]}>
+              <Pressable key={slug} testID={`ask-${slug}`} onPress={() => void open(mode.c, slug)} accessibilityRole="button" style={({ pressed }) => [styles.row, { backgroundColor: surf.card, opacity: pressed ? 0.8 : 1 }]}>
                 <Text style={[type.strong(16, t.ink), { flex: 1 }]}>{e.name}</Text>
                 <BandPill band={e.band} score={e.score} />
               </Pressable>
@@ -213,7 +218,7 @@ export default function ScanScreen() {
             </Tile>
           ) : null}
           {mode.seen.map((x) => (
-            <Pressable key={x.entry.slug} testID={`room-${x.entry.slug}`} onPress={() => openEntry(x.entry.slug)} accessibilityRole="button" style={({ pressed }) => [styles.row, { backgroundColor: t.panel, opacity: pressed ? 0.8 : 1 }]}>
+            <Pressable key={x.entry.slug} testID={`room-${x.entry.slug}`} onPress={() => openEntry(x.entry.slug)} accessibilityRole="button" style={({ pressed }) => [styles.row, { backgroundColor: surf.card, opacity: pressed ? 0.8 : 1 }]}>
               <View style={{ flex: 1, gap: 2 }}>
                 <Text style={type.strong(16, t.ink)}>{x.entry.name}</Text>
                 <Body muted size={12}>{x.name.toLowerCase()}</Body>
@@ -234,7 +239,7 @@ export default function ScanScreen() {
         </View>
       ) : null}
 
-      {mode.k !== "working" ? (
+      {mode.k === "pick" || mode.k === "room" ? (
         <View style={{ gap: space.s }}>
           <TextInput
             testID="scan-search"
@@ -242,13 +247,13 @@ export default function ScanScreen() {
             onChangeText={setQuery}
             placeholder="Search the Index…"
             placeholderTextColor={t.muted}
-            style={[type.body(16, t.ink), { backgroundColor: t.panel, borderRadius: radius.pill, paddingHorizontal: space.l, minHeight: 48 }]}
+            style={[type.body(16, t.ink), { backgroundColor: surf.card, borderRadius: radius.pill, paddingHorizontal: space.l, minHeight: 48 }]}
             autoCorrect={false}
             autoCapitalize="none"
             accessibilityLabel="Search the Exposure Index"
           />
           {results.map((e) => (
-            <Pressable key={e.slug} onPress={() => { setQuery(""); openEntry(e.slug); }} accessibilityRole="button" style={({ pressed }) => [styles.row, { backgroundColor: t.panel, opacity: pressed ? 0.8 : 1 }]}>
+            <Pressable key={e.slug} onPress={() => { setQuery(""); openEntry(e.slug); }} accessibilityRole="button" style={({ pressed }) => [styles.row, { backgroundColor: surf.card, opacity: pressed ? 0.8 : 1 }]}>
               <Text style={[type.strong(15, t.ink), { flex: 1 }]}>{e.name}</Text>
               <BandPill band={e.band} score={e.score} />
             </Pressable>
@@ -258,16 +263,16 @@ export default function ScanScreen() {
 
       {mode.k === "home" && scans.length ? (
         <View style={{ gap: space.s }}>
-          <Heading>Recent</Heading>
+          <SectionTitle>Recent</SectionTitle>
           {scans.slice(0, 5).map((s) => {
             const e = s.slug ? bySlug(s.slug) : undefined;
             return (
-              <Pressable key={`${s.at}-${s.label}`} disabled={!e} onPress={() => e && openEntry(e.slug)} accessibilityRole="button" style={({ pressed }) => [styles.row, { backgroundColor: t.panel, opacity: pressed ? 0.8 : 1 }]}>
+              <Pressable key={`${s.at}-${s.label}`} disabled={!e} onPress={() => e && openEntry(e.slug)} accessibilityRole="button" style={({ pressed }) => [styles.row, { backgroundColor: surf.card, opacity: pressed ? 0.8 : 1 }]}>
+                {e ? <Thumb photo={labelPhoto(s.label) ?? rowPhoto(e.slug)} score={e.score} band={e.band} size={44} /> : null}
                 <View style={{ flex: 1, gap: 2 }}>
-                  <Text style={type.strong(15, t.ink)}>{s.name}</Text>
-                  <Body muted size={12}>{new Date(s.at).toLocaleString(undefined, { day: "numeric", month: "short", hour: "2-digit", minute: "2-digit" })}</Body>
+                  <Text style={type.strong(15, t.ink)} numberOfLines={1}>{s.name}</Text>
+                  {e ? <VerdictPill band={e.band} score={e.score} small /> : null}
                 </View>
-                {e ? <BandPill band={e.band} score={e.score} /> : null}
               </Pressable>
             );
           })}
@@ -284,30 +289,21 @@ export default function ScanScreen() {
  * corner-marked viewfinder stays FatTonic's (design critique 2026-10-21: three health apps opened on one screen).
  */
 function ScanTarget({ demo, onPress }: { demo: boolean; onPress: () => void }) {
-  const t = useTheme();
-  const ink = demo ? FIXED.onDark : t.ink;
+  const surf = useSurface();
+  const t = surf.t;
+  // [DX-ROUND-1117] the round look: a photo card, one line, one button — the reader's own product is the picture once
+  // the camera is open; before it, the app's sample photo (CC0, credited) stands in.
   return (
-    <Pressable
-      onPress={onPress}
-      accessibilityRole="button"
-      accessibilityLabel={demo ? "See the demo scan result" : "Open the camera and scan a product"}
-      testID="scan-target"
-      style={({ pressed }) => [styles.target, { backgroundColor: t.panel, borderColor: demo ? FIXED.photoLine : t.link, opacity: pressed ? 0.9 : 1 }]}
-    >
-      {demo ? (
-        <>
-          <Image source={DEMO_PHOTO} style={StyleSheet.absoluteFill} resizeMode="cover" accessibilityLabel="A plastic water bottle" />
-          <View style={[StyleSheet.absoluteFill, { backgroundColor: "rgba(17,21,19,0.55)" }]} />
-        </>
-      ) : null}
-      <Text style={[type.label(demo ? FIXED.onDark : t.link)]}>Home check</Text>
-      <Display size={40} color={ink} style={{ textAlign: "left", marginTop: space.s }}>What's in your home?</Display>
-      <Text style={[type.body(15, demo ? FIXED.onDark : t.muted), { marginTop: space.s }]}>{demo ? "Sample photo" : "Pans · containers · candles · bottles"}</Text>
-      <View style={{ flex: 1 }} />
-      <View style={[styles.targetCta, { backgroundColor: demo ? FIXED.onDark : t.link }]}>
-        <Text style={type.strong(17, demo ? FIXED.onLight : t.onLink)}>{demo ? "See a scan" : "Scan a product"}</Text>
+    <View style={{ backgroundColor: surf.card, borderRadius: 24, overflow: "hidden" }} testID="scan-card">
+      <Pressable onPress={onPress} accessibilityRole="button" accessibilityLabel={demo ? "See the demo scan result" : "Open the camera and scan a product"} testID="scan-target">
+        <Image source={DEMO_PHOTO} style={{ width: "100%", height: 230 }} resizeMode="cover" accessibilityLabel="A plastic water bottle" />
+      </Pressable>
+      <View style={{ padding: space.l, gap: space.m }}>
+        <Text style={type.display(36, t.ink)}>Point at a product</Text>
+        <Text style={type.body(14, t.muted)}>Pans · containers · candles · bottles</Text>
+        <Button title={demo ? "See a scan" : "Scan a product"} onPress={onPress} testID="scan-go" />
       </View>
-    </Pressable>
+    </View>
   );
 }
 
@@ -322,8 +318,9 @@ function BackToScan({ onPress, color }: { onPress: () => void; color: string }) 
 /** A9: the confirm tap is made against a picture, not a word — a reference photo of the label sits on the chip. */
 function Chip({ label, note, photo, onPress }: { label: string; note?: string; photo?: number; onPress: () => void }) {
   const t = useTheme();
+  const surf = useSurface();
   return (
-    <Pressable onPress={onPress} accessibilityRole="button" accessibilityLabel={label} style={({ pressed }) => [styles.chip, { backgroundColor: pressed ? t.link : t.panel }]}>
+    <Pressable onPress={onPress} accessibilityRole="button" accessibilityLabel={label} style={({ pressed }) => [styles.chip, { backgroundColor: pressed ? t.link : surf.card }]}>
       {({ pressed }) => (
         <>
           {photo != null ? <Image source={photo} style={styles.chipImg} testID="chip-photo" accessibilityIgnoresInvertColors /> : null}

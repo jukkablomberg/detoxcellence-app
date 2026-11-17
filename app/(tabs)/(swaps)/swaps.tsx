@@ -8,8 +8,11 @@ import { type Driver } from "../../../src/lib/quiz";
 import { readDone, toggleDone } from "../../../src/lib/swaps-done";
 import { DEFAULT_SETTINGS, plan, readSettings, requestPermission, saveSettings, scheduledCount, WEEKDAYS, type ReminderSettings } from "../../../src/lib/reminders";
 import { hourLabel } from "../../../src/lib/locale";
-import { radius, space, type, useTheme } from "../../../src/lib/theme";
-import { BandPill, Body, Chip, Label, Screen, Tile } from "../../../src/ui/primitives";
+import { space, type, useTheme } from "../../../src/lib/theme";
+import { Body, Chip, Screen } from "../../../src/ui/primitives";
+import { Thumb, Tick } from "../../../src/ui/kit";
+import { rowPhoto } from "../../../src/lib/photos";
+import type { BandLabel } from "../../../src/lib/exposures";
 
 /**
  * Swaps — the weekly swap reminder (native value 2) and the swaps it will send, in order. The plan starts from the
@@ -31,9 +34,10 @@ export default function SwapsScreen() {
   );
 }
 
-/** [DX-MY-HOME] 2026-11-06: the Plan body, also drawn inside My home (`embedded`: no opener line — My home's result card
- *  above it is the source — and a "This week's swap" heading). */
-export function PlanSection({ embedded = false }: { embedded?: boolean }) {
+/** [DX-MY-HOME] 2026-11-06: the Plan body, also drawn inside My home. [DX-ROUND-1117] in the round kit: one card of rows
+ *  (photo or score tile · date · the swap · Instead of · a tick), the reminder as the card's first row. `skipFirst`: My home
+ *  already shows this week's swap on its own card, so the folded list starts at next week. */
+export function PlanSection({ embedded = false, skipFirst = false }: { embedded?: boolean; skipFirst?: boolean }) {
   const t = useTheme();
   const { list } = useIndex();
   const [s, setS] = useState<ReminderSettings>(DEFAULT_SETTINGS);
@@ -68,79 +72,72 @@ export function PlanSection({ embedded = false }: { embedded?: boolean }) {
     if (s.on) setHeld(await saveSettings(s)); // the schedule drops (or regains) the ticked swap
   };
 
-  const upcoming = plan(list, driver, s, new Date(), done);
+  const upcoming = plan(list, driver, s, new Date(), done).slice(skipFirst ? 1 : 0);
   const doneRows = list.filter((e) => done.includes(e.slug));
   const hours = [7, 8, 9, 10, 12, 17, 18, 19, 20];
   const fromCheck = driver !== null;
 
   return (
     <>
-      {embedded ? <Text style={type.strong(18, t.ink)} accessibilityRole="header">This week's swap</Text> : null}
       {embedded ? null : <View style={{ gap: space.xs }}>
-        <Body size={15}>Your highest-exposure items — one safer swap a week. Do it by Sunday, then tick it off.</Body>
-        <Pressable testID="plan-source" onPress={() => router.navigate("/score" as never)} accessibilityRole="button" style={{ minHeight: 32, justifyContent: "center" }}>
-          <Text style={type.body(13, t.link)}>{fromCheck ? "Built from your Home Check · Redo ›" : "Starter plan — take the Home Check to put your worst rooms first ›"}</Text>
+        <Body size={15}>One safer swap a week, worst first.</Body>
+        <Pressable testID="plan-source" onPress={() => router.navigate("/" as never)} accessibilityRole="button" style={{ minHeight: 32, justifyContent: "center" }}>
+          <Text style={type.body(13, t.link)}>{fromCheck ? "From your Home Check ›" : "Take the Home Check ›"}</Text>
         </Pressable>
       </View>}
 
-      <Tile>
-        <View style={{ flexDirection: "row", alignItems: "center", justifyContent: "space-between", gap: space.m }}>
+      <View style={{ gap: space.s }}>
+        <View style={{ flexDirection: "row", alignItems: "center", justifyContent: "space-between", gap: space.m, minHeight: 44 }}>
           <View style={{ flex: 1, gap: 2 }}>
-            <Text style={type.strong(16, t.ink)}>Remind me weekly</Text>
-            {s.on ? <Body muted size={13}>{`${WEEKDAYS[s.weekday - 1]} · ${hourLabel(s.hour)}`}</Body> : null}
+            <Text style={type.strong(15, t.ink)}>Remind me weekly</Text>
+            {s.on ? <Body muted size={13}>{`${WEEKDAYS[s.weekday - 1]} · ${hourLabel(s.hour)}${Platform.OS !== "web" ? ` · ${held} scheduled` : ""}`}</Body> : null}
           </View>
           <Switch testID="reminder-switch" value={s.on} onValueChange={(on) => void apply({ ...s, on })} trackColor={{ true: t.link, false: t.track }} accessibilityLabel="Weekly swap reminder" />
         </View>
         {note ? <Body size={13}>{note}</Body> : null}
         {s.on ? (
           <>
-            <ScrollView horizontal showsHorizontalScrollIndicator={false} style={{ marginHorizontal: -space.l }} contentContainerStyle={{ gap: space.s, paddingHorizontal: space.l }}>
+            <ScrollView horizontal showsHorizontalScrollIndicator={false} contentContainerStyle={{ gap: space.s }}>
               {WEEKDAYS.map((d, i) => (
                 <Chip key={d} title={d.slice(0, 3)} on={s.weekday === i + 1} onPress={() => void apply({ ...s, weekday: i + 1 })} testID={`day-${i + 1}`} />
               ))}
             </ScrollView>
-            <ScrollView horizontal showsHorizontalScrollIndicator={false} style={{ marginHorizontal: -space.l }} contentContainerStyle={{ gap: space.s, paddingHorizontal: space.l }}>
+            <ScrollView horizontal showsHorizontalScrollIndicator={false} contentContainerStyle={{ gap: space.s }}>
               {hours.map((h) => (
                 <Chip key={h} title={hourLabel(h)} on={s.hour === h} onPress={() => void apply({ ...s, hour: h })} testID={`hour-${h}`} />
               ))}
             </ScrollView>
-            {Platform.OS !== "web" ? <Body muted size={13} style={{ fontVariant: ["tabular-nums"] }}>{held} scheduled</Body> : null}
           </>
         ) : null}
-      </Tile>
+      </View>
 
-      <View style={{ gap: space.s }}>
+      <View style={{ gap: space.m }}>
         {upcoming.map(({ date, entry }) => (
-          <SwapCard key={date.toISOString()} entry={entry} kicker={`${date.toLocaleDateString(undefined, { weekday: "short", day: "numeric", month: "short" })} · Swap`} done={false} onTick={() => void tick(entry.slug)} />
+          <SwapRow key={date.toISOString()} entry={entry} kicker={date.toLocaleDateString(undefined, { weekday: "short", day: "numeric", month: "short" })} done={false} onTick={() => void tick(entry.slug)} />
         ))}
         {doneRows.map((entry) => (
-          <SwapCard key={`done-${entry.slug}`} entry={entry} kicker="Done · Swap" done onTick={() => void tick(entry.slug)} />
+          <SwapRow key={`done-${entry.slug}`} entry={entry} kicker="Done" done onTick={() => void tick(entry.slug)} />
         ))}
       </View>
     </>
   );
 }
 
-type CardEntry = { slug: string; name: string; swap: string; room: string; older_home?: boolean; band: Parameters<typeof BandPill>[0]["band"]; score: number };
+type CardEntry = { slug: string; name: string; swap: string; room: string; older_home?: boolean; band: BandLabel; score: number };
 
-function SwapCard({ entry, kicker, done, onTick }: { entry: CardEntry; kicker: string; done: boolean; onTick: () => void }) {
+function SwapRow({ entry, kicker, done, onTick }: { entry: CardEntry; kicker: string; done: boolean; onTick: () => void }) {
   const t = useTheme();
   return (
-    <View style={{ backgroundColor: t.panel, borderRadius: radius.card, padding: space.l, gap: 6, opacity: done ? 0.55 : 1, flexDirection: "row", alignItems: "flex-start" }}>
-      <Pressable testID={`swap-${entry.slug}`} onPress={() => openEntry(entry.slug)} accessibilityRole="button" style={({ pressed }) => ({ flex: 1, gap: 4, opacity: pressed ? 0.8 : 1 })}>
-        <View style={{ flexDirection: "row", justifyContent: "space-between", gap: space.m }}>
-          <View style={{ flex: 1, gap: 2 }}>
-            <Label>{kicker}</Label>
-            <Text style={type.body(12, t.muted)}>{entry.older_home ? `${entry.room} · Older homes` : entry.room}</Text>
-          </View>
-          <BandPill band={entry.band} score={entry.score} />
+    <View style={{ flexDirection: "row", alignItems: "center", gap: space.m, opacity: done ? 0.55 : 1 }}>
+      <Pressable testID={`swap-${entry.slug}`} onPress={() => openEntry(entry.slug)} accessibilityRole="button" style={({ pressed }) => ({ flex: 1, flexDirection: "row", gap: space.m, alignItems: "center", opacity: pressed ? 0.8 : 1 })}>
+        <Thumb photo={rowPhoto(entry.slug)} score={entry.score} band={entry.band} size={48} />
+        <View style={{ flex: 1, gap: 1 }}>
+          <Text style={type.label(t.muted)}>{kicker}</Text>
+          <Text style={[type.strong(15, t.ink), done ? { textDecorationLine: "line-through" } : null]} numberOfLines={2}>{entry.swap}</Text>
+          <Text style={type.body(12, t.muted)} numberOfLines={1}>{`Instead of ${entry.name}`}</Text>
         </View>
-        <Text style={[type.strong(16, t.ink), done ? { textDecorationLine: "line-through" } : null]}>{entry.swap}</Text>
-        <Body muted size={13}>{`Instead of ${entry.name}`}</Body>
       </Pressable>
-      <Pressable testID={`done-${entry.slug}`} onPress={onTick} accessibilityRole="checkbox" accessibilityState={{ checked: done }} accessibilityLabel={`Done: ${entry.swap}`} hitSlop={8} style={{ marginLeft: space.m, marginTop: 2, width: 28, height: 28, borderRadius: 14, borderWidth: 2, borderColor: done ? t.link : t.muted, backgroundColor: done ? t.link : "transparent", alignItems: "center", justifyContent: "center" }}>
-        {done ? <Text style={type.strong(15, t.onLink)}>✓</Text> : null}
-      </Pressable>
+      <Tick on={done} onPress={onTick} a11y={`Done: ${entry.swap}`} testID={`done-${entry.slug}`} />
     </View>
   );
 }

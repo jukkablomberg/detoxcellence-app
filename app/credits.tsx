@@ -3,6 +3,7 @@ import venture from "../venture.json";
 import { labelPhotoCredits } from "../modules/health-camera";
 import { getIndex } from "../src/lib/exposures";
 import { LENS } from "../src/lib/lens";
+import { ROOM_PHOTO_CREDITS } from "../src/lib/photos";
 import { openOutbound } from "../src/lib/outbound";
 import { space, type, useTheme } from "../src/lib/theme";
 import { Body, Label, Screen, Tile } from "../src/ui/primitives";
@@ -15,14 +16,18 @@ const short = (url: string) => url.replace(/^https?:\/\/(www\.)?/, "");
  * data & records in about section?"). The obligations moved off About, never deleted: the CC BY credits for the
  * "Is it…" chip photos (scripts/check-label-photos.mjs), the methodology version, the open data and the site.
  * Reached from the last row of Settings — the one screen in the app whose job is to point at the record.
+ * [DX-ROUND-1117] + the room photos (assets/rooms/credits.json: CC0 / public domain) and the record's DOI.
  */
 export default function Credits() {
   const t = useTheme();
-  const v = getIndex().doc.version;
+  const doc = getIndex().doc;
+  const v = doc.version;
+  // [DX-ROUND-1117] the record's DOI, read from the export's own citation line (Zenodo, 1.8.0+) — never typed here.
+  const doi = /doi\.org\/(\S+?)\.?(\s|$)/.exec(doc.citation ?? "")?.[1];
   const credits = labelPhotoCredits.filter((c) => LENS[c.id]);
   const rows = [
     { label: "Methodology", sub: `v${v}`, url: web("/methodology.html"), placement: "credits-methodology" },
-    { label: "Open data", sub: "CC BY 4.0", url: web("/data/export/exposures.json"), placement: "credits-data" },
+    { label: "Open data", sub: doi ? `CC BY 4.0 · doi:${doi}` : "CC BY 4.0", url: doi ? `https://doi.org/${doi}` : web("/data/export/exposures.json"), placement: "credits-data" },
     { label: venture.domain, sub: "The full Index", url: web("/"), placement: "credits-site" },
   ];
   return (
@@ -49,6 +54,12 @@ export default function Credits() {
           </Tile>
         </>
       ) : null}
+      <Label style={{ marginTop: space.s }}>Room photos</Label>
+      <Tile>
+        {ROOM_PHOTO_CREDITS.map((c) => (
+          <Body key={c.id} muted size={13}>{`${c.id}: ${c.author}, ${c.licence}, ${short(c.source)}`}</Body>
+        ))}
+      </Tile>
     </Screen>
   );
 }

@@ -1,19 +1,21 @@
 import type { PropsWithChildren, ReactNode } from "react";
-import { Pressable, ScrollView, Text, View, type StyleProp, type TextStyle, type ViewStyle } from "react-native";
+import { Platform, Pressable, ScrollView, Text, View, type StyleProp, type TextStyle, type ViewStyle } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import type { BandLabel } from "../lib/exposures";
 import { palettes, radius, space, type, useTheme, FIXED } from "../lib/theme";
+import { useSurface } from "./kit";
 
-/** A screen: white ground, safe-area bottom. */
+/** A screen: [DX-ROUND-1117] the surface ground (cards sit on it), safe-area bottom; the last control clears the iOS 26
+ *  floating tab bar (APP-STANDARD: insets.bottom + 60, ROUND-RUNBOOK 11-16). */
 export function Screen({ children, testID }: PropsWithChildren<{ testID?: string }>) {
-  const t = useTheme();
+  const s = useSurface();
   const insets = useSafeAreaInsets();
   return (
     <ScrollView
       testID={testID}
-      style={{ flex: 1, backgroundColor: t.ground }}
+      style={{ flex: 1, backgroundColor: s.bg }}
       contentInsetAdjustmentBehavior="automatic"
-      contentContainerStyle={{ padding: space.l, paddingBottom: insets.bottom + space.xxxl, gap: space.m }}
+      contentContainerStyle={{ padding: space.l, paddingBottom: insets.bottom + space.xxxl + (Platform.OS === "ios" ? 60 : 0), gap: space.m }}
       keyboardShouldPersistTaps="handled"
     >
       {children}
@@ -21,10 +23,10 @@ export function Screen({ children, testID }: PropsWithChildren<{ testID?: string
   );
 }
 
-/** Integrity tile: #F4F4F4 on white, rounded, no border, no shadow (DESIGN.md § Components). */
+/** Integrity tile, rounded, no border, no shadow (DESIGN.md § Components) — [DX-ROUND-1117] the card surface (white on #F4F4F4). */
 export function Tile({ children, onPress, style, testID, label }: PropsWithChildren<{ onPress?: () => void; style?: StyleProp<ViewStyle>; testID?: string; label?: string }>) {
-  const t = useTheme();
-  const base: ViewStyle = { backgroundColor: t.panel, borderRadius: radius.card, padding: space.l, gap: space.s };
+  const s = useSurface();
+  const base: ViewStyle = { backgroundColor: s.card, borderRadius: 20, padding: space.l, gap: space.s };
   if (!onPress) return <View testID={testID} style={[base, style]}>{children}</View>;
   return (
     <Pressable testID={testID} onPress={onPress} accessibilityRole="button" accessibilityLabel={label} style={({ pressed }) => [base, style, { opacity: pressed ? 0.8 : 1 }]}>
@@ -56,6 +58,7 @@ export function Label({ children, style }: PropsWithChildren<{ style?: StyleProp
 /** Content button: a pill (the venture's shape), ≥ 48 high, pressed + disabled states, a verb for a label. */
 export function Button({ title, onPress, kind = "primary", disabled, testID, icon }: { title: string; onPress: () => void; kind?: "primary" | "secondary"; disabled?: boolean; testID?: string; icon?: ReactNode }) {
   const t = useTheme();
+  const surf = useSurface();
   const primary = kind === "primary";
   return (
     <Pressable
@@ -72,7 +75,7 @@ export function Button({ title, onPress, kind = "primary", disabled, testID, ico
         justifyContent: "center",
         flexDirection: "row",
         gap: space.s,
-        backgroundColor: primary ? t.link : t.panel,
+        backgroundColor: primary ? t.link : surf.card,
         opacity: disabled ? 0.45 : pressed ? 0.82 : 1,
       })}
     >
@@ -85,6 +88,7 @@ export function Button({ title, onPress, kind = "primary", disabled, testID, ico
 /** A filter chip (pill). */
 export function Chip({ title, on, onPress, testID }: { title: string; on: boolean; onPress: () => void; testID?: string }) {
   const t = useTheme();
+  const surf = useSurface();
   return (
     <Pressable
       testID={testID}
@@ -96,7 +100,7 @@ export function Chip({ title, on, onPress, testID }: { title: string; on: boolea
         paddingHorizontal: space.m,
         borderRadius: radius.pill,
         justifyContent: "center",
-        backgroundColor: on ? t.link : t.panel,
+        backgroundColor: on ? t.link : surf.card,
         opacity: pressed ? 0.8 : 1,
       })}
     >

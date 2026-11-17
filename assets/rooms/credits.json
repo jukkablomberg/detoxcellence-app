@@ -1,0 +1,61 @@
+{
+ "_note": "[DX-ROUND-1117] Room photos for the Detoxcellence app (My home, the Index room tiles, the Home Check). CC0 / public domain only, from Wikimedia Commons; 'older' is EPA's vermiculite photo the site already uses (/older-homes/is-this-vermiculite/). Credited in Settings > Credits & data. Never shown as evidence of a rating.",
+ "photos": {
+  "kitchen": {
+   "file": "rooms/kitchen.jpg",
+   "title": "Blue white kitchen interior (Unsplash).jpg",
+   "author": "NeONBRAND neonbrand",
+   "licence": "CC0",
+   "source": "https://commons.wikimedia.org/wiki/File:Blue_white_kitchen_interior_(Unsplash).jpg"
+  },
+  "living": {
+   "file": "rooms/living.jpg",
+   "title": "At Home (Unsplash).jpg",
+   "author": "Naomi Hébert naomish",
+   "licence": "CC0",
+   "source": "https://commons.wikimedia.org/wiki/File:At_Home_(Unsplash).jpg"
+  },
+  "laundry": {
+   "file": "rooms/laundry.jpg",
+   "title": "Laundry room (tvättstuga).JPG",
+   "author": "Bluescan sv.wiki",
+   "licence": "Public domain",
+   "source": "https://commons.wikimedia.org/wiki/File:Laundry_room_(tv%C3%A4ttstuga).JPG"
+  },
+  "attic": {
+   "file": "rooms/attic.jpg",
+   "title": "Pine Attic - 01 (Poly Haven).jpg",
+   "author": "Sergej Majboroda",
+   "licence": "CC0",
+   "source": "https://commons.wikimedia.org/wiki/File:Pine_Attic_-_01_(Poly_Haven).jpg"
+  },
+  "garden": {
+   "file": "rooms/garden.jpg",
+   "title": "Kitchen garden at Los Poblanos.jpg",
+   "author": "PralineCoffee",
+   "licence": "CC0",
+   "source": "https://commons.wikimedia.org/wiki/File:Kitchen_garden_at_Los_Poblanos.jpg"
+  },
+  "home": {
+   "file": "rooms/home.jpg",
+   "title": "Afternoon light (Unsplash).jpg",
+   "author": "Daiga Ellaby daiga_ellaby",
+   "licence": "CC0",
+   "source": "https://commons.wikimedia.org/wiki/File:Afternoon_light_(Unsplash).jpg"
+  },
+  "water": {
+   "file": "rooms/water.jpg",
+   "title": "Water on tap (Unsplash).jpg",
+   "author": "Luis Tosta luis_tosta",
+   "licence": "CC0",
+   "source": "https://commons.wikimedia.org/wiki/File:Water_on_tap_(Unsplash).jpg"
+  },
+  "older": {
+   "file": "rooms/older.jpg",
+   "title": "Vermiculite insulation between attic joists (EPA photo 2 of 5)",
+   "author": "US EPA",
+   "licence": "Public domain",
+   "source": "https://www.epa.gov/sites/production/files/2013-06/vermiculite2.jpg"
+  }
+ }
+}
