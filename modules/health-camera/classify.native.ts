@@ -47,7 +47,10 @@ function load(): Promise<InferenceSession> {
       const asset = Asset.fromModule(MODEL);
       await asset.downloadAsync();
       const uri = asset.localUri ?? asset.uri;
-      return Session.create(uri.replace(/^file:\/\//, ""));
+      // [HT-CAMERA-PATH-1117] a file URI is percent-encoded ("Application%20Support"): once an OTA update carries the
+      // model, it lives under Library/Application Support/.expo-internal and ONNX Runtime was handed the literal "%20"
+      // (SnapStress, Jukka's phone 11-17: "Load model from …/Application%20Support/… failed"). Decode before loading.
+      return Session.create(decodeURIComponent(uri.replace(/^file:\/\//, "")));
     })();
     session.catch(() => {
       session = null;
