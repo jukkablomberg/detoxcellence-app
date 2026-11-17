@@ -36,3 +36,8 @@ that carried the change. This file is the dated record Apple's review asks for �
 **Not done:** "My home" (proposal card 1) is not built; card 1 crops the Index (worst first) instead.
 
 **2026-11-06 (critic, intros B):** Card 1 "See what in your home matters most"; crops start below the tab switch and end on a row; card 3 is now the scan result of the app's own sample photo, line "Scan a product, see its score".
+
+## 2026-11-17 — `rounds: detoxcellence` (Jukka, CoS session) → commit 18b6443, OTA pending his word
+**Jukka:** "looks visually weak and has too much text, like SnapStress and FatTonic did before their rounds … verdict first, rounded cards, real photos, clear navigation, one job per tab." (His screenshots did not reach the session; the before frames are the web export.)
+**Changed:** see the commit — My home verdict card + one swap + room photo tiles + checks chart; Home Check look; Index photo tiles; entry verdict-first; Scan photo card; room photos CC0/PD credited; Index data 1.8.0 (DOI). Word budget: score 44→20 (welcome+question 20 in src/ui/home-check.tsx), entry 10, index 17, scan 115→53 (still over). Tests 28/28.
+**Sheet:** `projects/app-stores/contact-sheets/detoxcellence-2026-11-17-round1.png` (before · after light · en-US · dark). No independent critic ran (as FatTonic 11-16): Jukka's phone round is the review.
