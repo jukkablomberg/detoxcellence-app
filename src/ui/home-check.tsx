@@ -1,5 +1,6 @@
 import { Image, Pressable, Text, View } from "react-native";
 import { HOME_PHOTO, checkRoomPhoto } from "../lib/photos";
+import { openVermiculite } from "../lib/nav";
 import { QUESTIONS, ROOMS } from "../lib/quiz";
 import { fonts, space, type } from "../lib/theme";
 import { Button, Screen } from "./primitives";
@@ -57,6 +58,11 @@ export function Question({ i, onAnswer, onBack, onCancel }: { i: number; onAnswe
       {why ? (
         <View style={{ backgroundColor: s.sunk, borderRadius: 14, padding: space.m }}>
           <Text style={type.body(14, s.t.ink2)}><Text style={{ fontFamily: fonts.heading }}>Why we ask · </Text>{why}</Text>
+          {/is-this-vermiculite/.test(q.sub) ? (
+            <Pressable onPress={openVermiculite} accessibilityRole="button" testID="quiz-vermiculite" style={{ marginTop: space.s, alignSelf: "flex-start", backgroundColor: s.card, borderRadius: 999, paddingHorizontal: 14, paddingVertical: 8 }}>
+              <Text style={type.strong(14, s.t.link)}>See EPA's photos ›</Text>
+            </Pressable>
+          ) : null}
         </View>
       ) : null}
       <View style={{ gap: space.s }}>

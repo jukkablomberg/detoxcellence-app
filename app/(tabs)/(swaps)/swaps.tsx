@@ -8,9 +8,13 @@ import { type Driver } from "../../../src/lib/quiz";
 import { readDone, toggleDone } from "../../../src/lib/swaps-done";
 import { DEFAULT_SETTINGS, plan, readSettings, requestPermission, saveSettings, scheduledCount, WEEKDAYS, type ReminderSettings } from "../../../src/lib/reminders";
 import { hourLabel } from "../../../src/lib/locale";
-import { space, type, useTheme } from "../../../src/lib/theme";
-import { Body, Chip, Screen } from "../../../src/ui/primitives";
-import { Thumb, Tick } from "../../../src/ui/kit";
+import { fonts, palettes, space, type, useTheme } from "../../../src/lib/theme";
+import { clearHistory, newestFirst, readHistory, type HistoryEntry } from "../../../src/lib/history";
+import { indexRoomFor, QUESTIONS, ROOMS, scoreBand, scoreQuiz } from "../../../src/lib/quiz";
+import { hasSwap } from "../../../src/lib/score";
+import { Checks } from "../../../src/ui/progress";
+import { Body, Button, Chip, Screen } from "../../../src/ui/primitives";
+import { Card, ScoreDial, SectionTitle, Thumb, Tick, useSurface } from "../../../src/ui/kit";
 import { rowPhoto } from "../../../src/lib/photos";
 import type { BandLabel } from "../../../src/lib/exposures";
 
@@ -25,14 +29,92 @@ import type { BandLabel } from "../../../src/lib/exposures";
  * choice in bold, "Instead of <item>" muted); truly worst-first; a Done tick per card (src/lib/swaps-done.ts) — done
  * cards sink, muted; one provenance line (Home Check · Redo, or Starter plan); the reminder is a compact row right
  * under the opener, day/time chips only while it is on.
+ * [DX-ROUND2-1117] (Jukka 11-17: "there also need to be some kind of my progress tab") — the tab is back as MY PROGRESS,
+ * the SnapStress shape: where you are now (dial, change since your first check, swaps done, re-check), your checks over
+ * time, each room's number and its swaps-done bar, then the plan and the reminder. Built only from this phone's checks
+ * and ticks; nothing estimated.
  */
 export default function SwapsScreen() {
+  const { list } = useIndex();
+  const sf = useSurface();
+  const [history, setHistory] = useState<HistoryEntry[]>([]);
+  const [done, setDone] = useState<string[]>([]);
+  useFocusEffect(
+    useCallback(() => {
+      void readHistory().then((h) => setHistory(newestFirst(h)));
+      void readDone().then(setDone);
+    }, []),
+  );
+  const scored = history.filter((h) => h.answers?.length === QUESTIONS.length).map((h) => ({ at: h.at, r: scoreQuiz(h.answers) }));
+  const latest = scored[0];
+  const first = scored[scored.length - 1];
+  const checkAgain = () => router.navigate({ pathname: "/", params: { check: "1", t: String(Date.now()) } } as never);
+
+  if (!latest) {
+    return (
+      <Screen testID="progress-empty">
+        <Card style={{ alignItems: "center", gap: space.m, paddingVertical: space.xl }}>
+          <ScoreDial pct={0} color={sf.sunk} caption="no check yet" />
+          <Button title="Check your home · 3 min" onPress={checkAgain} testID="progress-start" />
+        </Card>
+      </Screen>
+    );
+  }
+
+  const change = latest.r.pct - first.r.pct;
+  const swapRows = list.filter(hasSwap);
+  const doneN = swapRows.filter((e) => done.includes(e.slug)).length;
   return (
-    <Screen testID="swaps">
-      <PlanSection />
+    <Screen testID="progress">
+      <Card testID="progress-now" style={{ gap: space.m }}>
+        <View style={{ flexDirection: "row", alignItems: "center", gap: space.l }}>
+          <ScoreDial pct={latest.r.pct} color={palettes.light.band[scoreBand(latest.r.pct)]} />
+          <View style={{ flex: 1, gap: space.s }}>
+            <Text style={{ fontFamily: fonts.display, fontSize: 44, lineHeight: 46, color: sf.t.ink }}>{scored.length > 1 ? `${change > 0 ? "+" : change < 0 ? "−" : ""}${Math.abs(change)}` : "1st"}</Text>
+            <Text style={type.body(14, sf.t.muted)}>{scored.length > 1 ? `since ${day(first.at)} · ${scored.length} checks` : `check · ${day(latest.at)}`}</Text>
+            <Text style={type.strong(14, sf.t.ink)}>{`${doneN} ${doneN === 1 ? "swap" : "swaps"} done`}</Text>
+          </View>
+        </View>
+        <Button title={`Re-check ${day(latest.at + 28 * 864e5)}`} kind="secondary" onPress={checkAgain} testID="progress-recheck" />
+      </Card>
+
+      {scored.length > 1 ? <Checks history={history} /> : null}
+
+      <SectionTitle>Rooms</SectionTitle>
+      <Card testID="progress-rooms" style={{ gap: space.m }}>
+        {latest.r.report.map((row) => {
+          const where = indexRoomFor(row.k);
+          const rows = swapRows.filter((e) => (where.olderHome ? e.older_home === true : e.room === where.room));
+          const n = rows.filter((e) => done.includes(e.slug)).length;
+          const prev = scored.length > 1 ? first.r.report.find((x) => x.k === row.k)?.pct ?? null : null;
+          return (
+            <View key={row.k} style={{ gap: 6 }}>
+              <View style={{ flexDirection: "row", alignItems: "baseline", gap: space.s }}>
+                <Text style={[type.strong(15, sf.t.ink), { flex: 1 }]}>{ROOMS[row.k].label}</Text>
+                {prev != null && prev !== row.pct ? <Text style={type.body(12, sf.t.muted)}>{`${prev} →`}</Text> : null}
+                <Text style={{ fontFamily: fonts.display, fontSize: 24, lineHeight: 26, color: palettes.light.band[scoreBand(row.pct)] }}>{row.pct}</Text>
+              </View>
+              <View style={{ height: 8, borderRadius: 4, backgroundColor: sf.sunk, overflow: "hidden" }} accessibilityLabel={`${ROOMS[row.k].label}: ${n} of ${Math.min(3, rows.length)} swaps done`}>
+                <View style={{ width: `${Math.min(1, n / Math.max(1, Math.min(3, rows.length))) * 100}%`, height: 8, backgroundColor: sf.t.link }} />
+              </View>
+            </View>
+          );
+        })}
+      </Card>
+
+      <SectionTitle>Your plan</SectionTitle>
+      <Card style={{ gap: space.m }}>
+        <PlanSection embedded />
+      </Card>
+
+      <Pressable onPress={async () => { await clearHistory(); setHistory([]); }} accessibilityRole="button" style={{ minHeight: 44, justifyContent: "center", alignSelf: "center" }} testID="clear-history">
+        <Text style={type.body(13, sf.t.muted)}>Clear history</Text>
+      </Pressable>
     </Screen>
   );
 }
+
+const day = (ms: number) => new Date(ms).toLocaleDateString(undefined, { day: "numeric", month: "short" });
 
 /** [DX-MY-HOME] 2026-11-06: the Plan body, also drawn inside My home. [DX-ROUND-1117] in the round kit: one card of rows
  *  (photo or score tile · date · the swap · Instead of · a tick), the reminder as the card's first row. `skipFirst`: My home
@@ -73,18 +155,11 @@ export function PlanSection({ embedded = false, skipFirst = false }: { embedded?
   };
 
   const upcoming = plan(list, driver, s, new Date(), done).slice(skipFirst ? 1 : 0);
-  const doneRows = list.filter((e) => done.includes(e.slug));
+  const doneRows = list.filter((e) => done.includes(e.slug) && hasSwap(e));
   const hours = [7, 8, 9, 10, 12, 17, 18, 19, 20];
-  const fromCheck = driver !== null;
 
   return (
     <>
-      {embedded ? null : <View style={{ gap: space.xs }}>
-        <Body size={15}>One safer swap a week, worst first.</Body>
-        <Pressable testID="plan-source" onPress={() => router.navigate("/" as never)} accessibilityRole="button" style={{ minHeight: 32, justifyContent: "center" }}>
-          <Text style={type.body(13, t.link)}>{fromCheck ? "From your Home Check ›" : "Take the Home Check ›"}</Text>
-        </Pressable>
-      </View>}
 
       <View style={{ gap: space.s }}>
         <View style={{ flexDirection: "row", alignItems: "center", justifyContent: "space-between", gap: space.m, minHeight: 44 }}>

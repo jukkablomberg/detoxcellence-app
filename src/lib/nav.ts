@@ -25,3 +25,11 @@ export function openRoom(room: string | null, olderHome = false): void {
 export function openAisle(cat: string | null): void {
   router.navigate({ pathname: "/the-index", params: { cat: cat ?? "", t: String(Date.now()) } } as never);
 }
+
+/** [DX-ROUND2-1117] The two reader tools, shared routes under every tab group (the tab bar stays). */
+export function openVermiculite(): void {
+  router.push("/vermiculite" as never);
+}
+export function openWaterFilter(): void {
+  router.push("/water-filter" as never);
+}

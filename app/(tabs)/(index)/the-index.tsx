@@ -1,5 +1,5 @@
 import { useLocalSearchParams } from "expo-router";
-import { openEntry } from "../../../src/lib/nav";
+import { openEntry, openVermiculite, openWaterFilter } from "../../../src/lib/nav";
 import { useEffect, useMemo, useState } from "react";
 import { FlatList, Image, Pressable, ScrollView, Text, TextInput, View } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
@@ -145,6 +145,8 @@ function Row({ e }: { e: Entry }) {
 function PickBanner({ pick, n, onClear }: { pick: Pick; n: number; onClear: () => void }) {
   const surf = useSurface();
   const title = pick.kind === "room" ? pick.room : pick.kind === "pfas" ? "PFAS at home" : pick.kind === "older" ? "Older homes" : pick.kind === "cat" ? pick.cat : "";
+  // [DX-ROUND2-1117] each door opens its reader's tool: Older homes → "Is this vermiculite?", PFAS / Water → the filter check.
+  const tool = pick.kind === "older" ? { title: "Is this vermiculite?", go: openVermiculite } : pick.kind === "pfas" || (pick.kind === "room" && pick.room === "Water") ? { title: "Is my filter certified?", go: openWaterFilter } : null;
   const photo = pick.kind === "room" ? indexRoomPhoto(pick.room) : pick.kind === "pfas" ? DOOR_PHOTO.pfas : pick.kind === "older" ? DOOR_PHOTO.older : undefined;
   return (
     <View style={{ backgroundColor: surf.card, borderRadius: 20, overflow: "hidden" }} testID="pick-banner">
@@ -156,6 +158,12 @@ function PickBanner({ pick, n, onClear }: { pick: Pick; n: number; onClear: () =
           <Text style={type.strong(15, surf.t.ink)}>✕</Text>
         </Pressable>
       </View>
+      {tool ? (
+        <Pressable onPress={tool.go} accessibilityRole="button" testID="banner-tool" style={({ pressed }) => ({ flexDirection: "row", alignItems: "center", gap: space.s, marginHorizontal: space.m, marginBottom: space.m, backgroundColor: surf.t.link, borderRadius: 999, paddingHorizontal: space.l, minHeight: 44, opacity: pressed ? 0.85 : 1 })}>
+          <Text style={[type.strong(15, surf.t.onLink), { flex: 1 }]}>{tool.title}</Text>
+          <Text style={type.strong(17, surf.t.onLink)}>›</Text>
+        </Pressable>
+      ) : null}
     </View>
   );
 }

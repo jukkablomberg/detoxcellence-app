@@ -1,19 +1,19 @@
-import { useFocusEffect } from "expo-router";
-import { useCallback, useState } from "react";
+import { useFocusEffect, useLocalSearchParams } from "expo-router";
+import { useCallback, useEffect, useState } from "react";
 import { Pressable, Text, View } from "react-native";
-import { useIndex } from "../../../src/lib/exposures";
-import { appendHistory, clearHistory, newestFirst, readHistory, type HistoryEntry } from "../../../src/lib/history";
-import { openEntry, openRoom } from "../../../src/lib/nav";
+import { bySlug, useIndex } from "../../../src/lib/exposures";
+import { pfasFromAnswers, waterOpen } from "../../../src/lib/pfas-home";
+import { appendHistory, newestFirst, readHistory, type HistoryEntry } from "../../../src/lib/history";
+import { openEntry, openRoom, openVermiculite, openWaterFilter } from "../../../src/lib/nav";
 import { checkRoomPhoto, rowPhoto } from "../../../src/lib/photos";
 import { indexRoomFor, QUESTIONS, ROOMS, scoreBand, scoreQuiz, type Result, type RoomKey } from "../../../src/lib/quiz";
 import { DEFAULT_SETTINGS, plan, readSettings, refillReminder } from "../../../src/lib/reminders";
 import { readDone, toggleDone } from "../../../src/lib/swaps-done";
 import { hasSwap } from "../../../src/lib/score";
-import { palettes, radius, space, type, useTheme, FIXED } from "../../../src/lib/theme";
+import { fonts, palettes, radius, space, type, useTheme, FIXED } from "../../../src/lib/theme";
 import { Button, Screen } from "../../../src/ui/primitives";
-import { Card, Expander, Grid2, PhotoTile, ScoreDial, SectionTitle, Thumb, Tick, useSurface } from "../../../src/ui/kit";
+import { Card, CardList, CardRow, Grid2, PhotoTile, ScoreDial, SectionTitle, Thumb, Tick, VerdictPill, useSurface } from "../../../src/ui/kit";
 import { Question, Welcome } from "../../../src/ui/home-check";
-import { PlanSection } from "../(swaps)/swaps";
 
 /** [DX-MY-HOME] re-check cadence: the loop asks again four weeks after the latest check. */
 const RECHECK_DAYS = 28;
@@ -29,6 +29,9 @@ type Mode = { k: "home" } | { k: "quiz"; i: number; answers: number[] };
  * swaps-done dots → the checks over time. The rest of the plan folds under "Next swaps".
  * The Home Check is the site's twelve questions scored by the site's rules (src/lib/quiz.ts, parity-tested) — unchanged;
  * the test now has a room photo per question, a "Why we ask" card, answer cards that move on by themselves, Back.
+ * [DX-ROUND2-1117] My Exposure (Jukka 11-17): + "PFAS in your home" — the Index's PFAS rows the reader's own answers name
+ * (src/lib/pfas-home.ts) and the filter check when they drink unfiltered/carbon/well water; Older house opens "Is this
+ * vermiculite?"; the checks chart, the plan and Clear history moved to My Progress.
  */
 export default function ScoreScreen() {
   const [mode, setMode] = useState<Mode>({ k: "home" });
@@ -37,6 +40,8 @@ export default function ScoreScreen() {
   const [settings, setSettings] = useState(DEFAULT_SETTINGS);
   const { list } = useIndex();
   const t = useTheme();
+  const params = useLocalSearchParams<{ check?: string; t?: string }>();
+  useEffect(() => { if (params.check === "1" && params.t) setMode({ k: "quiz", i: 0, answers: [] }); }, [params.check, params.t]);
 
   useFocusEffect(
     useCallback(() => {
@@ -71,11 +76,37 @@ export default function ScoreScreen() {
 
   const prev = history[1]?.answers?.length === QUESTIONS.length ? scoreQuiz(history[1].answers) : null;
   const week = plan(list, latest.driver, settings, new Date(), done)[0]?.entry;
+  const pfas = pfasFromAnswers(history[0].answers, bySlug);
+  const water = waterOpen(history[0].answers);
   const tick = async (slug: string) => setDone(await toggleDone(slug));
 
   return (
     <Screen testID="score-home">
       <Verdict r={latest} at={history[0].at} delta={prev ? latest.pct - prev.pct : null} />
+
+      {pfas.length ? (
+        <>
+          <SectionTitle right={<Text style={{ fontFamily: fonts.display, fontSize: 28, lineHeight: 30, color: t.ink }}>{pfas.length}</Text>}>PFAS in your home</SectionTitle>
+          <CardList>
+            {pfas.map((e) => (
+              <CardRow key={e.slug} onPress={() => openEntry(e.slug)} testID={`pfas-${e.slug}`} label={`${e.name}, Detox Score ${e.score}`}>
+                <Thumb photo={rowPhoto(e.slug)} score={e.score} band={e.band} size={48} />
+                <Text style={[type.strong(15, t.ink), { flex: 1 }]} numberOfLines={2}>{e.name}</Text>
+                <VerdictPill band={e.band} small />
+              </CardRow>
+            ))}
+            {water ? (
+              <CardRow onPress={openWaterFilter} testID="pfas-filter-check">
+                <View style={{ width: 48, height: 48, borderRadius: 14, backgroundColor: t.link, alignItems: "center", justifyContent: "center" }}>
+                  <Text style={type.strong(20, t.onLink)}>?</Text>
+                </View>
+                <Text style={[type.strong(15, t.link), { flex: 1 }]}>Is my filter certified?</Text>
+                <Text style={type.heading(18, t.muted)}>›</Text>
+              </CardRow>
+            ) : null}
+          </CardList>
+        </>
+      ) : null}
 
       {week ? (
         <>
@@ -89,9 +120,6 @@ export default function ScoreScreen() {
               <Tick on={done.includes(week.slug)} onPress={() => void tick(week.slug)} a11y={`Done: ${week.swap}`} testID={`done-${week.slug}`} />
             </View>
           </Card>
-          <Expander title="Next swaps" testID="next-swaps">
-            <PlanSection embedded skipFirst />
-          </Expander>
         </>
       ) : null}
 
@@ -111,20 +139,13 @@ export default function ScoreScreen() {
               figureColor={palettes.light.band[scoreBand(row.pct)]}
               sub={row.bandLabel.split(" — ")[0]}
               dots={{ done: Math.min(of, rows.filter((e) => done.includes(e.slug)).length), of }}
-              onPress={() => openRoom(where.room, where.olderHome)}
+              onPress={() => (row.k === "older" && row.band !== "fine" ? openVermiculite() : openRoom(where.room, where.olderHome))}
             />
           );
         })}
       </Grid2>
 
-      {history.length > 1 ? <Checks history={history} /> : null}
-
       <Button testID="start-quiz" title="Check again" kind="secondary" onPress={start} />
-      {history.length > 1 ? (
-        <Pressable onPress={async () => { await clearHistory(); setHistory([]); }} accessibilityRole="button" style={{ minHeight: 44, justifyContent: "center", alignSelf: "center" }} testID="clear-history">
-          <Text style={type.body(13, t.muted)}>Clear history</Text>
-        </Pressable>
-      ) : null}
     </Screen>
   );
 }
@@ -165,31 +186,5 @@ function SwapText({ swap, name, done }: { swap: string; name: string; done: bool
       <Text style={[type.strong(16, t.ink), done ? { textDecorationLine: "line-through", color: t.muted } : null]} numberOfLines={3}>{swap}</Text>
       <Text style={type.body(13, t.muted)} numberOfLines={1}>{`Instead of ${name}`}</Text>
     </View>
-  );
-}
-
-/** The checks over time: one bar per check, newest on the right. */
-function Checks({ history }: { history: HistoryEntry[] }) {
-  const s = useSurface();
-  const last = [...history].slice(0, 6).reverse();
-  return (
-    <>
-      <SectionTitle>Your checks</SectionTitle>
-      <Card testID="score-history">
-        <View style={{ flexDirection: "row", alignItems: "flex-end", gap: space.m, height: 132 }}>
-          {last.map((h) => {
-            // the number the check gave, re-scored from its answers (the report is derived, never stored)
-            const pct = h.answers?.length === QUESTIONS.length ? scoreQuiz(h.answers).pct : h.pct;
-            return (
-            <View key={h.at} style={{ flex: 1, alignItems: "center", gap: 4 }}>
-              <Text style={[type.strong(13, s.t.ink), { fontVariant: ["tabular-nums"] }]}>{pct}</Text>
-              <View style={{ width: "70%", height: Math.max(6, pct), backgroundColor: palettes.light.band[scoreBand(pct)], borderRadius: 6 }} />
-              <Text style={type.body(11, s.t.muted)}>{day(h.at)}</Text>
-            </View>
-            );
-          })}
-        </View>
-      </Card>
-    </>
   );
 }

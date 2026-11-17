@@ -1,0 +1,16 @@
+{
+ "_note": "[DX-ROUND2-1117] Copied from detoxcellence.com /guides/check-water-filter-certified-pfas.html (site repo, sources read 2026-10-02: US EPA filter page, EPA steps, EPA lab methods, NSF 2024, Herkert et al. 2020 doi:10.1021/acs.estlett.0c00004). The app adds no claim of its own: each filter type points at its Exposure Index row where the Index has one. Do not retype: update from the guide.",
+ "guide": "https://detoxcellence.com/guides/check-water-filter-certified-pfas.html",
+ "types": [
+  { "id": "ro", "label": "Under-sink reverse osmosis", "row": "reverse-osmosis-filtered-water", "standard": "NSF/ANSI 58", "study": "In a 2020 study of North Carolina homes, under-sink reverse-osmosis and two-stage filters removed nearly all PFAS tested." },
+  { "id": "carbon", "label": "Carbon pitcher, tap or under-sink carbon", "row": "carbon-filter-pitcher-water", "standard": "NSF/ANSI 53", "study": "In a 2020 study of North Carolina homes, pitcher, faucet and other carbon filters removed about 60–70% of long-chain and about 40% of short-chain PFAS." },
+  { "id": "house", "label": "Whole-house carbon", "row": null, "standard": "NSF/ANSI 53", "study": "In a 2020 study of North Carolina homes, four of eight whole-house carbon systems raised PFAS levels." },
+  { "id": "none", "label": "No filter, or I don't know", "row": "unfiltered-tap-water", "standard": null, "study": "On a public supply, ask your water utility what it has measured for PFAS, or ask it to test; this is the first step US EPA suggests. On a private well, test regularly with a lab certified for PFAS analysis (EPA methods 533 and 537.1)." }
+ ],
+ "steps": [
+  { "title": "The label names PFAS reduction", "text": "A filter can be certified to NSF/ANSI 53 for something else, such as lead, so the certification has to name PFAS reduction — and the type of PFAS you are trying to remove." },
+  { "title": "The certifier's own listing", "text": "Search the exact model number in the certifier's directory: the listing names PFOA and PFOS, or \"Total PFAS\". EPA lists five certification bodies: NSF · UL · WQA · CSA Group · IAPMO R&T." },
+  { "title": "Keep it working", "text": "Filters are only effective if they are maintained to the manufacturer's replacement interval. Put it in your calendar." }
+ ],
+ "where": "US certification standards and US EPA limits. Outside the United States, ask your water supplier what it measures and which certifications your national authority recognises."
+}

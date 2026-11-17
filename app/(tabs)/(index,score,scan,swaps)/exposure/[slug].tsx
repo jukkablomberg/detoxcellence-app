@@ -1,10 +1,10 @@
 import { Stack, useLocalSearchParams } from "expo-router";
 import { useEffect, useState } from "react";
 import { Image, Pressable, Text, View } from "react-native";
-import { bySlug, EVIDENCE, hasSwap, INPUTS, useIndex, type Entry } from "../../../../src/lib/exposures";
+import { bySlug, EVIDENCE, hasSwap, INPUTS, isPFAS, useIndex, type Entry } from "../../../../src/lib/exposures";
 import { sisterLine } from "../../../../modules/health-camera/sister-lines";
 import { space, type, useTheme } from "../../../../src/lib/theme";
-import { scanHome } from "../../../../src/lib/nav";
+import { openVermiculite, openWaterFilter, scanHome } from "../../../../src/lib/nav";
 import { Body, Button, Screen } from "../../../../src/ui/primitives";
 import { Card, Expander, ScoreFigure, StatTiles, VerdictPill, ZoneBar } from "../../../../src/ui/kit";
 import { rowPhoto } from "../../../../src/lib/photos";
@@ -88,6 +88,12 @@ function EntryPage({ e }: { e: Entry }) {
             </View>
           ))}
         </Card>
+      ) : null}
+
+      {e.slug === "vermiculite-attic-insulation-asbestos" ? (
+        <Button title="Compare with EPA's photos" onPress={openVermiculite} testID="entry-vermiculite" />
+      ) : e.room === "Water" && isPFAS(e) ? (
+        <Button title="Is my filter certified?" onPress={openWaterFilter} testID="entry-filter" />
       ) : null}
 
       {sister ? (

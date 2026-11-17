@@ -34,23 +34,25 @@ export default function TabsLayout() {
       indicatorColor={android ? alpha(t.link, 0.15) : web ? webChip : undefined}
       iconColor={android ? { default: t.muted, selected: t.link } : undefined}
     >
-      {/* [DX-MY-HOME] 2026-11-06 (Jukka `dx-app: go`): 4 tabs → 3. My home (Home Check + Plan, route "/") lands first,
-          then the Index (the reference), then Scan. The Plan tab is hidden, not deleted — its screen lives inside My home. */}
+      {/* [DX-MY-HOME] 2026-11-06 (Jukka `dx-app: go`): My home lands first, then the Index, then Scan.
+          [DX-ROUND2-1117] (Jukka 11-17: "My Exposure Index is good (My Exposure)" · "there also need to be some kind of my
+          progress tab"): My Exposure · Exposure Index · Scan · My Progress — the SnapStress shape (My Stress · … · My Progress).
+          The (swaps) group, hidden since 11-06, is back as My Progress (checks over time, swaps done, the plan, the reminder). */}
       <NativeTabs.Trigger name="(score)">
         <NativeTabs.Trigger.Icon sf={ICONS.home.sf} md={ICONS.home.md} />
-        <NativeTabs.Trigger.Label>My home</NativeTabs.Trigger.Label>
+        <NativeTabs.Trigger.Label>My Exposure</NativeTabs.Trigger.Label>
       </NativeTabs.Trigger>
       <NativeTabs.Trigger name="(index)">
         <NativeTabs.Trigger.Icon sf={ICONS.index.sf} md={ICONS.index.md} />
-        <NativeTabs.Trigger.Label>Index</NativeTabs.Trigger.Label>
+        <NativeTabs.Trigger.Label>Exposure Index</NativeTabs.Trigger.Label>
       </NativeTabs.Trigger>
       <NativeTabs.Trigger name="(scan)">
         <NativeTabs.Trigger.Icon sf={ICONS.scan.sf} md={ICONS.scan.md} />
         <NativeTabs.Trigger.Label>Scan</NativeTabs.Trigger.Label>
       </NativeTabs.Trigger>
-      <NativeTabs.Trigger name="(swaps)" hidden>
-        <NativeTabs.Trigger.Icon sf={ICONS.tips.sf} md={ICONS.tips.md} />
-        <NativeTabs.Trigger.Label>Plan</NativeTabs.Trigger.Label>
+      <NativeTabs.Trigger name="(swaps)">
+        <NativeTabs.Trigger.Icon sf={ICONS.forecasts.sf} md={ICONS.forecasts.md} />
+        <NativeTabs.Trigger.Label>My Progress</NativeTabs.Trigger.Label>
       </NativeTabs.Trigger>
     </NativeTabs>
   );

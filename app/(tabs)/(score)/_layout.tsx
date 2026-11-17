@@ -8,8 +8,8 @@ export default function Layout() {
   const t = useStudioTheme();
   return (
     <Stack screenOptions={tabRootOptions(t, VENTURE_NAME, { renderTitle: (title) => <DisplayTitle title={title} color={t.ink} onPress={() => scanHome()} /> })}>
-      <Stack.Screen name="index" options={{ title: "My home" }} />
-      <Stack.Screen name="score" options={{ title: "My home" }} />
+      <Stack.Screen name="index" options={{ title: "My Exposure" }} />
+      <Stack.Screen name="score" options={{ title: "My Exposure" }} />
     </Stack>
   );
 }

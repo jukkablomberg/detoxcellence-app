@@ -1,0 +1,20 @@
+{
+ "_note": "[DX-ROUND2-1117] Copied from detoxcellence.com /older-homes/is-this-vermiculite/ (site repo, read 2026-11-17) — the five US EPA photographs (public domain; captions from the page's ImageObject data) and the page's 'How to tell' lines. Source on the site: US EPA, Protect Your Family from Asbestos-Contaminated Vermiculite Insulation (read by the site 2026-11-02). Do not retype: update from the site page.",
+ "source": "https://www.epa.gov/asbestos/protect-your-family-asbestos-contaminated-vermiculite-insulation",
+ "photos": [
+  { "file": "epa-vermiculite1.jpg", "caption": "Typical vermiculite insulation" },
+  { "file": "epa-vermiculite2.jpg", "caption": "Vermiculite insulation between attic joists" },
+  { "file": "epa-vermiculite3.jpg", "caption": "Vermiculite insulation particle size relative to paper clip" },
+  { "file": "epa-vermiculite4.jpg", "caption": "Different sizes of vermiculite particles" },
+  { "file": "epa-vermiculite5.jpg", "caption": "Typical vermiculite insulation" }
+ ],
+ "lead": "Vermiculite is a pebble-like, pour-in product, usually grey-brown or silver-gold, lying loose between the attic joists.",
+ "how": [
+  "Look from the hatch with a torch. Do not reach in, sweep or scoop a sample.",
+  "Vermiculite is loose granules, from fine grains to pieces nearly an inch long, with a shiny, mica-like sheen. It pours; it does not hang together.",
+  "Not vermiculite: fiberglass batts or fluff (pink, yellow or white, like cotton candy), blown cellulose (grey, like shredded paper), mineral wool (woolly fibres).",
+  "Do not open walls to look for it. EPA advises against it."
+ ],
+ "verdict": "If in doubt, do not disturb it — use an accredited tester. EPA goes further: treat any vermiculite insulation as if it contains asbestos, without testing.",
+ "row": "vermiculite-attic-insulation-asbestos"
+}
